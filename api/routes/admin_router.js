@@ -49,5 +49,15 @@ router.post('/resetstations', async function(req, res) {
     }
 })
 
+router.post('/resetvehicles', async function(req, res) {
+    try {
+        await db.populateTags()
+        res.status(200).json({"status":"OK"})
+    } catch(err) { 
+        console.log(err)
+        res.status(500).json({"status":"failed"})
+    }
+})
+
 module.exports = router
 

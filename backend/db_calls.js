@@ -48,13 +48,13 @@ function testConnection() {  return new Promise((resolve, reject) => {
 
 async function deletePasses() {
     console.log("deleting Pass data...")
-        await pool.query(`DELETE * FROM ${process.env.DB_NAME}.Pass`)
+        await pool.query(`DELETE FROM ${process.env.DB_NAME}.Pass`)
 }
 
 async function populateStations() {
     console.log("populating Station table with default data...")
     const results = [];
-    values = ''
+    let values = ''
     fs.createReadStream('../backend/sampledata01_stations.csv')
     .pipe(csv({separator: ';'}))
     .on('data', (data) => results.push(data))
@@ -64,7 +64,7 @@ async function populateStations() {
             values += `("${object.stationID}", "${object.stationProvider}", "${object.stationName}"),\n`
         })
         values = values.slice(0, -2) + ';'
-        
+
         // ERROR HANDLING IS WRONG
         pool.query(`INSERT INTO Station(stationID, stationProvider, stationName) VALUES ${values}`)
         .catch(err => {
@@ -77,4 +77,31 @@ async function populateStations() {
 }
 
 
-module.exports = {testConnection, deletePasses, populateStations}
+async function populateTags() {
+    console.log("populating Tag table with default data...")
+    const results = [];
+    values = ''
+    fs.createReadStream('../backend/sampledata01_vehicles_100.csv')
+    .pipe(csv({separator: ';'}))
+    .on('data', (data) => results.push(data))
+    .on('end', () => {
+        //console.log(results)
+        results.forEach(object => {
+            values += `("${object.tagID}", "${object.tagProvider}", "${object.vehicleID}", "${object.licenseYear}"),\n`
+        })
+        values = values.slice(0, -2) + ';'
+        
+        // ERROR HANDLING IS WRONG
+        pool.query(`INSERT INTO Tag(tagID, tagProvider, vehicleID, licenseYear) VALUES ${values}`)
+        .catch(err => {
+            throw err
+        })
+    })
+    .catch(err => {
+        throw err
+    })
+}
+
+
+
+module.exports = {testConnection, deletePasses, populateStations, populateTags}
