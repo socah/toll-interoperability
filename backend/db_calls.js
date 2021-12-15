@@ -2,7 +2,8 @@ const { fstat } = require('fs');
 const mariadb = require('mariadb');
 require('dotenv').config()
 const csv = require('csv-parser')
-const fs = require('fs')
+const fs = require('fs');
+//const { PassThrough } = require('stream'); dont know where this line came from...
 const results = [];
 
 const pool = mariadb.createPool({
@@ -102,6 +103,44 @@ async function populateTags() {
     })
 }
 
+async function populatePasses() {
+    console.log("populating Pass table with default data...")
+    const results = [];
+    values = ''
+    fs.createReadStream('../backend/sampledata01_passes100_8000.csv')
+    .pipe(csv({separator: ';'}))
+    .on('data', (data) => results.push(data))
+    .on('end', () => {
+        //console.log(results)
+        results.forEach(object => {
+            time = object.timestamp.match(/(\d+)\/(\d+)\/(\d+) (\d+):(\d+)/);
+            timestamp = time[3] + "-" + time[2].padStart(2, '0') + "-" +  time[1].padStart(2, '0') + " " + time[4] + ":" + time[5] + ":00"
+            values += `("${object.passID}", "${timestamp}", "${object.stationRef}", "${object.vehicleRef}", ${object.charge}),\n`
+        })
+        values = values.slice(0, -2) + ';'
+        
+        // ERROR HANDLING IS WRONG
+        pool.query(`INSERT INTO Pass(passID, timestamp, stationRef, vehicleRef, charge) VALUES ${values}`)
+        .catch(err => {
+            throw err
+        })
+    })
+    .catch(err => {
+        throw err
+    })
+    
+    await pool.query(`UPDATE Pass
+                    SET Pass.stationOwner = Station.stationProvider
+                    FROM Pass INNER JOIN Station
+                    ON Pass.stationRef = Station.stationID`)
+    
+    await pool.query(`UPDATE Pass
+                    SET Pass.tagOwner = Tag.tagProvider,
+                        Pass.tagID = Tag.tagID
+                    FROM Pass INNER JOIN Tag
+                    ON Pass.vehicleRef = Tag.vehicleID`)
+}
 
 
-module.exports = {testConnection, deletePasses, populateStations, populateTags}
+
+module.exports = {testConnection, deletePasses, populateStations, populateTags, populatePasses}

@@ -59,5 +59,15 @@ router.post('/resetvehicles', async function(req, res) {
     }
 })
 
+router.post('/addpasses', async function(req, res) {
+    try {
+        await db.populatePasses()
+        res.status(200).json({"status":"OK"})
+    } catch(err) { 
+        console.log(err)
+        res.status(500).json({"status":"failed"})
+    }
+})
+
 module.exports = router
 
