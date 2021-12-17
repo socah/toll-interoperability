@@ -162,7 +162,7 @@ router.get("/PassesAnalysis/:op1_ID/:op2_ID/:date_from/:date_to", (req, res) =>{
         }
     })
     .catch((err) => {
-        console.log("Error on PassesPerStation:");
+        console.log("Error on PassesAnalysis:");
         console.log(err);
         res.status(500).json( {status:"failed", reason:"Internal server error"} );
     });
