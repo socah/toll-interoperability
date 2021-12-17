@@ -95,8 +95,23 @@ function getPassesCost(stationProvider, tagProvider, dateFrom, dateTo) {
 
 // d
 function getChargesBy(opID, dateFrom, dateTo) {
-    return new Promise( (fullfil, reject) => {
-        fullfil();
+    
+    return new Promise((fullfil, reject) => {
+
+        // κάνουμε query για να λάβουμε τις διελεύσεις
+        return pool.query(`SELECT V.tagProvider as VistingOperator, count(*) as NumberOfPasses, sum(P.charge) as PassesCost
+            FROM (Pass as P JOIN Station as S ON P.stationRef = S.stationID)
+            JOIN Vehicle as V ON P.vehicleRef = V.vehicleID
+            WHERE S.stationProvider != V.tagProvider AND S.stationProvider = ? AND P.timestamp BETWEEN ? AND ?
+            GROUP BY V.tagProvider`, [opID, dateFrom, dateTo])
+        .then((rows) => {
+            console.log("Received Rows:" + rows);
+            output = {
+                rows: rows
+            }
+            fullfil(output);
+        })
+        .catch(err => reject(err));
     });
 }
 
