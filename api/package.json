@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "express": "^4.17.1",
-    "mariadb": "^2.5.5"
+    "mariadb": "^2.5.5",
+    "morgan": "^1.10.0"
   },
   "scripts": {
     "devStart": "nodemon server.js"

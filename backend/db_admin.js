@@ -33,7 +33,7 @@ async function populateStations() {
     console.log("populating Station table with default data...")
     const results = [];
     let values = ''
-    fs.createReadStream('../backend/sampledata01_stations.csv')
+    fs.createReadStream('../database/csv_files/sampledata01_stations.csv')
     .pipe(csv({separator: ';'}))
     .on('data', (data) => results.push(data))
     .on('end', () => {
@@ -56,7 +56,7 @@ async function populateTags() {
     console.log("populating Tag table with default data...")
     const results = [];
     values = ''
-    fs.createReadStream('../backend/sampledata01_vehicles_100.csv')
+    fs.createReadStream('../database/csv_files/sampledata01_vehicles_100.csv')
     .pipe(csv({separator: ';'}))
     .on('data', (data) => results.push(data))
     .on('end', () => {
@@ -78,7 +78,7 @@ async function populatePasses() {
     console.log("populating Pass table with default data...")
     const results = [];
     values = ''
-    fs.createReadStream('../backend/sampledata01_passes100_8000.csv')
+    fs.createReadStream('../database/csv_files/sampledata01_passes100_8000.csv')
     .pipe(csv({separator: ';'}))
     .on('data', (data) => results.push(data))
     .on('end', () => {
@@ -96,17 +96,6 @@ async function populatePasses() {
             throw err
         })
     })
-    
-    await pool.query(`UPDATE Pass
-                    SET Pass.stationOwner = Station.stationProvider
-                    FROM Pass INNER JOIN Station
-                    ON Pass.stationRef = Station.stationID`)
-    
-    await pool.query(`UPDATE Pass
-                    SET Pass.tagOwner = Tag.tagProvider,
-                        Pass.tagID = Tag.tagID
-                    FROM Pass INNER JOIN Tag
-                    ON Pass.vehicleRef = Tag.vehicleID`)
 }
 
 
