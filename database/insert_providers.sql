@@ -1,3 +1,4 @@
+-- TODO : να κάνουμε το attribute delete να έχει default τιμή το μηδέν
 INSERT INTO Provider (operatorID, providerAbbr) VALUES
 ("kentriki_odos", "KO"),
 ("aodos", "AO"),

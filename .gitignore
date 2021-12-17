@@ -1,0 +1,7 @@
+# MAC OS stuff
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code hidden dir
+.vscode/

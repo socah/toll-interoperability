@@ -1,35 +1,12 @@
+require('dotenv').config()
+
 const { fstat } = require('fs');
 const mariadb = require('mariadb');
-require('dotenv').config()
 const csv = require('csv-parser')
 const fs = require('fs');
-//const { PassThrough } = require('stream'); dont know where this line came from...
-const results = [];
+const pool = require('./dp_pool.js');
 
-const pool = mariadb.createPool({
-     host: process.env.DB_URL,
-     user: process.env.DB_USER, 
-     password: process.env.DB_PASSWD,
-     database: process.env.DB_NAME,
-     connectionLimit: 5
-});
 
-pool.getConnection((err, connection) => {
-    if(err) {
-        if (err.code === 'PROTOCOL_CONNECTION_LOST'){
-            console.error('Database connection lost');
-        }
-        if (err.code === 'ER_CON_COUNT_ERROR'){
-            console.error('Database has too many connections')
-        }
-        if (err.code === 'ECONNREFUSED'){
-            console.error('Database connection was refused')
-        }
-    }
-    if(connection) connection.release()
-
-    return
-})
 
 function testConnection() {  return new Promise((resolve, reject) => {
     connectionString = process.env.DB_USER+'@'+process.env.DB_URL
@@ -47,9 +24,9 @@ function testConnection() {  return new Promise((resolve, reject) => {
 })
 }
 
-async function deletePasses() {
+function deletePasses() {
     console.log("deleting Pass data...")
-        await pool.query(`DELETE FROM ${process.env.DB_NAME}.Pass`)
+    return pool.query(`DELETE FROM ${process.env.DB_NAME}.Pass`)
 }
 
 async function populateStations() {
@@ -71,9 +48,6 @@ async function populateStations() {
         .catch(err => {
             throw err
         })
-    })
-    .catch(err => {
-        throw err
     })
 }
 
@@ -98,9 +72,6 @@ async function populateTags() {
             throw err
         })
     })
-    .catch(err => {
-        throw err
-    })
 }
 
 async function populatePasses() {
@@ -124,9 +95,6 @@ async function populatePasses() {
         .catch(err => {
             throw err
         })
-    })
-    .catch(err => {
-        throw err
     })
     
     await pool.query(`UPDATE Pass
