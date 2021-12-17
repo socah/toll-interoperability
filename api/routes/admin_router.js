@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const db = require('../../backend/db_calls.js')
+const db = require('../../backend/db_admin.js')
 
 router.get('/healthcheck', (req, res) => {
     db.testConnection()

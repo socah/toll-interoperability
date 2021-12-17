@@ -67,7 +67,7 @@ async function populateTags() {
         values = values.slice(0, -2) + ';'
         
         // ERROR HANDLING IS WRONG
-        pool.query(`INSERT INTO Tag(tagID, tagProvider, vehicleID, licenseYear) VALUES ${values}`)
+        pool.query(`INSERT INTO Vehicle(tagID, tagProvider, vehicleID, licenseYear) VALUES ${values}`)
         .catch(err => {
             throw err
         })
