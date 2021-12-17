@@ -1,5 +1,5 @@
 CREATE TABLE Account (Username varchar(50) NOT NULL, MD5PasswordHash char(32) NOT NULL, operatorID varchar(50) NOT NULL, deleted tinyint(1) DEFAULT 0 NOT NULL, PRIMARY KEY (Username));
-CREATE TABLE Pass (passID varchar(10) NOT NULL, timestamp timestamp NOT NULL, stationRef varchar(4) NOT NULL, charge numeric(6, 2) NOT NULL, chargeStatus tinyint(1) DEFAULT 0 NOT NULL, settlementID int(10), balance numeric(6, 2), vehicleRef varchar(12), VehiclevehicleID varchar(12), PRIMARY KEY (passID));
+CREATE TABLE Pass (passID varchar(10) NOT NULL, timestamp timestamp NOT NULL, stationRef varchar(4) NOT NULL, charge numeric(6, 2) NOT NULL, chargeStatus tinyint(1) DEFAULT 0 NOT NULL, settlementID int(10), balance numeric(6, 2), vehicleRef varchar(12) NOT NULL, PRIMARY KEY (passID));
 CREATE TABLE Provider (operatorID varchar(50) NOT NULL, providerAbbr varchar(2), deleted tinyint(1) DEFAULT 0 NOT NULL, PRIMARY KEY (operatorID));
 CREATE TABLE Settlement (settlementID int(10) NOT NULL AUTO_INCREMENT, dateFrom date NOT NULL, dateTo date NOT NULL, amount int(10) NOT NULL, transactionID varchar(50), paid tinyint(1) DEFAULT 0 NOT NULL, operatorCredited varchar(50) NOT NULL, operatorDebited varchar(50) NOT NULL, PRIMARY KEY (settlementID));
 CREATE TABLE Station (stationID varchar(4) NOT NULL, stationProvider varchar(50) NOT NULL, stationName varchar(255), deleted tinyint(1) DEFAULT 0 NOT NULL, PRIMARY KEY (stationID));
@@ -11,4 +11,4 @@ ALTER TABLE Pass ADD CONSTRAINT `Settled In` FOREIGN KEY (settlementID) REFERENC
 ALTER TABLE Station ADD CONSTRAINT Station_Provider FOREIGN KEY (stationProvider) REFERENCES Provider (operatorID);
 ALTER TABLE Pass ADD CONSTRAINT Station_Ref FOREIGN KEY (stationRef) REFERENCES Station (stationID);
 ALTER TABLE Vehicle ADD CONSTRAINT Tag_Provider FOREIGN KEY (tagProvider) REFERENCES Provider (operatorID);
-ALTER TABLE Pass ADD CONSTRAINT Vehicle_ID FOREIGN KEY (VehiclevehicleID) REFERENCES Vehicle (vehicleID);
+ALTER TABLE Pass ADD CONSTRAINT Vehicle_ID FOREIGN KEY (vehicleRef) REFERENCES Vehicle (vehicleID);
