@@ -45,16 +45,18 @@ function populateStations() {
             values = values.slice(0, -2) + ';'
 
             pool.query(`INSERT INTO Station(stationID, stationProvider, stationName) VALUES ${values}`)
+            .then(rows => {
+                fullfil()
+            })
             .catch(err => {
                 reject(err)
             })
-            fullfil()
         })
     })
 }
 
 
-function populateTags() {
+function populateVehicles() {
         return new Promise( (fullfil, reject) => {
         console.log("populating Tag table with default data...")
         const results = [];
@@ -69,12 +71,13 @@ function populateTags() {
             })
             values = values.slice(0, -2) + ';'
             
-            // ERROR HANDLING IS WRONG
             pool.query(`INSERT INTO Vehicle(tagID, tagProvider, vehicleID, licenseYear) VALUES ${values}`)
+            .then(rows => {
+                fullfil()
+            })
             .catch(err => {
                 reject(err)
             })
-            fullfil()
         })
     })
 }
@@ -97,14 +100,16 @@ function populatePasses() {
             values = values.slice(0, -2) + ';'
             
             pool.query(`INSERT INTO Pass(passID, timestamp, stationRef, vehicleRef, charge) VALUES ${values}`)
+            .then(rows => {
+                fullfil()
+            })
             .catch(err => {
                 reject(err)
             })
-            fullfil()
         })
     })
 }
 
 
 
-module.exports = {testConnection, deletePasses, populateStations, populateTags, populatePasses}
+module.exports = {testConnection, deletePasses, populateStations, populateVehicles, populatePasses}
