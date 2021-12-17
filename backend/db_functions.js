@@ -70,9 +70,26 @@ function getPassesAnalysis(opID_1, opID_2, dateFrom, dateTo) {
 }
 
 // c
-function getPassesCost(opID_1, opID_2, dateFrom, dateTo) {
+function getPassesCost(stationProvider, tagProvider, dateFrom, dateTo) {
     return new Promise( (fullfil, reject) => {
-        fullfil();
+        
+        // κάνουμε query για να λάβουμε τo πλήθος και το άθροισμα των διελεύσεων
+        return pool.query(`
+            SELECT count(*) as NumberOfPasses, sum(P.charge) as PassesCost
+            FROM Pass as P
+            JOIN Station as S ON S.stationID=P.stationRef 
+            JOIN Vehicle as V ON V.vehicleID=P.vehicleRef
+            WHERE S.stationProvider = ? AND V.tagProvider = ? 
+            AND P.timestamp BETWEEN ? AND ?`
+            , [stationProvider, tagProvider, dateFrom, dateTo])
+        .then((rows) => {
+            output = {
+                rows: rows
+            }
+            fullfil(output);
+        })
+        .catch(err => reject(err));
+
     });
 }
 
