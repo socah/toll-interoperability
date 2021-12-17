@@ -94,13 +94,82 @@ router.get("/PassesPerStation/:stationID/:date_from/:date_to", (req, res) =>{
 });
 
 
-router.get("/PassesCost/:op1_ID/:op2_ID/:date_from/:date_to", (req, res) =>{
+router.get("/PassesAnalysis/:op1_ID/:op2_ID/:date_from/:date_to", (req, res) =>{
 
-    res.status(404).send("Not implemented Yet");
+    const requestTimestamp = new Date();
 
+    // check if authorized
+    authorized = true;
+    if(!authorized){
+        res.status(401).json({status:"failed", reason:"Not authorized"});
+        return;
+    }
+
+    // get parameters
+    stationProvider = String(req.params.op1_ID);
+    tagProvider = String(req.params.op2_ID);
+    fromDate = String(req.params.date_from);
+    toDate = String(req.params.date_to);
+    format = req.query.format || "json";
+
+
+    // ελέγχουμε αν οι παράμετροι είναι ορθές
+    const regex_date = /^\d{8}$/; // 8 digits in a row
+    const regex_format = /^json$|^csv$/;
+
+    good_request = regex_date.test(fromDate) 
+        && regex_date.test(toDate)
+        && regex_format.test(format);
+
+    if(!good_request){
+        res.status(400).json({status:"failed", reason:"Bad Request"});
+        return;
+    }
+
+    // αν όλα καλά μέχρι στιγμής εκτελούμε το query προς την βάση
+    db_functions.getPassesAnalysis(stationProvider, tagProvider, formatDateFromString(fromDate, "00:00:00"), formatDateFromString(toDate, "23:59:59"))
+    .then((result) => {
+        if(result == null){
+            res.status(402).json({status:"failed", reason:"No data"});
+        }else{
+            // Προσθέτουμε τον αύξοντα αριθμό PassIndex για κάθε row
+            // και κάνουμε format το timestamp
+            result.rows.forEach((element, index) => {
+                element.TimeStamp= formatDate(element.TimeStamp);
+            });
+
+            result.rows = result.rows.map((element, index) => Object.assign({PassIndex: index+1}, element))
+            
+            if(format == "json"){
+
+                response_object =
+                {
+                    op1_ID: stationProvider,
+                    op2_ID: tagProvider,
+                    RequestTimestamp: formatDate(requestTimestamp),
+                    PeriodFrom: formatDateFromString(fromDate, "00:00:00"),
+                    PeriodTo: formatDateFromString(toDate, "23:59:59"),
+                    NumberOfPasses: result.rows.length,
+
+                    PassesList : result.rows
+                };
+
+                res.status(200).json(response_object);
+            }else{
+                // αν είναι csv τότε επιστρέφουμε ουσιαστικά μόνο το PassesList
+                res.status(200).send(parse(result.rows));
+            }
+        }
+    })
+    .catch((err) => {
+        console.log("Error on PassesPerStation:");
+        console.log(err);
+        res.status(500).json( {status:"failed", reason:"Internal server error"} );
+    });
+    
 });
 
-router.get("/PassesAnalysis/:op1_ID/:op2_ID/:date_from/:date_to", (req, res) =>{
+router.get("/PassesCost/:op1_ID/:op2_ID/:date_from/:date_to", (req, res) =>{
 
     res.status(404).send("Not implemented Yet");
     

@@ -49,8 +49,23 @@ function getPassesPerStation(stationID, dateFrom, dateTo) {
 
 // b
 function getPassesAnalysis(opID_1, opID_2, dateFrom, dateTo) {
-    return new Promise( (fullfil, reject) => {
-        fullfil();
+    return new Promise((fullfil, reject) => {
+
+        // κάνουμε query για να λάβουμε τις διελεύσεις
+        return pool.query(`SELECT P.passID as PassID, P.stationRef as StationID, 
+            P.timestamp as TimeStamp, P.vehicleRef as VehicleID, P.charge as Charge
+            FROM Pass as P
+            JOIN Station as S ON S.stationID=P.stationRef 
+            JOIN Vehicle as V ON V.vehicleID=P.vehicleRef
+            WHERE S.stationProvider = ? AND V.tagProvider = ? AND P.timestamp BETWEEN ? AND ?;`, [opID_1, opID_2, dateFrom, dateTo])
+        .then((rows) => {
+            console.log("Received Rows:" + rows);
+            output = {
+                rows: rows
+            }
+            fullfil(output);
+        })
+        .catch(err => reject(err));
     });
 }
 
