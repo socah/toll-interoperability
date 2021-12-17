@@ -1,5 +1,7 @@
+const e = require('express');
 const express = require('express');
 const router = express.Router();
+const {parse} = require('json2csv');
 const db_functions = require('../../backend/db_functions.js');
 
 // TODO : Do not forget to check format GET param for csv, json
@@ -54,31 +56,33 @@ router.get("/PassesPerStation/:stationID/:date_from/:date_to", (req, res) =>{
         if(result == null){
             res.status(402).json({status:"failed", reason:"No data"});
         }else{
-            if(format == "csv"){
-                // TODO : add csv conversion
-            }
-
             // Προσθέτουμε τον αύξοντα αριθμό PassIndex για κάθε row
             // και κάνουμε format το timestamp
             result.rows.forEach((element, index) => {
-                element.PassIndex = index+1;
                 element.PassTimestamp = formatDate(element.PassTimestamp);
             });
 
-            response_object =
-            {
-                Station: stationID,
-                StationOperator: result.stationProvider,
-                RequestTimestamp: formatDate(requestTimestamp),
-                PeriodFrom: formatDateFromString(fromDate, "00:00:00"),
-                PeriodTo: formatDateFromString(toDate, "23:59:59"),
-                NumberOfPasses: result.rows.length,
+            result.rows = result.rows.map((element, index) => Object.assign({PassIndex: index+1}, element))
 
-                PassesList : result.rows
-            };
+            if(format == "json"){
+               
+                response_object =
+                {
+                    Station: stationID,
+                    StationOperator: result.stationProvider,
+                    RequestTimestamp: formatDate(requestTimestamp),
+                    PeriodFrom: formatDateFromString(fromDate, "00:00:00"),
+                    PeriodTo: formatDateFromString(toDate, "23:59:59"),
+                    NumberOfPasses: result.rows.length,
 
-            
-            res.status(200).json(response_object);
+                    PassesList : result.rows
+                };
+
+                res.status(200).json(response_object);
+            }else{
+                // αν είναι csv τότε επιστρέφουμε ουσιαστικά μόνο το PassesList
+                res.status(200).send(parse(result.rows));
+            }
         }
     })
     .catch((err) => {

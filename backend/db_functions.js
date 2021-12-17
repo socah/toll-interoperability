@@ -36,7 +36,6 @@ function getPassesPerStation(stationID, dateFrom, dateTo) {
                 WHERE P.stationRef = ? AND P.timestamp BETWEEN ? AND ?;`, [stationID, dateFrom, dateTo]);
         })
         .then((rows) => {
-            console.log("Received Rows:" + rows);
             output = {
                 stationProvider: stationProvider,
                 rows: rows
