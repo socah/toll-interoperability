@@ -29,71 +29,78 @@ function deletePasses() {
     return pool.query(`DELETE FROM ${process.env.DB_NAME}.Pass`)
 }
 
-async function populateStations() {
-    console.log("populating Station table with default data...")
-    const results = [];
-    let values = ''
-    fs.createReadStream('../database/csv_files/sampledata01_stations.csv')
-    .pipe(csv({separator: ';'}))
-    .on('data', (data) => results.push(data))
-    .on('end', () => {
-        //console.log(results)
-        results.forEach(object => {
-            values += `("${object.stationID}", "${object.stationProvider}", "${object.stationName}"),\n`
-        })
-        values = values.slice(0, -2) + ';'
+function populateStations() { 
+    return new Promise ( (fullfil, reject) => {
+        console.log("populating Station table with default data...")
+        const results = [];
+        let values = ''
+        fs.createReadStream('../database/csv_files/sampledata01_stations.csv')
+        .pipe(csv({separator: ';'}))
+        .on('data', (data) => results.push(data))
+        .on('end', () => {
+            //console.log(results)
+            results.forEach(object => {
+                values += `("${object.stationID}", "${object.stationProvider}", "${object.stationName}"),\n`
+            })
+            values = values.slice(0, -2) + ';'
 
-        // ERROR HANDLING IS WRONG
-        pool.query(`INSERT INTO Station(stationID, stationProvider, stationName) VALUES ${values}`)
-        .catch(err => {
-            throw err
+            pool.query(`INSERT INTO Station(stationID, stationProvider, stationName) VALUES ${values}`)
+            .catch(err => {
+                reject(err)
+            })
+            fullfil()
         })
     })
 }
 
 
-async function populateTags() {
-    console.log("populating Tag table with default data...")
-    const results = [];
-    values = ''
-    fs.createReadStream('../database/csv_files/sampledata01_vehicles_100.csv')
-    .pipe(csv({separator: ';'}))
-    .on('data', (data) => results.push(data))
-    .on('end', () => {
-        //console.log(results)
-        results.forEach(object => {
-            values += `("${object.tagID}", "${object.tagProvider}", "${object.vehicleID}", "${object.licenseYear}"),\n`
-        })
-        values = values.slice(0, -2) + ';'
-        
-        // ERROR HANDLING IS WRONG
-        pool.query(`INSERT INTO Vehicle(tagID, tagProvider, vehicleID, licenseYear) VALUES ${values}`)
-        .catch(err => {
-            throw err
+function populateTags() {
+        return new Promise( (fullfil, reject) => {
+        console.log("populating Tag table with default data...")
+        const results = [];
+        values = ''
+        fs.createReadStream('../database/csv_files/sampledata01_vehicles_100.csv')
+        .pipe(csv({separator: ';'}))
+        .on('data', (data) => results.push(data))
+        .on('end', () => {
+            //console.log(results)
+            results.forEach(object => {
+                values += `("${object.tagID}", "${object.tagProvider}", "${object.vehicleID}", "${object.licenseYear}"),\n`
+            })
+            values = values.slice(0, -2) + ';'
+            
+            // ERROR HANDLING IS WRONG
+            pool.query(`INSERT INTO Vehicle(tagID, tagProvider, vehicleID, licenseYear) VALUES ${values}`)
+            .catch(err => {
+                reject(err)
+            })
+            fullfil()
         })
     })
 }
 
-async function populatePasses() {
-    console.log("populating Pass table with default data...")
-    const results = [];
-    values = ''
-    fs.createReadStream('../database/csv_files/sampledata01_passes100_8000.csv')
-    .pipe(csv({separator: ';'}))
-    .on('data', (data) => results.push(data))
-    .on('end', () => {
-        //console.log(results)
-        results.forEach(object => {
-            time = object.timestamp.match(/(\d+)\/(\d+)\/(\d+) (\d+):(\d+)/);
-            timestamp = time[3] + "-" + time[2].padStart(2, '0') + "-" +  time[1].padStart(2, '0') + " " + time[4] + ":" + time[5] + ":00"
-            values += `("${object.passID}", "${timestamp}", "${object.stationRef}", "${object.vehicleRef}", ${object.charge}),\n`
-        })
-        values = values.slice(0, -2) + ';'
-        
-        // ERROR HANDLING IS WRONG
-        pool.query(`INSERT INTO Pass(passID, timestamp, stationRef, vehicleRef, charge) VALUES ${values}`)
-        .catch(err => {
-            throw err
+function populatePasses() {
+    return new Promise ( (fullfil, reject) => {
+        console.log("populating Pass table with default data...")
+        const results = [];
+        values = ''
+        fs.createReadStream('../database/csv_files/sampledata01_passes100_8000.csv')
+        .pipe(csv({separator: ';'}))
+        .on('data', (data) => results.push(data))
+        .on('end', () => {
+            //console.log(results)
+            results.forEach(object => {
+                time = object.timestamp.match(/(\d+)\/(\d+)\/(\d+) (\d+):(\d+)/);
+                timestamp = time[3] + "-" + time[2].padStart(2, '0') + "-" +  time[1].padStart(2, '0') + " " + time[4] + ":" + time[5] + ":00"
+                values += `("${object.passID}", "${timestamp}", "${object.stationRef}", "${object.vehicleRef}", ${object.charge}),\n`
+            })
+            values = values.slice(0, -2) + ';'
+            
+            pool.query(`INSERT INTO Pass(passID, timestamp, stationRef, vehicleRef, charge) VALUES ${values}`)
+            .catch(err => {
+                reject(err)
+            })
+            fullfil()
         })
     })
 }
