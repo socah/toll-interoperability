@@ -9,7 +9,7 @@ const pool = require('./dp_pool.js');
 
 
 function testConnection() {  return new Promise((resolve, reject) => {
-    connectionString = process.env.DB_USER+'@'+process.env.DB_URL
+    connectionString = `SERVER=${process.env.DB_URL};USER=${process.env.DB_USER};PASSWORD=${process.env.DB_PASSWD};DATABASE=${process.env.DB_NAME};PORT=3306`
     console.log("testing db connection...")
     pool.getConnection()
     .then(conn => {

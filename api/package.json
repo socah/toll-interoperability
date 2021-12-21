@@ -2,7 +2,9 @@
   "dependencies": {
     "express": "^4.17.1",
     "json2csv": "^5.0.6",
+    "jsonwebtoken": "^8.5.1",
     "mariadb": "^2.5.5",
+    "md5": "^2.3.0",
     "morgan": "^1.10.0"
   },
   "scripts": {
