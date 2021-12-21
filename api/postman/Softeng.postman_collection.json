@@ -1,0 +1,1791 @@
+{
+	"info": {
+		"_postman_id": "61548d0b-d47c-4d91-a132-aaae51f0f06a",
+		"name": "Softeng",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Διαχειριστικά Endpoints",
+			"item": [
+				{
+					"name": "Admin Healthcheck",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/admin/healthcheck",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"admin",
+								"healthcheck"
+							]
+						},
+						"description": "Eπιβεβαιώνει τη συνδεσιμότητα (end-to-end connectivity) μεταξύ του χρήστη και της βάσης δεδομένων. Το back-end, δηλαδή, ελέγχει τη συνδεσιμότητα με τη ΒΔ για να απαντήσει στο αίτημα. Σε περίπτωση επιτυχούς σύνδεσης επιστρέφεται το json object: {\"status\":\"OK\", \"dbconnection\":\\[connection string\\]}, διαφορετικά επιστρέφεται {\"status\":\"failed\", \"dbconnection\":\\[connection string\\]}. Στο connection string περιέχεται το όνομα του εξυπηρετητή της βάσης, το όνομα χρήστη, το όνομα της βάσης και η θύρα όπου γίνεται η σύνδεση."
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Reset Passes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/admin/resetpasses",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"admin",
+								"resetpasses"
+							]
+						},
+						"description": "Προβαίνει σε αρχικοποίηση του πίνακα γεγονότων διέλευσης (διαγραφή όλων των γεγονότων). Σε περίπτωση επιτυχίας, επιστρέφεται το json object: {\"status\":\"OK\"}, διαφορετικά επιστρέφεται {\"status\":\"failed\"}."
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Reset Stations",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/admin/resetstations",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"admin",
+								"resetstations"
+							]
+						},
+						"description": "Προβαίνει σε  \nαρχικοποίηση του πίνακα σταθμών διοδίων με τις τιμές που σας δόθηκαν ως ενδεικτικά  \nδεδομένα. Σε περίπτωση επιτυχίας, επιστρέφεται το json object: {\"status\":\"OK\"}, διαφορετικά επιστρέφεται {\"status\":\"failed\"}."
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Reset Vehicles",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/admin/resetvehicles",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"admin",
+								"resetvehicles"
+							]
+						},
+						"description": "Προβαίνει σε αρχικοποίηση του πίνακα οχημάτων με τις τιμές που μας δόθηκαν ως ενδεικτικά δεδομένα.  \nΣε περίπτωση επιτυχίας, επιστρέφεται το json object: {\"status\":\"OK\"}, διαφορετικά επιστρέφεται {\"status\":\"failed\"}."
+					},
+					"response": []
+				},
+				{
+					"name": "[extra] Admin Add Passes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/admin/addpasses",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"admin",
+								"addpasses"
+							]
+						},
+						"description": "Προβαίνει σε αρχικοποίηση του πίνακα διελεύσεων με τις τιμές που μας δόθηκαν ως ενδεικτικά δεδομένα. Σε περίπτωση επιτυχίας, επιστρέφεται το json object: {\"status\":\"OK\"}, διαφορετικά επιστρέφεται {\"status\":\"failed\"}."
+					},
+					"response": []
+				}
+			],
+			"description": "Τα παρακάτω endpoints θα λειτουργήσουν επικουρικά για τον πλήρως αυτοματοποιημένο έλεγχο που θα γίνει κατά την εξέταση της εργασίας."
+		},
+		{
+			"name": "Λειτουργία συστήματος",
+			"item": [
+				{
+					"name": "PassesPerStation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/PassesPerStation/:stationID/:date_from/:date_to?format=csv",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"PassesPerStation",
+								":stationID",
+								":date_from",
+								":date_to"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+								}
+							],
+							"variable": [
+								{
+									"key": "stationID",
+									"value": "NE08",
+									"description": "Το ID του σταθμού για τον οποίο θα λάβουμε τα Passes"
+								},
+								{
+									"key": "date_from",
+									"value": "20201217",
+									"description": "Από ημ/νία"
+								},
+								{
+									"key": "date_to",
+									"value": "20210125",
+									"description": "Έως ημ/νία"
+								}
+							]
+						},
+						"description": "Επιστρέφεται λίστα με την ανάλυση των διελεύσεων (Passes) για τον σταθμό διοδίων και για την περίοδο που δίνονται στο URL."
+					},
+					"response": [
+						{
+							"name": "PassesPerStation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/PassesPerStation/:stationID/:date_from/:date_to",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"PassesPerStation",
+										":stationID",
+										":date_from",
+										":date_to"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "csv",
+											"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "stationID",
+											"value": "NE08",
+											"description": "Το ID του σταθμού για τον οποίο θα λάβουμε τα Passes"
+										},
+										{
+											"key": "date_from",
+											"value": "20201217",
+											"description": "Από ημ/νία"
+										},
+										{
+											"key": "date_to",
+											"value": "20210125",
+											"description": "Έως ημ/νία"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2489"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9b9-gESA5NTJvS+7ORfvncF7uHMmHqg\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 09:16:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Station\": \"NE08\",\n    \"StationOperator\": \"nea_odos\",\n    \"RequestTimestamp\": \"2021-12-21 09:16:06\",\n    \"PeriodFrom\": \"2020-12-17 00:00:00\",\n    \"PeriodTo\": \"2021-01-25 23:59:59\",\n    \"NumberOfPasses\": 14,\n    \"PassesList\": [\n        {\n            \"PassIndex\": 1,\n            \"PassID\": \"CHJ3711264\",\n            \"PassTimestamp\": \"2021-01-16 03:41:00\",\n            \"VehicleID\": \"LM86GYO69819\",\n            \"TagProvider\": \"gefyra\",\n            \"PassType\": \"visitor\",\n            \"PassCharge\": 1\n        },\n        {\n            \"PassIndex\": 2,\n            \"PassID\": \"GVR1654684\",\n            \"PassTimestamp\": \"2021-01-11 11:25:00\",\n            \"VehicleID\": \"SU00RDZ36214\",\n            \"TagProvider\": \"aodos\",\n            \"PassType\": \"visitor\",\n            \"PassCharge\": 2.2\n        },\n        {\n            \"PassIndex\": 3,\n            \"PassID\": \"GYL6474575\",\n            \"PassTimestamp\": \"2021-01-03 15:32:00\",\n            \"VehicleID\": \"BI87HYL81972\",\n            \"TagProvider\": \"moreas\",\n            \"PassType\": \"visitor\",\n            \"PassCharge\": 1.5\n        },\n        {\n            \"PassIndex\": 4,\n            \"PassID\": \"JCX6175558\",\n            \"PassTimestamp\": \"2021-01-17 23:43:00\",\n            \"VehicleID\": \"IW53OQE31439\",\n            \"TagProvider\": \"egnatia\",\n            \"PassType\": \"visitor\",\n            \"PassCharge\": 2.2\n        },\n        {\n            \"PassIndex\": 5,\n            \"PassID\": \"OEE5160485\",\n            \"PassTimestamp\": \"2021-01-18 03:34:00\",\n            \"VehicleID\": \"MA30QLI76818\",\n            \"TagProvider\": \"gefyra\",\n            \"PassType\": \"visitor\",\n            \"PassCharge\": 2.5\n        },\n        {\n            \"PassIndex\": 6,\n            \"PassID\": \"OWF5536323\",\n            \"PassTimestamp\": \"2021-01-04 20:09:00\",\n            \"VehicleID\": \"QU94IGC75528\",\n            \"TagProvider\": \"egnatia\",\n            \"PassType\": \"visitor\",\n            \"PassCharge\": 2\n        },\n        {\n            \"PassIndex\": 7,\n            \"PassID\": \"RRT4895775\",\n            \"PassTimestamp\": \"2021-01-06 05:01:00\",\n            \"VehicleID\": \"OY94SZK34436\",\n            \"TagProvider\": \"nea_odos\",\n            \"PassType\": \"home\",\n            \"PassCharge\": 2.5\n        },\n        {\n            \"PassIndex\": 8,\n            \"PassID\": \"VAW9394698\",\n            \"PassTimestamp\": \"2021-01-08 02:33:00\",\n            \"VehicleID\": \"PM58XHX45588\",\n            \"TagProvider\": \"nea_odos\",\n            \"PassType\": \"home\",\n            \"PassCharge\": 1.5\n        },\n        {\n            \"PassIndex\": 9,\n            \"PassID\": \"VBK2416884\",\n            \"PassTimestamp\": \"2021-01-21 17:04:00\",\n            \"VehicleID\": \"BK77KNV91142\",\n            \"TagProvider\": \"olympia_odos\",\n            \"PassType\": \"visitor\",\n            \"PassCharge\": 2.8\n        },\n        {\n            \"PassIndex\": 10,\n            \"PassID\": \"VCA8173912\",\n            \"PassTimestamp\": \"2021-01-04 12:28:00\",\n            \"VehicleID\": \"PD45WOT56494\",\n            \"TagProvider\": \"nea_odos\",\n            \"PassType\": \"home\",\n            \"PassCharge\": 2\n        },\n        {\n            \"PassIndex\": 11,\n            \"PassID\": \"VGB5922665\",\n            \"PassTimestamp\": \"2021-01-02 13:37:00\",\n            \"VehicleID\": \"EC02LZC49528\",\n            \"TagProvider\": \"egnatia\",\n            \"PassType\": \"visitor\",\n            \"PassCharge\": 2.2\n        },\n        {\n            \"PassIndex\": 12,\n            \"PassID\": \"WCJ0058925\",\n            \"PassTimestamp\": \"2021-01-19 01:49:00\",\n            \"VehicleID\": \"JV67MTI17124\",\n            \"TagProvider\": \"nea_odos\",\n            \"PassType\": \"home\",\n            \"PassCharge\": 2.5\n        },\n        {\n            \"PassIndex\": 13,\n            \"PassID\": \"WDX0978936\",\n            \"PassTimestamp\": \"2020-12-27 15:17:00\",\n            \"VehicleID\": \"YX66XYW62640\",\n            \"TagProvider\": \"gefyra\",\n            \"PassType\": \"visitor\",\n            \"PassCharge\": 1.5\n        },\n        {\n            \"PassIndex\": 14,\n            \"PassID\": \"XYG8522658\",\n            \"PassTimestamp\": \"2021-01-22 15:15:00\",\n            \"VehicleID\": \"NY14GZR94632\",\n            \"TagProvider\": \"nea_odos\",\n            \"PassType\": \"home\",\n            \"PassCharge\": 2.8\n        }\n    ]\n}"
+						},
+						{
+							"name": "PassesPerStation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/PassesPerStation/:stationID/:date_from/:date_to?format=csv",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"PassesPerStation",
+										":stationID",
+										":date_from",
+										":date_to"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "csv",
+											"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+										}
+									],
+									"variable": [
+										{
+											"key": "stationID",
+											"value": "NE08",
+											"description": "Το ID του σταθμού για τον οποίο θα λάβουμε τα Passes"
+										},
+										{
+											"key": "date_from",
+											"value": "20201217",
+											"description": "Από ημ/νία"
+										},
+										{
+											"key": "date_to",
+											"value": "20210125",
+											"description": "Έως ημ/νία"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/csv; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1138"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"472-Q8qRlJHNJ1ZvICm6cispXpZwuLU\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 09:16:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "\"PassIndex\",\"PassID\",\"PassTimestamp\",\"VehicleID\",\"TagProvider\",\"PassType\",\"PassCharge\"\n1,\"CHJ3711264\",\"2021-01-16 03:41:00\",\"LM86GYO69819\",\"gefyra\",\"visitor\",1\n2,\"GVR1654684\",\"2021-01-11 11:25:00\",\"SU00RDZ36214\",\"aodos\",\"visitor\",2.2\n3,\"GYL6474575\",\"2021-01-03 15:32:00\",\"BI87HYL81972\",\"moreas\",\"visitor\",1.5\n4,\"JCX6175558\",\"2021-01-17 23:43:00\",\"IW53OQE31439\",\"egnatia\",\"visitor\",2.2\n5,\"OEE5160485\",\"2021-01-18 03:34:00\",\"MA30QLI76818\",\"gefyra\",\"visitor\",2.5\n6,\"OWF5536323\",\"2021-01-04 20:09:00\",\"QU94IGC75528\",\"egnatia\",\"visitor\",2\n7,\"RRT4895775\",\"2021-01-06 05:01:00\",\"OY94SZK34436\",\"nea_odos\",\"home\",2.5\n8,\"VAW9394698\",\"2021-01-08 02:33:00\",\"PM58XHX45588\",\"nea_odos\",\"home\",1.5\n9,\"VBK2416884\",\"2021-01-21 17:04:00\",\"BK77KNV91142\",\"olympia_odos\",\"visitor\",2.8\n10,\"VCA8173912\",\"2021-01-04 12:28:00\",\"PD45WOT56494\",\"nea_odos\",\"home\",2\n11,\"VGB5922665\",\"2021-01-02 13:37:00\",\"EC02LZC49528\",\"egnatia\",\"visitor\",2.2\n12,\"WCJ0058925\",\"2021-01-19 01:49:00\",\"JV67MTI17124\",\"nea_odos\",\"home\",2.5\n13,\"WDX0978936\",\"2020-12-27 15:17:00\",\"YX66XYW62640\",\"gefyra\",\"visitor\",1.5\n14,\"XYG8522658\",\"2021-01-22 15:15:00\",\"NY14GZR94632\",\"nea_odos\",\"home\",2.8"
+						}
+					]
+				},
+				{
+					"name": "PassesAnalysis",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/PassesAnalysis/:op1_ID/:op2_ID/:date_from/:date_to?format=csv",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"PassesAnalysis",
+								":op1_ID",
+								":op2_ID",
+								":date_from",
+								":date_to"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+								}
+							],
+							"variable": [
+								{
+									"key": "op1_ID",
+									"value": "aodos",
+									"description": "Το ID του πρώτου λειτουργού"
+								},
+								{
+									"key": "op2_ID",
+									"value": "gefyra",
+									"description": "Το ID του δεύτερου λειτουργού"
+								},
+								{
+									"key": "date_from",
+									"value": "20210120",
+									"description": "Από ημ/νία"
+								},
+								{
+									"key": "date_to",
+									"value": "20210222",
+									"description": "Έως ημ/νία"
+								}
+							]
+						},
+						"description": "Επιστρέφεται λίστα με την ανάλυση ανά σημείο των γεγονότων διέλευσης που πραγματοποιήθηκαν με tag του op2\\_ID σε σταθμούς του op1\\_ID."
+					},
+					"response": [
+						{
+							"name": "PassesAnalysis",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/PassesAnalysis/:op1_ID/:op2_ID/:date_from/:date_to",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"PassesAnalysis",
+										":op1_ID",
+										":op2_ID",
+										":date_from",
+										":date_to"
+									],
+									"variable": [
+										{
+											"key": "op1_ID",
+											"value": "aodos",
+											"description": "Το ID του πρώτου λειτουργού"
+										},
+										{
+											"key": "op2_ID",
+											"value": "gefyra",
+											"description": "Το ID του δεύτερου λειτουργού"
+										},
+										{
+											"key": "date_from",
+											"value": "20210120",
+											"description": "Από ημ/νία"
+										},
+										{
+											"key": "date_to",
+											"value": "20210222",
+											"description": "Έως ημ/νία"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1227"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4cb-ZEh/2zu2cCgHgp7MkQKrmq93yFs\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 09:17:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"op1_ID\": \"aodos\",\n    \"op2_ID\": \"gefyra\",\n    \"RequestTimestamp\": \"2021-12-21 09:17:25\",\n    \"PeriodFrom\": \"2021-01-20 00:00:00\",\n    \"PeriodTo\": \"2021-02-22 23:59:59\",\n    \"NumberOfPasses\": 8,\n    \"PassesList\": [\n        {\n            \"PassIndex\": 1,\n            \"PassID\": \"GAU6458371\",\n            \"StationID\": \"AO05\",\n            \"TimeStamp\": \"2021-02-11 22:36:00\",\n            \"VehicleID\": \"BY85QGR11636\",\n            \"Charge\": 2.8\n        },\n        {\n            \"PassIndex\": 2,\n            \"PassID\": \"UFL2436261\",\n            \"StationID\": \"AO06\",\n            \"TimeStamp\": \"2021-01-24 04:33:00\",\n            \"VehicleID\": \"CK97FAU13897\",\n            \"Charge\": 2.8\n        },\n        {\n            \"PassIndex\": 3,\n            \"PassID\": \"WFY6778676\",\n            \"StationID\": \"AO00\",\n            \"TimeStamp\": \"2021-01-21 02:12:00\",\n            \"VehicleID\": \"CP56DAO45598\",\n            \"Charge\": 2.8\n        },\n        {\n            \"PassIndex\": 4,\n            \"PassID\": \"YFF2418945\",\n            \"StationID\": \"AO13\",\n            \"TimeStamp\": \"2021-01-31 18:37:00\",\n            \"VehicleID\": \"JE65QJK64802\",\n            \"Charge\": 2.8\n        },\n        {\n            \"PassIndex\": 5,\n            \"PassID\": \"MCY7543417\",\n            \"StationID\": \"AO14\",\n            \"TimeStamp\": \"2021-01-26 17:26:00\",\n            \"VehicleID\": \"KW50MJG67260\",\n            \"Charge\": 2.8\n        },\n        {\n            \"PassIndex\": 6,\n            \"PassID\": \"TYU6608700\",\n            \"StationID\": \"AO05\",\n            \"TimeStamp\": \"2021-02-08 07:58:00\",\n            \"VehicleID\": \"KW50MJG67260\",\n            \"Charge\": 2.8\n        },\n        {\n            \"PassIndex\": 7,\n            \"PassID\": \"BJX5011154\",\n            \"StationID\": \"AO18\",\n            \"TimeStamp\": \"2021-01-30 00:30:00\",\n            \"VehicleID\": \"LM86GYO69819\",\n            \"Charge\": 2.8\n        },\n        {\n            \"PassIndex\": 8,\n            \"PassID\": \"GAR1778319\",\n            \"StationID\": \"AO09\",\n            \"TimeStamp\": \"2021-02-01 09:48:00\",\n            \"VehicleID\": \"MP14WFM40909\",\n            \"Charge\": 2.8\n        }\n    ]\n}"
+						},
+						{
+							"name": "PassesAnalysis",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/PassesAnalysis/:op1_ID/:op2_ID/:date_from/:date_to?format=csv",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"PassesAnalysis",
+										":op1_ID",
+										":op2_ID",
+										":date_from",
+										":date_to"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "csv",
+											"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+										}
+									],
+									"variable": [
+										{
+											"key": "op1_ID",
+											"value": "aodos",
+											"description": "Το ID του πρώτου λειτουργού"
+										},
+										{
+											"key": "op2_ID",
+											"value": "gefyra",
+											"description": "Το ID του δεύτερου λειτουργού"
+										},
+										{
+											"key": "date_from",
+											"value": "20210120",
+											"description": "Από ημ/νία"
+										},
+										{
+											"key": "date_to",
+											"value": "20210222",
+											"description": "Έως ημ/νία"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/csv; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "569"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"239-HmxpUGQj1LLgCQKgTvrIZnI4KA4\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 09:18:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "\"PassIndex\",\"PassID\",\"StationID\",\"TimeStamp\",\"VehicleID\",\"Charge\"\n1,\"GAU6458371\",\"AO05\",\"2021-02-11 22:36:00\",\"BY85QGR11636\",2.8\n2,\"UFL2436261\",\"AO06\",\"2021-01-24 04:33:00\",\"CK97FAU13897\",2.8\n3,\"WFY6778676\",\"AO00\",\"2021-01-21 02:12:00\",\"CP56DAO45598\",2.8\n4,\"YFF2418945\",\"AO13\",\"2021-01-31 18:37:00\",\"JE65QJK64802\",2.8\n5,\"MCY7543417\",\"AO14\",\"2021-01-26 17:26:00\",\"KW50MJG67260\",2.8\n6,\"TYU6608700\",\"AO05\",\"2021-02-08 07:58:00\",\"KW50MJG67260\",2.8\n7,\"BJX5011154\",\"AO18\",\"2021-01-30 00:30:00\",\"LM86GYO69819\",2.8\n8,\"GAR1778319\",\"AO09\",\"2021-02-01 09:48:00\",\"MP14WFM40909\",2.8"
+						}
+					]
+				},
+				{
+					"name": "ChargesBy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/ChargesBy/:op_ID/:date_from/:date_to?format=csv",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"ChargesBy",
+								":op_ID",
+								":date_from",
+								":date_to"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+								}
+							],
+							"variable": [
+								{
+									"key": "op_ID",
+									"value": "aodos",
+									"description": "Το ID του λειτουργού"
+								},
+								{
+									"key": "date_from",
+									"value": "20210120",
+									"description": "Από ημ/νία"
+								},
+								{
+									"key": "date_to",
+									"value": "20210222",
+									"description": "Έως ημ/νία"
+								}
+							]
+						},
+						"description": "Επιστρέφεται ο αριθμός των γεγονότων διέλευσης που πραγματοποιήθηκαν σε σταθμούς του op_ID, από οχήματα όλων των άλλων operators, καθώς και το κόστος τους, δηλαδή το ποσό που καθένας από τους λοιπούς operators οφείλει στον Operator op_ID, για τη δοσμένη περίοδο."
+					},
+					"response": [
+						{
+							"name": "ChargesBy",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/ChargesBy/:op_ID/:date_from/:date_to",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"ChargesBy",
+										":op_ID",
+										":date_from",
+										":date_to"
+									],
+									"variable": [
+										{
+											"key": "op_ID",
+											"value": "aodos",
+											"description": "Το ID του λειτουργού"
+										},
+										{
+											"key": "date_from",
+											"value": "20210120",
+											"description": "Από ημ/νία"
+										},
+										{
+											"key": "date_to",
+											"value": "20210222",
+											"description": "Έως ημ/νία"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "553"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"229-yfX66vhIJ+NKpItrX0c0Td/AG3g\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 09:18:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"op1_ID\": \"aodos\",\n    \"RequestTimestamp\": \"2021-12-21 09:18:28\",\n    \"PeriodFrom\": \"2021-01-20 00:00:00\",\n    \"PeriodTo\": \"2021-02-22 23:59:59\",\n    \"PPOList\": [\n        {\n            \"VistingOperator\": \"egnatia\",\n            \"NumberOfPasses\": 13,\n            \"PassesCost\": 36.4\n        },\n        {\n            \"VistingOperator\": \"gefyra\",\n            \"NumberOfPasses\": 8,\n            \"PassesCost\": 22.4\n        },\n        {\n            \"VistingOperator\": \"kentriki_odos\",\n            \"NumberOfPasses\": 13,\n            \"PassesCost\": 36.4\n        },\n        {\n            \"VistingOperator\": \"moreas\",\n            \"NumberOfPasses\": 16,\n            \"PassesCost\": 44.8\n        },\n        {\n            \"VistingOperator\": \"nea_odos\",\n            \"NumberOfPasses\": 4,\n            \"PassesCost\": 11.2\n        },\n        {\n            \"VistingOperator\": \"olympia_odos\",\n            \"NumberOfPasses\": 10,\n            \"PassesCost\": 28\n        }\n    ]\n}"
+						},
+						{
+							"name": "ChargesBy",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/ChargesBy/:op_ID/:date_from/:date_to?format=csv",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"ChargesBy",
+										":op_ID",
+										":date_from",
+										":date_to"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "csv",
+											"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+										}
+									],
+									"variable": [
+										{
+											"key": "op_ID",
+											"value": "aodos",
+											"description": "Το ID του λειτουργού"
+										},
+										{
+											"key": "date_from",
+											"value": "20210120",
+											"description": "Από ημ/νία"
+										},
+										{
+											"key": "date_to",
+											"value": "20210222",
+											"description": "Έως ημ/νία"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/csv; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "161"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a1-YkGhi8DsBacml/XIGFCGqHT9Nqk\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 09:19:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "\"VistingOperator\",\"NumberOfPasses\",\"PassesCost\"\n\"egnatia\",13,36.4\n\"gefyra\",8,22.4\n\"kentriki_odos\",13,36.4\n\"moreas\",16,44.8\n\"nea_odos\",4,11.2\n\"olympia_odos\",10,28"
+						}
+					]
+				},
+				{
+					"name": "PassesCost",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/PassesCost/:op1_ID/:op2_ID/:date_from/:date_to?format=csv",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"PassesCost",
+								":op1_ID",
+								":op2_ID",
+								":date_from",
+								":date_to"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+								}
+							],
+							"variable": [
+								{
+									"key": "op1_ID",
+									"value": "aodos",
+									"description": "Το ID του πρώτου λειτουργού"
+								},
+								{
+									"key": "op2_ID",
+									"value": "egnatia",
+									"description": "Το ID του δεύτερου λειτουργού"
+								},
+								{
+									"key": "date_from",
+									"value": "20190613",
+									"description": "Από ημ/νία"
+								},
+								{
+									"key": "date_to",
+									"value": "20210613",
+									"description": "Έως ημ/νία"
+								}
+							]
+						},
+						"description": "Επιστρέφεται ο αριθμός των γεγονότων διέλευσης που πραγματοποιήθηκαν με tag του op2_ID σε σταθμούς του op1_ID, καθώς και το κόστος τους, δηλαδή το ποσό που ο op2_ID οφείλει στον op1_ID, για τη δοσμένη περίοδο."
+					},
+					"response": [
+						{
+							"name": "PassesCost",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/PassesCost/:op1_ID/:op2_ID/:date_from/:date_to?format=csv",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"PassesCost",
+										":op1_ID",
+										":op2_ID",
+										":date_from",
+										":date_to"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "csv",
+											"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+										}
+									],
+									"variable": [
+										{
+											"key": "op1_ID",
+											"value": "aodos",
+											"description": "Το ID του πρώτου λειτουργού"
+										},
+										{
+											"key": "op2_ID",
+											"value": "egnatia",
+											"description": "Το ID του δεύτερου λειτουργού"
+										},
+										{
+											"key": "date_from",
+											"value": "20190613",
+											"description": "Από ημ/νία"
+										},
+										{
+											"key": "date_to",
+											"value": "20210613",
+											"description": "Έως ημ/νία"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "165"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a5-oW3a31nFDWqUXLSdh42LiYo5ASo\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 09:19:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"op1_ID\": \"aodos\",\n    \"op2_ID\": \"egnatia\",\n    \"RequestTimestamp\": \"2021-12-21 09:19:16\",\n    \"PeriodFrom\": \"2019-06-13 00:00:00\",\n    \"PeriodTo\": \"2021-06-13 23:59:59\",\n    \"PassesCost\": 607.6\n}"
+						},
+						{
+							"name": "PassesCost",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/PassesCost/:op1_ID/:op2_ID/:date_from/:date_to?format=csv",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"PassesCost",
+										":op1_ID",
+										":op2_ID",
+										":date_from",
+										":date_to"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "csv",
+											"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+										}
+									],
+									"variable": [
+										{
+											"key": "op1_ID",
+											"value": "aodos",
+											"description": "Το ID του πρώτου λειτουργού"
+										},
+										{
+											"key": "op2_ID",
+											"value": "egnatia",
+											"description": "Το ID του δεύτερου λειτουργού"
+										},
+										{
+											"key": "date_from",
+											"value": "20190613",
+											"description": "Από ημ/νία"
+										},
+										{
+											"key": "date_to",
+											"value": "20210613",
+											"description": "Έως ημ/νία"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/csv; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "163"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a3-ElvjmJgSDuZN2//vg89iglI3SWo\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 09:19:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "\"op1_ID\",\"op2_ID\",\"RequestTimestamp\",\"PeriodFrom\",\"PeriodTo\",\"PassesCost\"\n\"aodos\",\"egnatia\",\"2021-12-21 09:19:46\",\"2019-06-13 00:00:00\",\"2021-06-13 23:59:59\",607.6"
+						}
+					]
+				}
+			],
+			"description": "Τα παρακάτω endpoints μπορούν να χρησιμοποιηθούν για την αλληλεπίδραση διαφόρων stakeholders προς το σύστημα και την επιτέλεση των βασικών λειτουργιών του."
+		},
+		{
+			"name": "Endpoints οφειλών",
+			"item": [
+				{
+					"name": "GetSettlements",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/settlements/GetSettlements/:op_ID",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"settlements",
+								"GetSettlements",
+								":op_ID"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "op_ID",
+									"value": "aodos",
+									"description": "το ID του λειτουργού"
+								}
+							]
+						},
+						"description": "Επιστρέφεται η λίστα των οφειλών που αφορούν τον op_ID, δηλαδή επιστρέφονται οι οφειλές του λειτουργούν με op_ID προς άλλους λειτουργούς και οι οφειλές που έχουν άλλοι λειτουργοί προς τον λειτουργό με το συγκεκριμένο op_ID."
+					},
+					"response": [
+						{
+							"name": "GetSettlements",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/settlements/GetSettlements/:op_ID",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"settlements",
+										"GetSettlements",
+										":op_ID"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "csv",
+											"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "op_ID",
+											"value": "aodos",
+											"description": "το ID του λειτουργού"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "275"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"113-VN0jWs8zI+WQpd+IAVu488Zy9ec\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 20:48:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"op_ID\": \"aodos\",\n    \"RequestTimestamp\": \"2021-12-21 20:48:21\",\n    \"SettlementsLength\": 1,\n    \"SettlementsList\": [\n        {\n            \"settlementID\": 1,\n            \"dateFrom\": \"2019-12-31 22:00:00\",\n            \"dateTo\": \"2020-01-31 22:00:00\",\n            \"amount\": 123,\n            \"paid\": 1,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "GetSettlements",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/settlements/GetSettlements/:op_ID?format=csv",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"settlements",
+										"GetSettlements",
+										":op_ID"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "csv",
+											"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+										}
+									],
+									"variable": [
+										{
+											"key": "op_ID",
+											"value": "aodos",
+											"description": "το ID του λειτουργού"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/csv; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "172"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"ac-7+hBIlms8h2LGKjZktu2aGgPhrU\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 20:48:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "\"settlementID\",\"dateFrom\",\"dateTo\",\"amount\",\"paid\",\"operatorCredited\",\"operatorDebited\",\"Type\"\n1,\"2019-12-31 22:00:00\",\"2020-01-31 22:00:00\",123,1,\"aodos\",\"gefyra\",\"credit\""
+						}
+					]
+				},
+				{
+					"name": "GetPassesForSettlemet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/settlements/GetPassesForSettlement/:settlement_ID",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"settlements",
+								"GetPassesForSettlement",
+								":settlement_ID"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "settlement_ID",
+									"value": "1",
+									"description": "To ID της οφειλής η οποία αφορά τις διελεύσεις που θέλουμε να λάβουμε. "
+								}
+							]
+						},
+						"description": "Επιστρέφεται η λίστα όλων των διελεύσεων που συνυπολογίζονται στην οφειλή με συγκεκριμένο settlement_ID."
+					},
+					"response": [
+						{
+							"name": "GetPassesForSettlemet",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/GetPassesForSettlement/:settlement_ID",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"GetPassesForSettlement",
+										":settlement_ID"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "csv",
+											"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "settlement_ID",
+											"value": "1",
+											"description": "To ID της οφειλής η οποία αφορά τις διελεύσεις που θέλουμε να λάβουμε. "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "440"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b8-XFkv5PhgJROQ0YeKXsZeAIS3OuQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 09:52:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"settlementID\": \"1\",\n    \"RequestTimestamp\": \"2021-12-21 09:52:15\",\n    \"PassesLength\": 3,\n    \"PassesList\": [\n        {\n            \"passID\": \"AAB7311258\",\n            \"timestamp\": \"2021-12-21T07:39:10.000Z\",\n            \"stationRef\": \"NE02\",\n            \"charge\": 3.1,\n            \"tagID\": \"EG52J0268\"\n        },\n        {\n            \"passID\": \"AAF5102386\",\n            \"timestamp\": \"2021-12-21T07:38:30.000Z\",\n            \"stationRef\": \"AO11\",\n            \"charge\": 13,\n            \"tagID\": \"AO27P4628\"\n        },\n        {\n            \"passID\": \"AAK2274580\",\n            \"timestamp\": \"2021-12-21T07:39:10.000Z\",\n            \"stationRef\": \"GF00\",\n            \"charge\": 2.8,\n            \"tagID\": \"GF87C4626\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "GetPassesForSettlemet",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/GetPassesForSettlement/:settlement_ID?format=csv",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"GetPassesForSettlement",
+										":settlement_ID"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "csv",
+											"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+										}
+									],
+									"variable": [
+										{
+											"key": "settlement_ID",
+											"value": "1",
+											"description": "To ID της οφειλής η οποία αφορά τις διελεύσεις που θέλουμε να λάβουμε. "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/csv; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "238"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"ee-aZOYeZ+IZyWAeF5/bHC0XmRQvOw\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 09:52:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "\"passID\",\"timestamp\",\"stationRef\",\"charge\",\"tagID\"\n\"AAB7311258\",\"2021-12-21T07:39:10.000Z\",\"NE02\",3.1,\"EG52J0268\"\n\"AAF5102386\",\"2021-12-21T07:38:30.000Z\",\"AO11\",13,\"AO27P4628\"\n\"AAK2274580\",\"2021-12-21T07:39:10.000Z\",\"GF00\",2.8,\"GF87C4626\""
+						}
+					]
+				},
+				{
+					"name": "PaySettlement",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/settlements/PaySettlement/:settlement_ID/:transaction",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"settlements",
+								"PaySettlement",
+								":settlement_ID",
+								":transaction"
+							],
+							"variable": [
+								{
+									"key": "settlement_ID",
+									"value": "1",
+									"description": "Ο κωδικός της οφειλής προς εξόφληση"
+								},
+								{
+									"key": "transaction",
+									"value": "AS348ASN4",
+									"description": "Ο κωδικός της συναλλαγής"
+								}
+							]
+						},
+						"description": "Επιβεβαιώνεται η πληρωμή με κωδικό transaction για την οφειλή settlement\\_ID"
+					},
+					"response": [
+						{
+							"name": "PaySettlement",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/settlements/PaySettlement/:settlement_ID/:transaction",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"settlements",
+										"PaySettlement",
+										":settlement_ID",
+										":transaction"
+									],
+									"variable": [
+										{
+											"key": "settlement_ID",
+											"value": "1",
+											"description": "Ο κωδικός της οφειλής προς εξόφληση"
+										},
+										{
+											"key": "transaction",
+											"value": "AS348ASN4",
+											"description": "Ο κωδικός της συναλλαγής"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "42"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2a-a7TdutjWoF6kEpZrtt0EEGxJb04\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 20:40:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"OK\",\n    \"Msg\": \"Settlement Cleared\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Τα παρακάτω endpoints μπορούν να χρησιμοποιηθούν από τους λειτουργούς για να διαχειριστούν τις οφειλές τους."
+		},
+		{
+			"name": "Authentication Endpoints",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/login?username=toulis&password=test",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "toulis"
+								},
+								{
+									"key": "password",
+									"value": "test"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/auth/login?username=toulis&password=test",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"auth",
+										"login"
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "toulis"
+										},
+										{
+											"key": "password",
+											"value": "test"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "173"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"ad-69T3fiOUGsSL/HEhmRqXCKFGJLQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 15:20:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidG91bGlzIiwib3BlcmF0b3JJRCI6ImFvZG9zIiwiaWF0IjoxNjQwMTAwMDAxfQ.YsOBUoECFdcQ6oB9JFGd-IL2c-qkHB4aCPaTw5GWzRc\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/logout?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidG91bGlzIiwib3BlcmF0b3JJRCI6ImFvZG9zIiwiaWF0IjoxNjQwMTAwMDAxfQ.YsOBUoECFdcQ6oB9JFGd-IL2c-qkHB4aCPaTw5GWzRc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"logout"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidG91bGlzIiwib3BlcmF0b3JJRCI6ImFvZG9zIiwiaWF0IjoxNjQwMTAwMDAxfQ.YsOBUoECFdcQ6oB9JFGd-IL2c-qkHB4aCPaTw5GWzRc"
+								},
+								{
+									"key": "password",
+									"value": "test",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Logout",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/auth/logout?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidG91bGlzIiwib3BlcmF0b3JJRCI6ImFvZG9zIiwiaWF0IjoxNjQwMTAwMDAxfQ.YsOBUoECFdcQ6oB9JFGd-IL2c-qkHB4aCPaTw5GWzRc",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"auth",
+										"logout"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidG91bGlzIiwib3BlcmF0b3JJRCI6ImFvZG9zIiwiaWF0IjoxNjQwMTAwMDAxfQ.YsOBUoECFdcQ6oB9JFGd-IL2c-qkHB4aCPaTw5GWzRc"
+										},
+										{
+											"key": "password",
+											"value": "test",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "15"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f-v/Y1JusChTxrQUzPtNAKycooOTA\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 15:35:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"OK\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Test Authentication",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidG91bGlzIiwib3BlcmF0b3JJRCI6ImFvZG9zIiwiaWF0IjoxNjQwMTAwMzM0fQ.8qr1fkMt2-OQ_H0O_qFEbHJcq1-ASlEdbViK6E6OL_U",
+								"description": "Έχει την μορφή Bearer TOKEN, όπου TOKEN το token που λήφθηκε κατά login",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/test_authentication",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"test_authentication"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Test Authentication",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidG91bGlzIiwib3BlcmF0b3JJRCI6ImFvZG9zIiwiaWF0IjoxNjQwMTAwMzM0fQ.8qr1fkMt2-OQ_H0O_qFEbHJcq1-ASlEdbViK6E6OL_U",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/auth/test_authentication",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"auth",
+										"test_authentication"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "15"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f-v/Y1JusChTxrQUzPtNAKycooOTA\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 15:31:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"OK\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Τα παρακάτω endpoints χρησιμοποιούνται από τους λειτουργούς για να συνδεθούν με τον λογαριασμό τους στο σύστημα."
+		}
+	]
+}
