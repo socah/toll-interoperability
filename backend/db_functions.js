@@ -15,7 +15,7 @@ function getPassesPerStation(stationID, dateFrom, dateTo) {
         stationProvider = null;
 
         // εκτελούμε το πρώτο query για την λήψη του stationProvider πχ 'aodos'
-        pool.query("SELECT S.stationProvider FROM Station as S WHERE S.stationID = ?", [stationID])
+        pool.query("SELECT S.stationProvider FROM Station as S WHERE S.stationID = ? AND S.deleted = 0", [stationID])
         .then((rows) => {
             // μόλις τελειώσει το πρώτο query εκτελούμε τα παρακάτω
             if(rows.length == 0){
@@ -33,7 +33,7 @@ function getPassesPerStation(stationID, dateFrom, dateTo) {
                 P.charge as PassCharge
                 FROM (Pass as P JOIN Vehicle as V ON P.vehicleRef = V.vehicleID)
                 JOIN Station as S ON S.stationID = P.stationRef
-                WHERE P.stationRef = ? AND P.timestamp BETWEEN ? AND ?;`, [stationID, dateFrom, dateTo]);
+                WHERE P.stationRef = ? AND S.deleted = 0 AND P.timestamp BETWEEN ? AND ?;`, [stationID, dateFrom, dateTo]);
         })
         .then((rows) => {
             output = {
@@ -57,7 +57,7 @@ function getPassesAnalysis(opID_1, opID_2, dateFrom, dateTo) {
             FROM Pass as P
             JOIN Station as S ON S.stationID=P.stationRef 
             JOIN Vehicle as V ON V.vehicleID=P.vehicleRef
-            WHERE S.stationProvider = ? AND V.tagProvider = ? AND P.timestamp BETWEEN ? AND ?;`, [opID_1, opID_2, dateFrom, dateTo])
+            WHERE S.stationProvider = ? AND S.deleted = 0 AND V.tagProvider = ? AND P.timestamp BETWEEN ? AND ?;`, [opID_1, opID_2, dateFrom, dateTo])
         .then((rows) => {
             console.log("Received Rows:" + rows);
             output = {
@@ -80,7 +80,7 @@ function getPassesCost(stationProvider, tagProvider, dateFrom, dateTo) {
             JOIN Station as S ON S.stationID=P.stationRef 
             JOIN Vehicle as V ON V.vehicleID=P.vehicleRef
             WHERE S.stationProvider = ? AND V.tagProvider = ? 
-            AND P.timestamp BETWEEN ? AND ?`
+            AND S.deleted = 0 AND V.deleted = 0 AND P.timestamp BETWEEN ? AND ?`
             , [stationProvider, tagProvider, dateFrom, dateTo])
         .then((rows) => {
             output = {
@@ -102,7 +102,7 @@ function getChargesBy(opID, dateFrom, dateTo) {
         return pool.query(`SELECT V.tagProvider as VistingOperator, count(*) as NumberOfPasses, sum(P.charge) as PassesCost
             FROM (Pass as P JOIN Station as S ON P.stationRef = S.stationID)
             JOIN Vehicle as V ON P.vehicleRef = V.vehicleID
-            WHERE S.stationProvider != V.tagProvider AND S.stationProvider = ? AND P.timestamp BETWEEN ? AND ?
+            WHERE S.deleted = 0 AND V.deleted = 0 S.stationProvider != V.tagProvider AND S.stationProvider = ? AND P.timestamp BETWEEN ? AND ?
             GROUP BY V.tagProvider`, [opID, dateFrom, dateTo])
         .then((rows) => {
             console.log("Received Rows:" + rows);

@@ -28,7 +28,7 @@ function getSettlementPasses(settlementID) {
         // παίρνουμε τα σοτιχεία των settlemnets που αφορούν την συγκεκριμένη οφειλή
         pool.query(`SELECT P.passID, P.timestamp, P.stationRef, P.charge, V.tagID
             FROM Pass as P JOIN Vehicle as V ON P.vehicleRef = V.vehicleID
-            WHERE settlementID = ?;`, [settlementID])
+            WHERE settlementID = ? AND V.deleted = 0;`, [settlementID])
         .then((rows) => {
             if(rows.length == 0){
                 console.log("No settlement found for : " + operatorID);

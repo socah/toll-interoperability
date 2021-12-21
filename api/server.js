@@ -15,11 +15,16 @@ app.use(express.json());
 const subscribersRouter = require('./routes/admin_router');
 app.use('/interoperability/api/admin', subscribersRouter);
 
+const settlementsRouter = require('./routes/settlements_router');
+app.use('/interoperability/api/settlements', settlementsRouter);
+
+const authRouter = require('./routes/auth_router');
+app.use('/interoperability/api/auth', authRouter);
+
 const functionsRouter = require('./routes/functions_router');
 app.use('/interoperability/api/', functionsRouter);
 
-const settlementsRouter = require('./routes/settlements_router');
-app.use('/interoperability/api/', settlementsRouter);
+
 
 // TODO: αφαίρεσε το, απλά υπάρχει για testing
 const pool = require('../backend/dp_pool');
