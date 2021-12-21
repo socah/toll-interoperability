@@ -3,17 +3,10 @@ const express = require('express');
 const router = express.Router();
 const {parse} = require('json2csv');
 const db_functions = require('../../backend/db_functions.js');
+const {formatDate, formatDateFromString} = require("../utilities/date_formater.js")
 
 // TODO : Do not forget to check format GET param for csv, json
 
-
-function formatDate(date){
-    return date.toISOString().slice(0, 19).replace('T', ' ');
-}
-
-function formatDateFromString(date, time){
-    return date.slice(0,4) + "-" + date.slice(4,6) + "-" + date.slice(6, 8) + " " + time;
-}
 
 
 router.get("/PassesPerStation/:stationID/:date_from/:date_to", (req, res) =>{
