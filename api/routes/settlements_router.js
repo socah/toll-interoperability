@@ -174,7 +174,7 @@ router.post("/PaySettlement/:settlement_ID/:transaction", (req, res) =>{
 
     db_settlements.getSettlementAmount(settlementID)
     .then((amount) => {return transactionCodeIsValid(transactionID, amount);})
-    .then(() => {return db_settlements.clearSetlement(settlementID);})
+    .then(() => {return db_settlements.clearSetlement(settlementID, transactionID);})
     .then((result) => {
        
         res.status(200).json({status: "OK", Msg: "Settlement Cleared"});
