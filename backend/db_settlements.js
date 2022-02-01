@@ -5,7 +5,7 @@ function getSettlements(operatorID) {
     return new Promise((fullfil, reject) => {
 
         // εκτελούμε το πρώτο query για την λήψη των οφειλών του operator
-        pool.query("SELECT * , if(operatorCredited = ?, 'credit', 'debited') as Type FROM Settlement WHERE operatorCredited = ? OR operatorDebited = ?", [operatorID,operatorID,operatorID])
+        pool.query("SELECT settlementID, dateFrom, dateTo, amount, paid, operatorCredited, operatorDebited, if(operatorCredited = ?, 'credit', 'debited') as Type FROM Settlement WHERE operatorCredited = ? OR operatorDebited = ?", [operatorID,operatorID,operatorID])
         .then((rows) => {
             if(rows.length == 0){
                 console.log("No settlement found for : " + operatorID);
@@ -48,11 +48,11 @@ function getSettlementAmount(settlementID){
     return new Promise((fullfil, reject) => {
 
             // παίρνουμε τα σοτιχεία των settlemnets που αφορούν την συγκεκριμένη οφειλή
-            pool.query(`SELECT amount FROM Settlement WHERE settlementID = ?;`, [settlementID])
+            pool.query(`SELECT amount FROM Settlement WHERE settlementID = ? AND paid = 0;`, [settlementID])
             .then((rows) => {
                 if(rows.length == 0){
-                    console.log("No settlement found for : " + operatorID);
-                    reject("Settlement n ot found"); // Return No Data
+                    console.log("No settlement found for : " + settlementID);
+                    reject("Settlement not found"); // Return No Data
                     return;
                 }else{
                     fullfil(rows[0].amount);
@@ -63,8 +63,8 @@ function getSettlementAmount(settlementID){
         }); 
 }
 
-function clearSetlement(settlementID){
-    return pool.query(`UPDATE Settlement SET paid = 1 WHERE settlementID = ?;`, [settlementID])
+function clearSetlement(settlementID, transactionID){
+    return pool.query(`UPDATE Settlement SET paid = 1, transactionID = ?  WHERE settlementID = ?;`, [transactionID, settlementID])
 }
 
 module.exports = {getSettlements, getSettlementPasses, getSettlementAmount, clearSetlement};
