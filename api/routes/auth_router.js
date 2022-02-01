@@ -10,6 +10,7 @@ const md5 = require("md5")
 let active_tokens = []
 
 router.post('/login', (req, res) => {
+        console.log(req.query.username, md5(req.query.password));
         db.authUser(req.query.username, md5(req.query.password))
         .then((operatorID) => {
         if (operatorID != null) {
