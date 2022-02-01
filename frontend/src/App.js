@@ -1,6 +1,10 @@
+
 import Login from './pages/Login';
 import Options from './pages/Options';
+import Showpasses from './pages/Showpasses';
+
 import Navbar from './components/NavBar';
+
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
@@ -20,6 +24,9 @@ function App() {
             </Route>
             <Route exact path="/options">
               <Options />
+            </Route>
+            <Route exact path="/showpasses">
+              <Showpasses />
             </Route>
         </Switch>
         </div>
