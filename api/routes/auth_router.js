@@ -38,7 +38,7 @@ router.get('/test_authentication',authenticateToken, (req, res) => {
     res.json({ "status": "OK"})
 })
 
-router.get('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
     active_tokens = active_tokens.filter(token => token != req.query.token)
     res.json({ "status": "OK"})
 })
