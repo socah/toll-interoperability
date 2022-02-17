@@ -2,6 +2,7 @@
 import Login from './pages/Login';
 import Options from './pages/Options';
 import Showpasses from './pages/Showpasses';
+import Showsettlements from './pages/Showsettlements';
 
 import Navbar from './components/NavBar';
 
@@ -12,7 +13,8 @@ function App() {
     <Router>
       <div className="App">
         <header className="App-header">
-          
+
+
         </header>
 
         <Navbar />
@@ -27,6 +29,9 @@ function App() {
             </Route>
             <Route exact path="/showpasses">
               <Showpasses />
+            </Route>
+            <Route exact path="/showsettlements">
+              <Showsettlements />
             </Route>
         </Switch>
         </div>
