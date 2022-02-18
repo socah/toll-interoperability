@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Options from './pages/Options';
 import Showpasses from './pages/Showpasses';
 import Showsettlements from './pages/Showsettlements';
+import ShowSettlementPasses from './pages/ShowSettlementPasses'
 
 import Navbar from './components/NavBar';
 
@@ -32,6 +33,9 @@ function App() {
             </Route>
             <Route exact path="/showsettlements">
               <Showsettlements />
+            </Route>
+            <Route path="/showsettlementpasses/:settlementID">
+              <ShowSettlementPasses />
             </Route>
         </Switch>
         </div>

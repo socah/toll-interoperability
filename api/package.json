@@ -5,7 +5,8 @@
     "jsonwebtoken": "^8.5.1",
     "mariadb": "^2.5.5",
     "md5": "^2.3.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "store2": "^2.13.1"
   },
   "scripts": {
     "devStart": "nodemon server.js"
