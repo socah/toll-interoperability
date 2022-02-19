@@ -1,5 +1,7 @@
+import axios from "axios"
 
 var ls = require('local-storage');
+
 
 
 function Navbar() {
@@ -17,8 +19,28 @@ function Navbar() {
 
     // συνάρτηση που αποσυνδέει τον χρήστη
     function disconnect(){
-      ls.remove("accessToken");
-      window.location.replace("/");
+        const accessToken = ls.get("accessToken")
+
+        // make request
+        axios.post("https://localhost:9103/interoperability/api/auth/logout", null, { params: {
+            token: accessToken
+        }})
+        .then((res) => {
+            // πήραμε response με 200 ΟΚ
+
+            ls.remove("accessToken");
+            window.location.replace("/");
+
+        }).catch((e) => {
+            // Είτε το response είναι κωδικό != 200 είτε δημιουργήθηκε κάποιο exception
+
+            // Σε αυτή την περίπτωση πάλι θα κάνουμε το ίδιο
+            // Ισως πρέπει να προστεθεί κάποιο notification..
+            ls.remove("accessToken");
+            window.location.replace("/");
+
+        console.log(e);
+      })
     }
 
     // ανακατεύθυνση προς το dashboard
