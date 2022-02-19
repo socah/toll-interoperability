@@ -23,6 +23,8 @@ function ProviderSelection({data}) {
                     <th scope='col'>Amount</th>
                     <th scope='col'>Paid</th>
                     <th scope='col'>Type</th>
+                    <th scope='col'>Operator Credited</th>
+                    <th scope='col'>Operator Debited</th>
                     <th scope='col'></th>
                 </tr>
                 </thead>
@@ -40,6 +42,8 @@ function ProviderSelection({data}) {
                                     <td>{element.amount}</td>
                                     <td>{element.paid}</td>
                                     <td>{element.Type}</td>
+                                    <td>{element.operatorCredited}</td>
+                                    <td>{element.operatorDebited}</td>
                                     <td>
                                         <button id="settlement_details" onClick={() => showSettlementPasses(element)}>
                                             Λεπτομέρειες
