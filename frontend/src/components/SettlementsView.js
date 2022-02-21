@@ -70,7 +70,7 @@ function ProviderSelection({data}) {
                                         element.paid ? (<td> </td>) : (
                                         <td>
                                             <button id={`"${element.settlementID.toString()}"`} onClick={() => confirmPayment(element)}>
-                                                Επιβεβαίωση Πληρωμής
+                                                Εξόφληση
                                             </button>
                                         </td>)
                                     }
@@ -93,7 +93,6 @@ function ProviderSelection({data}) {
                     <th scope='col'>Paid</th>
                     <th scope='col'>Operator Debited</th>
                     <th scope='col'></th>
-                    <th scope='col'></th>
                 </tr>
                 </thead>
                 {
@@ -114,14 +113,6 @@ function ProviderSelection({data}) {
                                             Λεπτομέρειες
                                         </button>
                                     </td>
-                                    {
-                                        element.paid ? (<td> </td>) : (
-                                        <td>
-                                            <button id={`"${element.settlementID.toString()}"`} onClick={() => confirmPayment(element)}>
-                                                Επιβεβαίωση Πληρωμής
-                                            </button>
-                                        </td>)
-                                    }
                                 </tr>
                             </tbody>
                         }
