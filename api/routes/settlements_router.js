@@ -92,44 +92,28 @@ router.get("/GetPassesForSettlement/:settlement_ID", authenticateToken, (req, re
         return;
     }
 
-    authorized = false;
-
+    // αρχικά λαμβάνουμε τις οφειλές του operatorID για να ελέγξουμε ότι το settlement για το οποίο αναζητούμε τα passes τον αφορά
+    // πρέπει δηλαδή ο operatorID να είναι είτε ο operatorCredited είτε ο operatorDebited.
     db_settlements.getSettlements(operatorID)
     .then((result) => {
         if(result == null){
             res.status(402).json({status:"failed", reason:"No data"});
+            return;
         }else{
             examinedSettlement = result.find(settlement => settlement.settlementID == settlementID)
-            if (examinedSettlement.operatorCredited == operatorID || examinedSettlement.operatorDebited == operatorID){
-                authorized = true;
+            // αν ο operatorID δεν είναι ούτε ο operatorCredited ούτε ο operatorDebited τότε δεν έχει δικαίωμα να δει τις διελεύσεις
+            if (examinedSettlement.operatorCredited != operatorID && examinedSettlement.operatorDebited != operatorID){
+                res.status(401).json({status:"failed", reason:"Not authorized"});
+                return;
             }
+            return db_settlements.getSettlementPasses(settlementID)
         }
     })
-    .catch((err) => {
-        console.log("Error on GetSettlements:");
-        console.log(err);
-        res.status(500).json( {status:"failed", reason:"Internal server error"} );
-    });
-
-    if(!authorized){
-        res.status(401).json({status:"failed", reason:"Not authorized"});
-        return;
-    }
-
-    // αν όλα καλά μέχρι στιγμής εκτελούμε το query προς την βάση
-    // δίνουμε και το op_ID για να ελεγχθεί ότι το settlement ανήκει στον operator με το op_ID
-    db_settlements.getSettlementPasses(settlementID)
     .then((result) => {
         if(result == null){
             res.status(402).json({status:"failed", reason:"No data"});
         }else{
-
-
-            // result.forEach((element) => {
-            //     element.dateFrom = formatDate(element.dateFrom);
-            //     element.dateTo = formatDate(element.dateTo);
-            // });
-          
+            
             if(format == "json"){
 
                 output_obj = {
@@ -138,8 +122,6 @@ router.get("/GetPassesForSettlement/:settlement_ID", authenticateToken, (req, re
 
                     PassesLength: result.length,
                     PassesList: result
-
-
                 }
 
                 res.status(200).json(output_obj);
@@ -151,12 +133,10 @@ router.get("/GetPassesForSettlement/:settlement_ID", authenticateToken, (req, re
         }
     })
     .catch((err) => {
-        console.log("Error on GetPassesForSettlement:");
+        console.log("Error on GetSettlements:");
         console.log(err);
         res.status(500).json( {status:"failed", reason:"Internal server error"} );
-    });
-
-    
+    }); 
 });
 
 // Προσπάθεια εξόφλησης οφειλής με χρήση του κωδικού συναλλαγής
