@@ -1,0 +1,1424 @@
+{
+	"info": {
+		"_postman_id": "f098b8f1-64ed-4af7-8d7b-fd975b3a4ff8",
+		"name": "Softeng - API Functional Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Διαχειριστικά Endpoints",
+			"item": [
+				{
+					"name": "Admin Healthcheck",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/admin/healthcheck",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"admin",
+								"healthcheck"
+							]
+						},
+						"description": "Eπιβεβαιώνει τη συνδεσιμότητα (end-to-end connectivity) μεταξύ του χρήστη και της βάσης δεδομένων. Το back-end, δηλαδή, ελέγχει τη συνδεσιμότητα με τη ΒΔ για να απαντήσει στο αίτημα. Σε περίπτωση επιτυχούς σύνδεσης επιστρέφεται το json object: {\"status\":\"OK\", \"dbconnection\":\\[connection string\\]}, διαφορετικά επιστρέφεται {\"status\":\"failed\", \"dbconnection\":\\[connection string\\]}. Στο connection string περιέχεται το όνομα του εξυπηρετητή της βάσης, το όνομα χρήστη, το όνομα της βάσης και η θύρα όπου γίνεται η σύνδεση."
+					},
+					"response": []
+				}
+			],
+			"description": "Τα παρακάτω endpoints θα λειτουργήσουν επικουρικά για τον πλήρως αυτοματοποιημένο έλεγχο που θα γίνει κατά την εξέταση της εργασίας.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Test 0 - Λειτουργία συστήματος",
+			"item": [
+				{
+					"name": "PassesPerStation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/PassesPerStation/:stationID/:date_from/:date_to?format=csv",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"PassesPerStation",
+								":stationID",
+								":date_from",
+								":date_to"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+								}
+							],
+							"variable": [
+								{
+									"key": "stationID",
+									"value": "NE08",
+									"description": "Το ID του σταθμού για τον οποίο θα λάβουμε τα Passes"
+								},
+								{
+									"key": "date_from",
+									"value": "20201217",
+									"description": "Από ημ/νία"
+								},
+								{
+									"key": "date_to",
+									"value": "20210125",
+									"description": "Έως ημ/νία"
+								}
+							]
+						},
+						"description": "Επιστρέφεται λίστα με την ανάλυση των διελεύσεων (Passes) για τον σταθμό διοδίων και για την περίοδο που δίνονται στο URL."
+					},
+					"response": []
+				},
+				{
+					"name": "PassesAnalysis",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/PassesAnalysis/:op1_ID/:op2_ID/:date_from/:date_to?format=csv",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"PassesAnalysis",
+								":op1_ID",
+								":op2_ID",
+								":date_from",
+								":date_to"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+								}
+							],
+							"variable": [
+								{
+									"key": "op1_ID",
+									"value": "aodos",
+									"description": "Το ID του πρώτου λειτουργού"
+								},
+								{
+									"key": "op2_ID",
+									"value": "gefyra",
+									"description": "Το ID του δεύτερου λειτουργού"
+								},
+								{
+									"key": "date_from",
+									"value": "20210120",
+									"description": "Από ημ/νία"
+								},
+								{
+									"key": "date_to",
+									"value": "20210222",
+									"description": "Έως ημ/νία"
+								}
+							]
+						},
+						"description": "Επιστρέφεται λίστα με την ανάλυση ανά σημείο των γεγονότων διέλευσης που πραγματοποιήθηκαν με tag του op2\\_ID σε σταθμούς του op1\\_ID."
+					},
+					"response": []
+				},
+				{
+					"name": "ChargesBy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/ChargesBy/:op_ID/:date_from/:date_to?format=csv",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"ChargesBy",
+								":op_ID",
+								":date_from",
+								":date_to"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+								}
+							],
+							"variable": [
+								{
+									"key": "op_ID",
+									"value": "aodos"
+								},
+								{
+									"key": "date_from",
+									"value": "20210120"
+								},
+								{
+									"key": "date_to",
+									"value": "20210222"
+								}
+							]
+						},
+						"description": "Επιστρέφεται ο αριθμός των γεγονότων διέλευσης που πραγματοποιήθηκαν σε σταθμούς του op_ID, από οχήματα όλων των άλλων operators, καθώς και το κόστος τους, δηλαδή το ποσό που καθένας από τους λοιπούς operators οφείλει στον Operator op_ID, για τη δοσμένη περίοδο."
+					},
+					"response": []
+				},
+				{
+					"name": "PassesCost",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/PassesCost/:op1_ID/:op2_ID/:date_from/:date_to?format=csv",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"PassesCost",
+								":op1_ID",
+								":op2_ID",
+								":date_from",
+								":date_to"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+								}
+							],
+							"variable": [
+								{
+									"key": "op1_ID",
+									"value": "aodos",
+									"description": "Το ID του πρώτου λειτουργού"
+								},
+								{
+									"key": "op2_ID",
+									"value": "egnatia",
+									"description": "Το ID του δεύτερου λειτουργού"
+								},
+								{
+									"key": "date_from",
+									"value": "20190613",
+									"description": "Από ημ/νία"
+								},
+								{
+									"key": "date_to",
+									"value": "20210613",
+									"description": "Έως ημ/νία"
+								}
+							]
+						},
+						"description": "Επιστρέφεται ο αριθμός των γεγονότων διέλευσης που πραγματοποιήθηκαν με tag του op2_ID σε σταθμούς του op1_ID, καθώς και το κόστος τους, δηλαδή το ποσό που ο op2_ID οφείλει στον op1_ID, για τη δοσμένη περίοδο."
+					},
+					"response": []
+				}
+			],
+			"description": "Τα παρακάτω endpoints μπορούν να χρησιμοποιηθούν για την αλληλεπίδραση διαφόρων stakeholders προς το σύστημα και την επιτέλεση των βασικών λειτουργιών του.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Test 1 - Login Logout",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const login_response = pm.response.json()",
+									"",
+									"//console.log(login_response.accessToken)",
+									"",
+									"pm.globals.set(\"accessToken\", login_response.accessToken)",
+									"pm.globals.set(\"accessTokenHeader\", \"Bearer \"+login_response.accessToken)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/login?username=username&password=password",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "username"
+								},
+								{
+									"key": "password",
+									"value": "password"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Authentication",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-observatory-auth",
+								"value": "{{accessTokenHeader}}",
+								"description": "Έχει την μορφή Bearer TOKEN, όπου TOKEN το token που λήφθηκε κατά login",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/test_authentication",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"test_authentication"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/logout?token={{accessToken}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"logout"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}"
+								},
+								{
+									"key": "password",
+									"value": "test",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Τα παρακάτω endpoints χρησιμοποιούνται από τους λειτουργούς για να συνδεθούν με τον λογαριασμό τους στο σύστημα.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Test 1.5 - Login With Invalid Credentials",
+			"item": [
+				{
+					"name": "Login - invalid username",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401 (invalid username)\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/login?username=invalid_username&password=password",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "invalid_username"
+								},
+								{
+									"key": "password",
+									"value": "password"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - invalid password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401 (invalid password)\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/login?username=username&password=invalid_password",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "username"
+								},
+								{
+									"key": "password",
+									"value": "invalid_password"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Τα παρακάτω endpoints χρησιμοποιούνται από τους λειτουργούς για να συνδεθούν με τον λογαριασμό τους στο σύστημα.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Test 2 - Show Passes",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const login_response = pm.response.json()",
+									"",
+									"//console.log(login_response.accessToken)",
+									"",
+									"pm.globals.set(\"accessToken\", login_response.accessToken)",
+									"pm.globals.set(\"accessTokenHeader\", \"Bearer \"+login_response.accessToken)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/login?username=username&password=password",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "username"
+								},
+								{
+									"key": "password",
+									"value": "password"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[extra] PassesAnalysisAuth",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-observatory-auth",
+								"value": "{{accessTokenHeader}}",
+								"description": "Μορφή: \"Bearer token\". Το token επιστρέφεται στο response του Login και καθορίζει τον χρήστη και τον λειτουργό στον οποίο υπάγεται ο χρήστης. ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/PassesAnalysisAuth/:op1_ID/:op2_ID/:date_from/:date_to?format=csv",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"PassesAnalysisAuth",
+								":op1_ID",
+								":op2_ID",
+								":date_from",
+								":date_to"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+								}
+							],
+							"variable": [
+								{
+									"key": "op1_ID",
+									"value": "aodos",
+									"description": "Το ID του πρώτου λειτουργού"
+								},
+								{
+									"key": "op2_ID",
+									"value": "gefyra",
+									"description": "Το ID του δεύτερου λειτουργού"
+								},
+								{
+									"key": "date_from",
+									"value": "20210120",
+									"description": "Από ημ/νία"
+								},
+								{
+									"key": "date_to",
+									"value": "20210222",
+									"description": "Έως ημ/νία"
+								}
+							]
+						},
+						"description": "Επιστρέφεται λίστα με την ανάλυση ανά σημείο των γεγονότων διέλευσης που πραγματοποιήθηκαν με tag του op2\\_ID σε σταθμούς του op1\\_ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/logout?token={{accessToken}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"logout"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}"
+								},
+								{
+									"key": "password",
+									"value": "test",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Τα παρακάτω endpoints χρησιμοποιούνται από τους λειτουργούς για να συνδεθούν με τον λογαριασμό τους στο σύστημα.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Test 2.5 - Show Unauthorized Passes",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const login_response = pm.response.json()",
+									"",
+									"//console.log(login_response.accessToken)",
+									"",
+									"pm.globals.set(\"accessToken\", login_response.accessToken)",
+									"pm.globals.set(\"accessTokenHeader\", \"Bearer \"+login_response.accessToken)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/login?username=username&password=password",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "username"
+								},
+								{
+									"key": "password",
+									"value": "password"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[extra] PassesAnalysisAuth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401 (access to passes data which do not relate to the operator requesting them)\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-observatory-auth",
+								"value": "{{accessTokenHeader}}",
+								"description": "Μορφή: \"Bearer token\". Το token επιστρέφεται στο response του Login και καθορίζει τον χρήστη και τον λειτουργό στον οποίο υπάγεται ο χρήστης. ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/PassesAnalysisAuth/:op1_ID/:op2_ID/:date_from/:date_to?format=csv",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"PassesAnalysisAuth",
+								":op1_ID",
+								":op2_ID",
+								":date_from",
+								":date_to"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+								}
+							],
+							"variable": [
+								{
+									"key": "op1_ID",
+									"value": "egnatia",
+									"description": "Το ID του πρώτου λειτουργού"
+								},
+								{
+									"key": "op2_ID",
+									"value": "gefyra",
+									"description": "Το ID του δεύτερου λειτουργού"
+								},
+								{
+									"key": "date_from",
+									"value": "20210120",
+									"description": "Από ημ/νία"
+								},
+								{
+									"key": "date_to",
+									"value": "20210222",
+									"description": "Έως ημ/νία"
+								}
+							]
+						},
+						"description": "Επιστρέφεται λίστα με την ανάλυση ανά σημείο των γεγονότων διέλευσης που πραγματοποιήθηκαν με tag του op2\\_ID σε σταθμούς του op1\\_ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/logout?token={{accessToken}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"logout"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}"
+								},
+								{
+									"key": "password",
+									"value": "test",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Τα παρακάτω endpoints χρησιμοποιούνται από τους λειτουργούς για να συνδεθούν με τον λογαριασμό τους στο σύστημα.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Test 3 - Settlements",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const login_response = pm.response.json()",
+									"",
+									"//console.log(login_response.accessToken)",
+									"",
+									"pm.globals.set(\"accessToken\", login_response.accessToken)",
+									"pm.globals.set(\"accessTokenHeader\", \"Bearer \"+login_response.accessToken)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/login?username=username&password=password",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "username"
+								},
+								{
+									"key": "password",
+									"value": "password"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSettlements",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const response = pm.response.json()",
+									"settlementsList = response.SettlementsList",
+									"",
+									"firstSettlement = settlementsList[0]",
+									"pm.globals.set(\"firstSettlement\", firstSettlement.settlementID)",
+									"",
+									"// we want to test the PaySettlement endpoint with an already paid settlement so we do not corrupt the database data",
+									"firstPaidSettlement = settlementsList.find(settlement => settlement.paid==1)",
+									"",
+									"// if we are using the default data from the database dump, there will be no paid settlement.",
+									"if (firstPaidSettlement == undefined) {",
+									"    // we cant test PaySettlement because we don't have any paid settlement in this case",
+									"    postman.setNextRequest(\"GetPassesForSettlement\")",
+									"} else {",
+									"    pm.globals.set(\"firstPaidSettlement\", firstPaidSettlement.settlementID)",
+									"}",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-observatory-auth",
+								"value": "{{accessTokenHeader}}",
+								"description": "Μορφή: \"Bearer token\". Το token επιστρέφεται στο response του Login και καθορίζει τον χρήστη και τον λειτουργό στον οποίο υπάγεται ο χρήστης.",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/settlements/GetSettlements/",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"settlements",
+								"GetSettlements",
+								""
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Επιστρέφεται η λίστα των οφειλών που αφορούν τον op_ID, δηλαδή επιστρέφονται οι οφειλές του λειτουργούν με op_ID προς άλλους λειτουργούς και οι οφειλές που έχουν άλλοι λειτουργοί προς τον λειτουργό με το συγκεκριμένο op_ID."
+					},
+					"response": []
+				},
+				{
+					"name": "PaySettlement",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500 (trying to confirm payment for an already paid settlement)\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/settlements/PaySettlement/:settlement_ID/:transaction",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"settlements",
+								"PaySettlement",
+								":settlement_ID",
+								":transaction"
+							],
+							"variable": [
+								{
+									"key": "settlement_ID",
+									"value": "{{firstPaidSettlement}}",
+									"description": "Ο κωδικός της οφειλής προς εξόφληση"
+								},
+								{
+									"key": "transaction",
+									"value": "AS348ASN4",
+									"description": "Ο κωδικός της συναλλαγής"
+								}
+							]
+						},
+						"description": "Επιβεβαιώνεται η πληρωμή με κωδικό transaction για την οφειλή settlement\\_ID"
+					},
+					"response": []
+				},
+				{
+					"name": "GetPassesForSettlement",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-observatory-auth",
+								"value": "{{accessTokenHeader}}",
+								"description": "Μορφή: \"Bearer token\". Το token επιστρέφεται στο response του Login και καθορίζει τον χρήστη και τον λειτουργό στον οποίο υπάγεται ο χρήστης. ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/settlements/GetPassesForSettlement/:settlement_ID",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"settlements",
+								"GetPassesForSettlement",
+								":settlement_ID"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "settlement_ID",
+									"value": "{{firstSettlement}}",
+									"description": "To ID της οφειλής η οποία αφορά τις διελεύσεις που θέλουμε να λάβουμε. "
+								}
+							]
+						},
+						"description": "Επιστρέφεται η λίστα όλων των διελεύσεων που συνυπολογίζονται στην οφειλή με συγκεκριμένο settlement_ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/logout?token={{accessToken}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"logout"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}"
+								},
+								{
+									"key": "password",
+									"value": "test",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Τα παρακάτω endpoints μπορούν να χρησιμοποιηθούν από τους λειτουργούς για να διαχειριστούν τις οφειλές τους.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Test 3.5 - Show Unauthorized Settlements",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const login_response = pm.response.json()",
+									"",
+									"//console.log(login_response.accessToken)",
+									"",
+									"pm.globals.set(\"accessToken\", login_response.accessToken)",
+									"pm.globals.set(\"accessTokenHeader\", \"Bearer \"+login_response.accessToken)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/login?username=username&password=password",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "username"
+								},
+								{
+									"key": "password",
+									"value": "password"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPassesForSettlement",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401 (attempt to access settlement data which are not related to the operator requesting them)\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-observatory-auth",
+								"value": "{{accessTokenHeader}}",
+								"description": "Μορφή: \"Bearer token\". Το token επιστρέφεται στο response του Login και καθορίζει τον χρήστη και τον λειτουργό στον οποίο υπάγεται ο χρήστης. ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/settlements/GetPassesForSettlement/:settlement_ID",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"settlements",
+								"GetPassesForSettlement",
+								":settlement_ID"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "settlement_ID",
+									"value": "6",
+									"description": "To ID της οφειλής η οποία αφορά τις διελεύσεις που θέλουμε να λάβουμε. "
+								}
+							]
+						},
+						"description": "Επιστρέφεται η λίστα όλων των διελεύσεων που συνυπολογίζονται στην οφειλή με συγκεκριμένο settlement_ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/logout?token={{accessToken}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"logout"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}"
+								},
+								{
+									"key": "password",
+									"value": "test",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Τα παρακάτω endpoints μπορούν να χρησιμοποιηθούν από τους λειτουργούς για να διαχειριστούν τις οφειλές τους.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}

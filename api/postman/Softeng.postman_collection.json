@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "61548d0b-d47c-4d91-a132-aaae51f0f06a",
-		"name": "Softeng",
+		"_postman_id": "98416f65-72d0-48de-b96b-b65bb541ddee",
+		"name": "Softeng - Submission 3",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -124,7 +124,29 @@
 					"response": []
 				}
 			],
-			"description": "Τα παρακάτω endpoints θα λειτουργήσουν επικουρικά για τον πλήρως αυτοματοποιημένο έλεγχο που θα γίνει κατά την εξέταση της εργασίας."
+			"description": "Τα παρακάτω endpoints θα λειτουργήσουν επικουρικά για τον πλήρως αυτοματοποιημένο έλεγχο που θα γίνει κατά την εξέταση της εργασίας.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
 		},
 		{
 			"name": "Λειτουργία συστήματος",
@@ -135,7 +157,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:9103/interoperability/api/PassesPerStation/:stationID/:date_from/:date_to?format=csv",
+							"raw": "https://localhost:9103/interoperability/api/PassesPerStation/:stationID/:date_from/:date_to",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -153,7 +175,8 @@
 								{
 									"key": "format",
 									"value": "csv",
-									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json",
+									"disabled": true
 								}
 							],
 							"variable": [
@@ -570,6 +593,292 @@
 					]
 				},
 				{
+					"name": "[extra] PassesAnalysisAuth",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-observatory-auth",
+								"value": "{{accessTokenHeader}}",
+								"description": "Μορφή: \"Bearer token\". Το token επιστρέφεται στο response του Login και καθορίζει τον χρήστη και τον λειτουργό στον οποίο υπάγεται ο χρήστης. ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/PassesAnalysisAuth/:op1_ID/:op2_ID/:date_from/:date_to?format=csv",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"PassesAnalysisAuth",
+								":op1_ID",
+								":op2_ID",
+								":date_from",
+								":date_to"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "csv",
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+								}
+							],
+							"variable": [
+								{
+									"key": "op1_ID",
+									"value": "aodos",
+									"description": "Το ID του πρώτου λειτουργού"
+								},
+								{
+									"key": "op2_ID",
+									"value": "gefyra",
+									"description": "Το ID του δεύτερου λειτουργού"
+								},
+								{
+									"key": "date_from",
+									"value": "20210120",
+									"description": "Από ημ/νία"
+								},
+								{
+									"key": "date_to",
+									"value": "20210222",
+									"description": "Έως ημ/νία"
+								}
+							]
+						},
+						"description": "Επιστρέφεται λίστα με την ανάλυση ανά σημείο των γεγονότων διέλευσης που πραγματοποιήθηκαν με tag του op2\\_ID σε σταθμούς του op1\\_ID, αλλά μόνο εάν ο λειτουργός που καθορίζεται από το token που δίνεται στο x-observatory-auth header είναι ένας από τους op1\\_ID, op2\\_ID."
+					},
+					"response": [
+						{
+							"name": "[extra] PassesAnalysisAuth",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-observatory-auth",
+										"value": "{{accessTokenHeader}}",
+										"description": "Μορφή: \"Bearer token\". Το token επιστρέφεται στο response του Login και καθορίζει τον χρήστη και τον λειτουργό στον οποίο υπάγεται ο χρήστης. ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/PassesAnalysisAuth/:op1_ID/:op2_ID/:date_from/:date_to",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"PassesAnalysisAuth",
+										":op1_ID",
+										":op2_ID",
+										":date_from",
+										":date_to"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "csv",
+											"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "op1_ID",
+											"value": "aodos",
+											"description": "Το ID του πρώτου λειτουργού"
+										},
+										{
+											"key": "op2_ID",
+											"value": "gefyra",
+											"description": "Το ID του δεύτερου λειτουργού"
+										},
+										{
+											"key": "date_from",
+											"value": "20210120",
+											"description": "Από ημ/νία"
+										},
+										{
+											"key": "date_to",
+											"value": "20210222",
+											"description": "Έως ημ/νία"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "X-Requested-With,content-type,x-observatory-auth"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1227"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4cb-oupmbCEzbFe0NobhIcFQUGiDqIw\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 25 Feb 2022 16:30:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"op1_ID\": \"aodos\",\n    \"op2_ID\": \"gefyra\",\n    \"RequestTimestamp\": \"2022-02-25 16:30:01\",\n    \"PeriodFrom\": \"2021-01-20 00:00:00\",\n    \"PeriodTo\": \"2021-02-22 23:59:59\",\n    \"NumberOfPasses\": 8,\n    \"PassesList\": [\n        {\n            \"PassIndex\": 1,\n            \"PassID\": \"GAU6458371\",\n            \"StationID\": \"AO05\",\n            \"TimeStamp\": \"2021-02-11 20:36:00\",\n            \"VehicleID\": \"BY85QGR11636\",\n            \"Charge\": 2.8\n        },\n        {\n            \"PassIndex\": 2,\n            \"PassID\": \"UFL2436261\",\n            \"StationID\": \"AO06\",\n            \"TimeStamp\": \"2021-01-24 02:33:00\",\n            \"VehicleID\": \"CK97FAU13897\",\n            \"Charge\": 2.8\n        },\n        {\n            \"PassIndex\": 3,\n            \"PassID\": \"WFY6778676\",\n            \"StationID\": \"AO00\",\n            \"TimeStamp\": \"2021-01-21 00:12:00\",\n            \"VehicleID\": \"CP56DAO45598\",\n            \"Charge\": 2.8\n        },\n        {\n            \"PassIndex\": 4,\n            \"PassID\": \"YFF2418945\",\n            \"StationID\": \"AO13\",\n            \"TimeStamp\": \"2021-01-31 16:37:00\",\n            \"VehicleID\": \"JE65QJK64802\",\n            \"Charge\": 2.8\n        },\n        {\n            \"PassIndex\": 5,\n            \"PassID\": \"MCY7543417\",\n            \"StationID\": \"AO14\",\n            \"TimeStamp\": \"2021-01-26 15:26:00\",\n            \"VehicleID\": \"KW50MJG67260\",\n            \"Charge\": 2.8\n        },\n        {\n            \"PassIndex\": 6,\n            \"PassID\": \"TYU6608700\",\n            \"StationID\": \"AO05\",\n            \"TimeStamp\": \"2021-02-08 05:58:00\",\n            \"VehicleID\": \"KW50MJG67260\",\n            \"Charge\": 2.8\n        },\n        {\n            \"PassIndex\": 7,\n            \"PassID\": \"BJX5011154\",\n            \"StationID\": \"AO18\",\n            \"TimeStamp\": \"2021-01-29 22:30:00\",\n            \"VehicleID\": \"LM86GYO69819\",\n            \"Charge\": 2.8\n        },\n        {\n            \"PassIndex\": 8,\n            \"PassID\": \"GAR1778319\",\n            \"StationID\": \"AO09\",\n            \"TimeStamp\": \"2021-02-01 07:48:00\",\n            \"VehicleID\": \"MP14WFM40909\",\n            \"Charge\": 2.8\n        }\n    ]\n}"
+						},
+						{
+							"name": "[extra] PassesAnalysisAuth",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-observatory-auth",
+										"value": "{{accessTokenHeader}}",
+										"description": "Μορφή: \"Bearer token\". Το token επιστρέφεται στο response του Login και καθορίζει τον χρήστη και τον λειτουργό στον οποίο υπάγεται ο χρήστης. ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/PassesAnalysisAuth/:op1_ID/:op2_ID/:date_from/:date_to?format=csv",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"PassesAnalysisAuth",
+										":op1_ID",
+										":op2_ID",
+										":date_from",
+										":date_to"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "csv",
+											"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
+										}
+									],
+									"variable": [
+										{
+											"key": "op1_ID",
+											"value": "aodos",
+											"description": "Το ID του πρώτου λειτουργού"
+										},
+										{
+											"key": "op2_ID",
+											"value": "gefyra",
+											"description": "Το ID του δεύτερου λειτουργού"
+										},
+										{
+											"key": "date_from",
+											"value": "20210120",
+											"description": "Από ημ/νία"
+										},
+										{
+											"key": "date_to",
+											"value": "20210222",
+											"description": "Έως ημ/νία"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "X-Requested-With,content-type,x-observatory-auth"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/csv; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "569"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"239-BYZyVKRuubb8OivCu5Zgr6e+7xU\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 25 Feb 2022 16:30:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "\"PassIndex\",\"PassID\",\"StationID\",\"TimeStamp\",\"VehicleID\",\"Charge\"\n1,\"GAU6458371\",\"AO05\",\"2021-02-11 20:36:00\",\"BY85QGR11636\",2.8\n2,\"UFL2436261\",\"AO06\",\"2021-01-24 02:33:00\",\"CK97FAU13897\",2.8\n3,\"WFY6778676\",\"AO00\",\"2021-01-21 00:12:00\",\"CP56DAO45598\",2.8\n4,\"YFF2418945\",\"AO13\",\"2021-01-31 16:37:00\",\"JE65QJK64802\",2.8\n5,\"MCY7543417\",\"AO14\",\"2021-01-26 15:26:00\",\"KW50MJG67260\",2.8\n6,\"TYU6608700\",\"AO05\",\"2021-02-08 05:58:00\",\"KW50MJG67260\",2.8\n7,\"BJX5011154\",\"AO18\",\"2021-01-29 22:30:00\",\"LM86GYO69819\",2.8\n8,\"GAR1778319\",\"AO09\",\"2021-02-01 07:48:00\",\"MP14WFM40909\",2.8"
+						}
+					]
+				},
+				{
 					"name": "ChargesBy",
 					"request": {
 						"method": "GET",
@@ -599,18 +908,15 @@
 							"variable": [
 								{
 									"key": "op_ID",
-									"value": "aodos",
-									"description": "Το ID του λειτουργού"
+									"value": "aodos"
 								},
 								{
 									"key": "date_from",
-									"value": "20210120",
-									"description": "Από ημ/νία"
+									"value": "20210120"
 								},
 								{
 									"key": "date_to",
-									"value": "20210222",
-									"description": "Έως ημ/νία"
+									"value": "20210222"
 								}
 							]
 						},
@@ -1009,7 +1315,29 @@
 					]
 				}
 			],
-			"description": "Τα παρακάτω endpoints μπορούν να χρησιμοποιηθούν για την αλληλεπίδραση διαφόρων stakeholders προς το σύστημα και την επιτέλεση των βασικών λειτουργιών του."
+			"description": "Τα παρακάτω endpoints μπορούν να χρησιμοποιηθούν για την αλληλεπίδραση διαφόρων stakeholders προς το σύστημα και την επιτέλεση των βασικών λειτουργιών του.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
 		},
 		{
 			"name": "Endpoints οφειλών",
@@ -1018,9 +1346,16 @@
 					"name": "GetSettlements",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-observatory-auth",
+								"value": "{{accessTokenHeader}}",
+								"description": "Μορφή: \"Bearer token\". Το token επιστρέφεται στο response του Login και καθορίζει τον χρήστη και τον λειτουργό στον οποίο υπάγεται ο χρήστης. ",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "https://localhost:9103/interoperability/api/settlements/GetSettlements/:op_ID",
+							"raw": "https://localhost:9103/interoperability/api/settlements/GetSettlements/?format=csv",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1031,34 +1366,33 @@
 								"api",
 								"settlements",
 								"GetSettlements",
-								":op_ID"
+								""
 							],
 							"query": [
 								{
 									"key": "format",
 									"value": "csv",
-									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json",
-									"disabled": true
-								}
-							],
-							"variable": [
-								{
-									"key": "op_ID",
-									"value": "aodos",
-									"description": "το ID του λειτουργού"
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
 								}
 							]
 						},
-						"description": "Επιστρέφεται η λίστα των οφειλών που αφορούν τον op_ID, δηλαδή επιστρέφονται οι οφειλές του λειτουργούν με op_ID προς άλλους λειτουργούς και οι οφειλές που έχουν άλλοι λειτουργοί προς τον λειτουργό με το συγκεκριμένο op_ID."
+						"description": "Επιστρέφεται η λίστα των οφειλών που αφορούν τον λειτουργό που καθορίζεται από το token που δίνεται στο x-observatory-auth header, Επιστρέφονται δηλαδή οι οφειλές του συγκεκριμένου λειτουργού προς άλλους λειτουργούς και οι οφειλές που έχουν άλλοι λειτουργοί προς τον συγκεκριμένο λειτουργό."
 					},
 					"response": [
 						{
 							"name": "GetSettlements",
 							"originalRequest": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "x-observatory-auth",
+										"value": "{{accessTokenHeader}}",
+										"description": "Μορφή: \"Bearer token\". Το token επιστρέφεται στο response του Login και καθορίζει τον χρήστη και τον λειτουργό στον οποίο υπάγεται ο χρήστης. ",
+										"type": "text"
+									}
+								],
 								"url": {
-									"raw": "https://localhost:9103/interoperability/api/settlements/GetSettlements/:op_ID",
+									"raw": "https://localhost:9103/interoperability/api/settlements/GetSettlements/",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -1069,7 +1403,7 @@
 										"api",
 										"settlements",
 										"GetSettlements",
-										":op_ID"
+										""
 									],
 									"query": [
 										{
@@ -1077,13 +1411,6 @@
 											"value": "csv",
 											"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json",
 											"disabled": true
-										}
-									],
-									"variable": [
-										{
-											"key": "op_ID",
-											"value": "aodos",
-											"description": "το ID του λειτουργού"
 										}
 									]
 								}
@@ -1097,20 +1424,36 @@
 									"value": "Express"
 								},
 								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "X-Requested-With,content-type,x-observatory-auth"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
 									"key": "Content-Type",
 									"value": "application/json; charset=utf-8"
 								},
 								{
 									"key": "Content-Length",
-									"value": "275"
+									"value": "37966"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"113-VN0jWs8zI+WQpd+IAVu488Zy9ec\""
+									"value": "W/\"944e-WBa5StKtJbeIWlNAft99KK2UmDM\""
 								},
 								{
 									"key": "Date",
-									"value": "Tue, 21 Dec 2021 20:48:21 GMT"
+									"value": "Fri, 25 Feb 2022 14:45:47 GMT"
 								},
 								{
 									"key": "Connection",
@@ -1122,15 +1465,22 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"op_ID\": \"aodos\",\n    \"RequestTimestamp\": \"2021-12-21 20:48:21\",\n    \"SettlementsLength\": 1,\n    \"SettlementsList\": [\n        {\n            \"settlementID\": 1,\n            \"dateFrom\": \"2019-12-31 22:00:00\",\n            \"dateTo\": \"2020-01-31 22:00:00\",\n            \"amount\": 123,\n            \"paid\": 1,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        }\n    ]\n}"
+							"body": "{\n    \"op_ID\": \"aodos\",\n    \"RequestTimestamp\": \"2022-02-25 14:45:47\",\n    \"SettlementsLength\": 210,\n    \"SettlementsList\": [\n        {\n            \"settlementID\": 1,\n            \"dateFrom\": \"2018-12-31 22:00:00\",\n            \"dateTo\": \"2019-01-30 22:00:00\",\n            \"amount\": 16.4,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 2,\n            \"dateFrom\": \"2018-12-31 22:00:00\",\n            \"dateTo\": \"2019-01-30 22:00:00\",\n            \"amount\": 19.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 3,\n            \"dateFrom\": \"2018-12-31 22:00:00\",\n            \"dateTo\": \"2019-01-30 22:00:00\",\n            \"amount\": 1,\n            \"paid\": 0,\n            \"operatorCredited\": \"moreas\",\n            \"operatorDebited\": \"aodos\",\n            \"Type\": \"debited\"\n        },\n        {\n            \"settlementID\": 4,\n            \"dateFrom\": \"2018-12-31 22:00:00\",\n            \"dateTo\": \"2019-01-30 22:00:00\",\n            \"amount\": 21.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 5,\n            \"dateFrom\": \"2018-12-31 22:00:00\",\n            \"dateTo\": \"2019-01-30 22:00:00\",\n            \"amount\": 2.45,\n            \"paid\": 0,\n            \"operatorCredited\": \"olympia_odos\",\n            \"operatorDebited\": \"aodos\",\n            \"Type\": \"debited\"\n        },\n        {\n            \"settlementID\": 10,\n            \"dateFrom\": \"2018-12-31 22:00:00\",\n            \"dateTo\": \"2019-01-30 22:00:00\",\n            \"amount\": 11.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 22,\n            \"dateFrom\": \"2019-01-31 22:00:00\",\n            \"dateTo\": \"2019-02-27 22:00:00\",\n            \"amount\": 19.5,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 23,\n            \"dateFrom\": \"2019-01-31 22:00:00\",\n            \"dateTo\": \"2019-02-27 22:00:00\",\n            \"amount\": 13.05,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 24,\n            \"dateFrom\": \"2019-01-31 22:00:00\",\n            \"dateTo\": \"2019-02-27 22:00:00\",\n            \"amount\": 4,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 25,\n            \"dateFrom\": \"2019-01-31 22:00:00\",\n            \"dateTo\": \"2019-02-27 22:00:00\",\n            \"amount\": 12.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 26,\n            \"dateFrom\": \"2019-01-31 22:00:00\",\n            \"dateTo\": \"2019-02-27 22:00:00\",\n            \"amount\": 3.5,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 31,\n            \"dateFrom\": \"2019-01-31 22:00:00\",\n            \"dateTo\": \"2019-02-27 22:00:00\",\n            \"amount\": 19.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 43,\n            \"dateFrom\": \"2019-02-28 22:00:00\",\n            \"dateTo\": \"2019-03-30 22:00:00\",\n            \"amount\": 19.3,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 44,\n            \"dateFrom\": \"2019-02-28 22:00:00\",\n            \"dateTo\": \"2019-03-30 22:00:00\",\n            \"amount\": 11.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 45,\n            \"dateFrom\": \"2019-02-28 22:00:00\",\n            \"dateTo\": \"2019-03-30 22:00:00\",\n            \"amount\": 24.1,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 46,\n            \"dateFrom\": \"2019-02-28 22:00:00\",\n            \"dateTo\": \"2019-03-30 22:00:00\",\n            \"amount\": 9.05,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 47,\n            \"dateFrom\": \"2019-02-28 22:00:00\",\n            \"dateTo\": \"2019-03-30 22:00:00\",\n            \"amount\": 9.85,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 52,\n            \"dateFrom\": \"2019-02-28 22:00:00\",\n            \"dateTo\": \"2019-03-30 22:00:00\",\n            \"amount\": 28,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 64,\n            \"dateFrom\": \"2019-03-31 21:00:00\",\n            \"dateTo\": \"2019-04-29 21:00:00\",\n            \"amount\": 29.55,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 65,\n            \"dateFrom\": \"2019-03-31 21:00:00\",\n            \"dateTo\": \"2019-04-29 21:00:00\",\n            \"amount\": 15.85,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 66,\n            \"dateFrom\": \"2019-03-31 21:00:00\",\n            \"dateTo\": \"2019-04-29 21:00:00\",\n            \"amount\": 10,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 67,\n            \"dateFrom\": \"2019-03-31 21:00:00\",\n            \"dateTo\": \"2019-04-29 21:00:00\",\n            \"amount\": 2.1,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 68,\n            \"dateFrom\": \"2019-03-31 21:00:00\",\n            \"dateTo\": \"2019-04-29 21:00:00\",\n            \"amount\": 32.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 73,\n            \"dateFrom\": \"2019-03-31 21:00:00\",\n            \"dateTo\": \"2019-04-29 21:00:00\",\n            \"amount\": 14,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 85,\n            \"dateFrom\": \"2019-04-30 21:00:00\",\n            \"dateTo\": \"2019-05-30 21:00:00\",\n            \"amount\": 18.7,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 86,\n            \"dateFrom\": \"2019-04-30 21:00:00\",\n            \"dateTo\": \"2019-05-30 21:00:00\",\n            \"amount\": 6.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 87,\n            \"dateFrom\": \"2019-04-30 21:00:00\",\n            \"dateTo\": \"2019-05-30 21:00:00\",\n            \"amount\": 7.85,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 88,\n            \"dateFrom\": \"2019-04-30 21:00:00\",\n            \"dateTo\": \"2019-05-30 21:00:00\",\n            \"amount\": 0.9,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 89,\n            \"dateFrom\": \"2019-04-30 21:00:00\",\n            \"dateTo\": \"2019-05-30 21:00:00\",\n            \"amount\": 3.45,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 90,\n            \"dateFrom\": \"2019-04-30 21:00:00\",\n            \"dateTo\": \"2019-05-30 21:00:00\",\n            \"amount\": 0.7,\n            \"paid\": 0,\n            \"operatorCredited\": \"olympia_odos\",\n            \"operatorDebited\": \"aodos\",\n            \"Type\": \"debited\"\n        },\n        {\n            \"settlementID\": 106,\n            \"dateFrom\": \"2019-05-31 21:00:00\",\n            \"dateTo\": \"2019-06-29 21:00:00\",\n            \"amount\": 28.1,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 107,\n            \"dateFrom\": \"2019-05-31 21:00:00\",\n            \"dateTo\": \"2019-06-29 21:00:00\",\n            \"amount\": 1.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"gefyra\",\n            \"operatorDebited\": \"aodos\",\n            \"Type\": \"debited\"\n        },\n        {\n            \"settlementID\": 108,\n            \"dateFrom\": \"2019-05-31 21:00:00\",\n            \"dateTo\": \"2019-06-29 21:00:00\",\n            \"amount\": 9.1,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 109,\n            \"dateFrom\": \"2019-05-31 21:00:00\",\n            \"dateTo\": \"2019-06-29 21:00:00\",\n            \"amount\": 0.4,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 110,\n            \"dateFrom\": \"2019-05-31 21:00:00\",\n            \"dateTo\": \"2019-06-29 21:00:00\",\n            \"amount\": 4.7,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 111,\n            \"dateFrom\": \"2019-05-31 21:00:00\",\n            \"dateTo\": \"2019-06-29 21:00:00\",\n            \"amount\": 12.5,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 127,\n            \"dateFrom\": \"2019-06-30 21:00:00\",\n            \"dateTo\": \"2019-07-30 21:00:00\",\n            \"amount\": 21.3,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 128,\n            \"dateFrom\": \"2019-06-30 21:00:00\",\n            \"dateTo\": \"2019-07-30 21:00:00\",\n            \"amount\": 31.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 129,\n            \"dateFrom\": \"2019-06-30 21:00:00\",\n            \"dateTo\": \"2019-07-30 21:00:00\",\n            \"amount\": 11.5,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 130,\n            \"dateFrom\": \"2019-06-30 21:00:00\",\n            \"dateTo\": \"2019-07-30 21:00:00\",\n            \"amount\": 9.5,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 131,\n            \"dateFrom\": \"2019-06-30 21:00:00\",\n            \"dateTo\": \"2019-07-30 21:00:00\",\n            \"amount\": 10.15,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 132,\n            \"dateFrom\": \"2019-06-30 21:00:00\",\n            \"dateTo\": \"2019-07-30 21:00:00\",\n            \"amount\": 23.75,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 148,\n            \"dateFrom\": \"2019-07-31 21:00:00\",\n            \"dateTo\": \"2019-08-30 21:00:00\",\n            \"amount\": 15.25,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 149,\n            \"dateFrom\": \"2019-07-31 21:00:00\",\n            \"dateTo\": \"2019-08-30 21:00:00\",\n            \"amount\": 6.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 150,\n            \"dateFrom\": \"2019-07-31 21:00:00\",\n            \"dateTo\": \"2019-08-30 21:00:00\",\n            \"amount\": 7.65,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 151,\n            \"dateFrom\": \"2019-07-31 21:00:00\",\n            \"dateTo\": \"2019-08-30 21:00:00\",\n            \"amount\": 13.45,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 152,\n            \"dateFrom\": \"2019-07-31 21:00:00\",\n            \"dateTo\": \"2019-08-30 21:00:00\",\n            \"amount\": 6.7,\n            \"paid\": 0,\n            \"operatorCredited\": \"nea_odos\",\n            \"operatorDebited\": \"aodos\",\n            \"Type\": \"debited\"\n        },\n        {\n            \"settlementID\": 153,\n            \"dateFrom\": \"2019-07-31 21:00:00\",\n            \"dateTo\": \"2019-08-30 21:00:00\",\n            \"amount\": 16.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 169,\n            \"dateFrom\": \"2019-08-31 21:00:00\",\n            \"dateTo\": \"2019-09-29 21:00:00\",\n            \"amount\": 15.75,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 170,\n            \"dateFrom\": \"2019-08-31 21:00:00\",\n            \"dateTo\": \"2019-09-29 21:00:00\",\n            \"amount\": 12.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 171,\n            \"dateFrom\": \"2019-08-31 21:00:00\",\n            \"dateTo\": \"2019-09-29 21:00:00\",\n            \"amount\": 31.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 172,\n            \"dateFrom\": \"2019-08-31 21:00:00\",\n            \"dateTo\": \"2019-09-29 21:00:00\",\n            \"amount\": 19.9,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 173,\n            \"dateFrom\": \"2019-08-31 21:00:00\",\n            \"dateTo\": \"2019-09-29 21:00:00\",\n            \"amount\": 1.55,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 186,\n            \"dateFrom\": \"2019-08-31 21:00:00\",\n            \"dateTo\": \"2019-09-29 21:00:00\",\n            \"amount\": 14,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 190,\n            \"dateFrom\": \"2019-09-30 21:00:00\",\n            \"dateTo\": \"2019-10-30 22:00:00\",\n            \"amount\": 23.5,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 191,\n            \"dateFrom\": \"2019-09-30 21:00:00\",\n            \"dateTo\": \"2019-10-30 22:00:00\",\n            \"amount\": 9.4,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 192,\n            \"dateFrom\": \"2019-09-30 21:00:00\",\n            \"dateTo\": \"2019-10-30 22:00:00\",\n            \"amount\": 12.45,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 193,\n            \"dateFrom\": \"2019-09-30 21:00:00\",\n            \"dateTo\": \"2019-10-30 22:00:00\",\n            \"amount\": 9.35,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 194,\n            \"dateFrom\": \"2019-09-30 21:00:00\",\n            \"dateTo\": \"2019-10-30 22:00:00\",\n            \"amount\": 2.35,\n            \"paid\": 0,\n            \"operatorCredited\": \"nea_odos\",\n            \"operatorDebited\": \"aodos\",\n            \"Type\": \"debited\"\n        },\n        {\n            \"settlementID\": 195,\n            \"dateFrom\": \"2019-09-30 21:00:00\",\n            \"dateTo\": \"2019-10-30 22:00:00\",\n            \"amount\": 16.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 211,\n            \"dateFrom\": \"2019-10-31 22:00:00\",\n            \"dateTo\": \"2019-11-29 22:00:00\",\n            \"amount\": 18.1,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 212,\n            \"dateFrom\": \"2019-10-31 22:00:00\",\n            \"dateTo\": \"2019-11-29 22:00:00\",\n            \"amount\": 2.75,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 213,\n            \"dateFrom\": \"2019-10-31 22:00:00\",\n            \"dateTo\": \"2019-11-29 22:00:00\",\n            \"amount\": 2.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 214,\n            \"dateFrom\": \"2019-10-31 22:00:00\",\n            \"dateTo\": \"2019-11-29 22:00:00\",\n            \"amount\": 2.75,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 215,\n            \"dateFrom\": \"2019-10-31 22:00:00\",\n            \"dateTo\": \"2019-11-29 22:00:00\",\n            \"amount\": 5.7,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 220,\n            \"dateFrom\": \"2019-10-31 22:00:00\",\n            \"dateTo\": \"2019-11-29 22:00:00\",\n            \"amount\": 39.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 232,\n            \"dateFrom\": \"2019-11-30 22:00:00\",\n            \"dateTo\": \"2019-12-30 22:00:00\",\n            \"amount\": 35.1,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 233,\n            \"dateFrom\": \"2019-11-30 22:00:00\",\n            \"dateTo\": \"2019-12-30 22:00:00\",\n            \"amount\": 14.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 234,\n            \"dateFrom\": \"2019-11-30 22:00:00\",\n            \"dateTo\": \"2019-12-30 22:00:00\",\n            \"amount\": 4.5,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 235,\n            \"dateFrom\": \"2019-11-30 22:00:00\",\n            \"dateTo\": \"2019-12-30 22:00:00\",\n            \"amount\": 14.25,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 240,\n            \"dateFrom\": \"2019-11-30 22:00:00\",\n            \"dateTo\": \"2019-12-30 22:00:00\",\n            \"amount\": 22.4,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 252,\n            \"dateFrom\": \"2019-11-30 22:00:00\",\n            \"dateTo\": \"2019-12-30 22:00:00\",\n            \"amount\": 11.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 253,\n            \"dateFrom\": \"2019-12-31 22:00:00\",\n            \"dateTo\": \"2020-01-30 22:00:00\",\n            \"amount\": 8.7,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 254,\n            \"dateFrom\": \"2019-12-31 22:00:00\",\n            \"dateTo\": \"2020-01-30 22:00:00\",\n            \"amount\": 25.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 255,\n            \"dateFrom\": \"2019-12-31 22:00:00\",\n            \"dateTo\": \"2020-01-30 22:00:00\",\n            \"amount\": 23.7,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 256,\n            \"dateFrom\": \"2019-12-31 22:00:00\",\n            \"dateTo\": \"2020-01-30 22:00:00\",\n            \"amount\": 10.85,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 261,\n            \"dateFrom\": \"2019-12-31 22:00:00\",\n            \"dateTo\": \"2020-01-30 22:00:00\",\n            \"amount\": 33.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 273,\n            \"dateFrom\": \"2019-12-31 22:00:00\",\n            \"dateTo\": \"2020-01-30 22:00:00\",\n            \"amount\": 33.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 274,\n            \"dateFrom\": \"2020-01-31 22:00:00\",\n            \"dateTo\": \"2020-02-28 22:00:00\",\n            \"amount\": 21.95,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 275,\n            \"dateFrom\": \"2020-01-31 22:00:00\",\n            \"dateTo\": \"2020-02-28 22:00:00\",\n            \"amount\": 9.4,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 276,\n            \"dateFrom\": \"2020-01-31 22:00:00\",\n            \"dateTo\": \"2020-02-28 22:00:00\",\n            \"amount\": 18.35,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 277,\n            \"dateFrom\": \"2020-01-31 22:00:00\",\n            \"dateTo\": \"2020-02-28 22:00:00\",\n            \"amount\": 17.9,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 278,\n            \"dateFrom\": \"2020-01-31 22:00:00\",\n            \"dateTo\": \"2020-02-28 22:00:00\",\n            \"amount\": 17.55,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 279,\n            \"dateFrom\": \"2020-01-31 22:00:00\",\n            \"dateTo\": \"2020-02-28 22:00:00\",\n            \"amount\": 6.3,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 295,\n            \"dateFrom\": \"2020-02-29 22:00:00\",\n            \"dateTo\": \"2020-03-30 21:00:00\",\n            \"amount\": 17.9,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 296,\n            \"dateFrom\": \"2020-02-29 22:00:00\",\n            \"dateTo\": \"2020-03-30 21:00:00\",\n            \"amount\": 15.15,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 297,\n            \"dateFrom\": \"2020-02-29 22:00:00\",\n            \"dateTo\": \"2020-03-30 21:00:00\",\n            \"amount\": 4.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 298,\n            \"dateFrom\": \"2020-02-29 22:00:00\",\n            \"dateTo\": \"2020-03-30 21:00:00\",\n            \"amount\": 1,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 299,\n            \"dateFrom\": \"2020-02-29 22:00:00\",\n            \"dateTo\": \"2020-03-30 21:00:00\",\n            \"amount\": 14.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 305,\n            \"dateFrom\": \"2020-02-29 22:00:00\",\n            \"dateTo\": \"2020-03-30 21:00:00\",\n            \"amount\": 39.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 316,\n            \"dateFrom\": \"2020-03-31 21:00:00\",\n            \"dateTo\": \"2020-04-29 21:00:00\",\n            \"amount\": 7.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 317,\n            \"dateFrom\": \"2020-03-31 21:00:00\",\n            \"dateTo\": \"2020-04-29 21:00:00\",\n            \"amount\": 7.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 318,\n            \"dateFrom\": \"2020-03-31 21:00:00\",\n            \"dateTo\": \"2020-04-29 21:00:00\",\n            \"amount\": 22.05,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 319,\n            \"dateFrom\": \"2020-03-31 21:00:00\",\n            \"dateTo\": \"2020-04-29 21:00:00\",\n            \"amount\": 12.25,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 320,\n            \"dateFrom\": \"2020-03-31 21:00:00\",\n            \"dateTo\": \"2020-04-29 21:00:00\",\n            \"amount\": 20.55,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 325,\n            \"dateFrom\": \"2020-03-31 21:00:00\",\n            \"dateTo\": \"2020-04-29 21:00:00\",\n            \"amount\": 28,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 337,\n            \"dateFrom\": \"2020-04-30 21:00:00\",\n            \"dateTo\": \"2020-05-30 21:00:00\",\n            \"amount\": 18,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 338,\n            \"dateFrom\": \"2020-04-30 21:00:00\",\n            \"dateTo\": \"2020-05-30 21:00:00\",\n            \"amount\": 10.3,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 339,\n            \"dateFrom\": \"2020-04-30 21:00:00\",\n            \"dateTo\": \"2020-05-30 21:00:00\",\n            \"amount\": 14.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 340,\n            \"dateFrom\": \"2020-04-30 21:00:00\",\n            \"dateTo\": \"2020-05-30 21:00:00\",\n            \"amount\": 8.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 341,\n            \"dateFrom\": \"2020-04-30 21:00:00\",\n            \"dateTo\": \"2020-05-30 21:00:00\",\n            \"amount\": 13.9,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 346,\n            \"dateFrom\": \"2020-04-30 21:00:00\",\n            \"dateTo\": \"2020-05-30 21:00:00\",\n            \"amount\": 22.4,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 358,\n            \"dateFrom\": \"2020-05-31 21:00:00\",\n            \"dateTo\": \"2020-06-29 21:00:00\",\n            \"amount\": 25.1,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 359,\n            \"dateFrom\": \"2020-05-31 21:00:00\",\n            \"dateTo\": \"2020-06-29 21:00:00\",\n            \"amount\": 18.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 360,\n            \"dateFrom\": \"2020-05-31 21:00:00\",\n            \"dateTo\": \"2020-06-29 21:00:00\",\n            \"amount\": 6.1,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 361,\n            \"dateFrom\": \"2020-05-31 21:00:00\",\n            \"dateTo\": \"2020-06-29 21:00:00\",\n            \"amount\": 8.95,\n            \"paid\": 0,\n            \"operatorCredited\": \"nea_odos\",\n            \"operatorDebited\": \"aodos\",\n            \"Type\": \"debited\"\n        },\n        {\n            \"settlementID\": 362,\n            \"dateFrom\": \"2020-05-31 21:00:00\",\n            \"dateTo\": \"2020-06-29 21:00:00\",\n            \"amount\": 16.5,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 367,\n            \"dateFrom\": \"2020-05-31 21:00:00\",\n            \"dateTo\": \"2020-06-29 21:00:00\",\n            \"amount\": 30.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 379,\n            \"dateFrom\": \"2020-06-30 21:00:00\",\n            \"dateTo\": \"2020-07-30 21:00:00\",\n            \"amount\": 6.85,\n            \"paid\": 0,\n            \"operatorCredited\": \"egnatia\",\n            \"operatorDebited\": \"aodos\",\n            \"Type\": \"debited\"\n        },\n        {\n            \"settlementID\": 380,\n            \"dateFrom\": \"2020-06-30 21:00:00\",\n            \"dateTo\": \"2020-07-30 21:00:00\",\n            \"amount\": 18.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 381,\n            \"dateFrom\": \"2020-06-30 21:00:00\",\n            \"dateTo\": \"2020-07-30 21:00:00\",\n            \"amount\": 12,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 382,\n            \"dateFrom\": \"2020-06-30 21:00:00\",\n            \"dateTo\": \"2020-07-30 21:00:00\",\n            \"amount\": 16.7,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 383,\n            \"dateFrom\": \"2020-06-30 21:00:00\",\n            \"dateTo\": \"2020-07-30 21:00:00\",\n            \"amount\": 9.65,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 388,\n            \"dateFrom\": \"2020-06-30 21:00:00\",\n            \"dateTo\": \"2020-07-30 21:00:00\",\n            \"amount\": 28,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 400,\n            \"dateFrom\": \"2020-07-31 21:00:00\",\n            \"dateTo\": \"2020-08-30 21:00:00\",\n            \"amount\": 12.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 401,\n            \"dateFrom\": \"2020-07-31 21:00:00\",\n            \"dateTo\": \"2020-08-30 21:00:00\",\n            \"amount\": 29,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 402,\n            \"dateFrom\": \"2020-07-31 21:00:00\",\n            \"dateTo\": \"2020-08-30 21:00:00\",\n            \"amount\": 19.3,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 403,\n            \"dateFrom\": \"2020-07-31 21:00:00\",\n            \"dateTo\": \"2020-08-30 21:00:00\",\n            \"amount\": 11.5,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 404,\n            \"dateFrom\": \"2020-07-31 21:00:00\",\n            \"dateTo\": \"2020-08-30 21:00:00\",\n            \"amount\": 16.3,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 405,\n            \"dateFrom\": \"2020-07-31 21:00:00\",\n            \"dateTo\": \"2020-08-30 21:00:00\",\n            \"amount\": 6.1,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 421,\n            \"dateFrom\": \"2020-08-31 21:00:00\",\n            \"dateTo\": \"2020-09-29 21:00:00\",\n            \"amount\": 14.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 422,\n            \"dateFrom\": \"2020-08-31 21:00:00\",\n            \"dateTo\": \"2020-09-29 21:00:00\",\n            \"amount\": 29.15,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 423,\n            \"dateFrom\": \"2020-08-31 21:00:00\",\n            \"dateTo\": \"2020-09-29 21:00:00\",\n            \"amount\": 18,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 424,\n            \"dateFrom\": \"2020-08-31 21:00:00\",\n            \"dateTo\": \"2020-09-29 21:00:00\",\n            \"amount\": 3.7,\n            \"paid\": 0,\n            \"operatorCredited\": \"nea_odos\",\n            \"operatorDebited\": \"aodos\",\n            \"Type\": \"debited\"\n        },\n        {\n            \"settlementID\": 425,\n            \"dateFrom\": \"2020-08-31 21:00:00\",\n            \"dateTo\": \"2020-09-29 21:00:00\",\n            \"amount\": 7.25,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 430,\n            \"dateFrom\": \"2020-08-31 21:00:00\",\n            \"dateTo\": \"2020-09-29 21:00:00\",\n            \"amount\": 25.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 442,\n            \"dateFrom\": \"2020-09-30 21:00:00\",\n            \"dateTo\": \"2020-10-30 22:00:00\",\n            \"amount\": 6.1,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 443,\n            \"dateFrom\": \"2020-09-30 21:00:00\",\n            \"dateTo\": \"2020-10-30 22:00:00\",\n            \"amount\": 3.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 444,\n            \"dateFrom\": \"2020-09-30 21:00:00\",\n            \"dateTo\": \"2020-10-30 22:00:00\",\n            \"amount\": 20.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 445,\n            \"dateFrom\": \"2020-09-30 21:00:00\",\n            \"dateTo\": \"2020-10-30 22:00:00\",\n            \"amount\": 9.7,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 446,\n            \"dateFrom\": \"2020-09-30 21:00:00\",\n            \"dateTo\": \"2020-10-30 22:00:00\",\n            \"amount\": 4.7,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 447,\n            \"dateFrom\": \"2020-09-30 21:00:00\",\n            \"dateTo\": \"2020-10-30 22:00:00\",\n            \"amount\": 34.4,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 463,\n            \"dateFrom\": \"2020-10-31 22:00:00\",\n            \"dateTo\": \"2020-11-29 22:00:00\",\n            \"amount\": 23.05,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 464,\n            \"dateFrom\": \"2020-10-31 22:00:00\",\n            \"dateTo\": \"2020-11-29 22:00:00\",\n            \"amount\": 11.9,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 465,\n            \"dateFrom\": \"2020-10-31 22:00:00\",\n            \"dateTo\": \"2020-11-29 22:00:00\",\n            \"amount\": 17.4,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 466,\n            \"dateFrom\": \"2020-10-31 22:00:00\",\n            \"dateTo\": \"2020-11-29 22:00:00\",\n            \"amount\": 13.9,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 467,\n            \"dateFrom\": \"2020-10-31 22:00:00\",\n            \"dateTo\": \"2020-11-29 22:00:00\",\n            \"amount\": 1.65,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 472,\n            \"dateFrom\": \"2020-10-31 22:00:00\",\n            \"dateTo\": \"2020-11-29 22:00:00\",\n            \"amount\": 19.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 484,\n            \"dateFrom\": \"2020-11-30 22:00:00\",\n            \"dateTo\": \"2020-12-30 22:00:00\",\n            \"amount\": 13.65,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 485,\n            \"dateFrom\": \"2020-11-30 22:00:00\",\n            \"dateTo\": \"2020-12-30 22:00:00\",\n            \"amount\": 17.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 486,\n            \"dateFrom\": \"2020-11-30 22:00:00\",\n            \"dateTo\": \"2020-12-30 22:00:00\",\n            \"amount\": 19.9,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 487,\n            \"dateFrom\": \"2020-11-30 22:00:00\",\n            \"dateTo\": \"2020-12-30 22:00:00\",\n            \"amount\": 5.9,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 488,\n            \"dateFrom\": \"2020-11-30 22:00:00\",\n            \"dateTo\": \"2020-12-30 22:00:00\",\n            \"amount\": 0,\n            \"paid\": 0,\n            \"operatorCredited\": \"olympia_odos\",\n            \"operatorDebited\": \"aodos\",\n            \"Type\": \"debited\"\n        },\n        {\n            \"settlementID\": 493,\n            \"dateFrom\": \"2020-11-30 22:00:00\",\n            \"dateTo\": \"2020-12-30 22:00:00\",\n            \"amount\": 39.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 505,\n            \"dateFrom\": \"2020-12-31 22:00:00\",\n            \"dateTo\": \"2021-01-30 22:00:00\",\n            \"amount\": 5.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"egnatia\",\n            \"operatorDebited\": \"aodos\",\n            \"Type\": \"debited\"\n        },\n        {\n            \"settlementID\": 506,\n            \"dateFrom\": \"2020-12-31 22:00:00\",\n            \"dateTo\": \"2021-01-30 22:00:00\",\n            \"amount\": 15,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 507,\n            \"dateFrom\": \"2020-12-31 22:00:00\",\n            \"dateTo\": \"2021-01-30 22:00:00\",\n            \"amount\": 29.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 508,\n            \"dateFrom\": \"2020-12-31 22:00:00\",\n            \"dateTo\": \"2021-01-30 22:00:00\",\n            \"amount\": 25.3,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 509,\n            \"dateFrom\": \"2020-12-31 22:00:00\",\n            \"dateTo\": \"2021-01-30 22:00:00\",\n            \"amount\": 7.3,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 510,\n            \"dateFrom\": \"2020-12-31 22:00:00\",\n            \"dateTo\": \"2021-01-30 22:00:00\",\n            \"amount\": 14.3,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 526,\n            \"dateFrom\": \"2021-01-31 22:00:00\",\n            \"dateTo\": \"2021-02-27 22:00:00\",\n            \"amount\": 22.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 527,\n            \"dateFrom\": \"2021-01-31 22:00:00\",\n            \"dateTo\": \"2021-02-27 22:00:00\",\n            \"amount\": 20.25,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 528,\n            \"dateFrom\": \"2021-01-31 22:00:00\",\n            \"dateTo\": \"2021-02-27 22:00:00\",\n            \"amount\": 23,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 529,\n            \"dateFrom\": \"2021-01-31 22:00:00\",\n            \"dateTo\": \"2021-02-27 22:00:00\",\n            \"amount\": 6.45,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 530,\n            \"dateFrom\": \"2021-01-31 22:00:00\",\n            \"dateTo\": \"2021-02-27 22:00:00\",\n            \"amount\": 11.5,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 535,\n            \"dateFrom\": \"2021-01-31 22:00:00\",\n            \"dateTo\": \"2021-02-27 22:00:00\",\n            \"amount\": 11.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 547,\n            \"dateFrom\": \"2021-02-28 22:00:00\",\n            \"dateTo\": \"2021-03-30 21:00:00\",\n            \"amount\": 20.5,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 548,\n            \"dateFrom\": \"2021-02-28 22:00:00\",\n            \"dateTo\": \"2021-03-30 21:00:00\",\n            \"amount\": 16.35,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 549,\n            \"dateFrom\": \"2021-02-28 22:00:00\",\n            \"dateTo\": \"2021-03-30 21:00:00\",\n            \"amount\": 13.55,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 550,\n            \"dateFrom\": \"2021-02-28 22:00:00\",\n            \"dateTo\": \"2021-03-30 21:00:00\",\n            \"amount\": 37.25,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 551,\n            \"dateFrom\": \"2021-02-28 22:00:00\",\n            \"dateTo\": \"2021-03-30 21:00:00\",\n            \"amount\": 12.1,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 556,\n            \"dateFrom\": \"2021-02-28 22:00:00\",\n            \"dateTo\": \"2021-03-30 21:00:00\",\n            \"amount\": 28,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 568,\n            \"dateFrom\": \"2021-03-31 21:00:00\",\n            \"dateTo\": \"2021-04-29 21:00:00\",\n            \"amount\": 7.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 569,\n            \"dateFrom\": \"2021-03-31 21:00:00\",\n            \"dateTo\": \"2021-04-29 21:00:00\",\n            \"amount\": 11.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 570,\n            \"dateFrom\": \"2021-03-31 21:00:00\",\n            \"dateTo\": \"2021-04-29 21:00:00\",\n            \"amount\": 22.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 571,\n            \"dateFrom\": \"2021-03-31 21:00:00\",\n            \"dateTo\": \"2021-04-29 21:00:00\",\n            \"amount\": 23.45,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 572,\n            \"dateFrom\": \"2021-03-31 21:00:00\",\n            \"dateTo\": \"2021-04-29 21:00:00\",\n            \"amount\": 3.4,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 578,\n            \"dateFrom\": \"2021-03-31 21:00:00\",\n            \"dateTo\": \"2021-04-29 21:00:00\",\n            \"amount\": 30.8,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 589,\n            \"dateFrom\": \"2021-04-30 21:00:00\",\n            \"dateTo\": \"2021-05-30 21:00:00\",\n            \"amount\": 17.45,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 590,\n            \"dateFrom\": \"2021-04-30 21:00:00\",\n            \"dateTo\": \"2021-05-30 21:00:00\",\n            \"amount\": 6.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 591,\n            \"dateFrom\": \"2021-04-30 21:00:00\",\n            \"dateTo\": \"2021-05-30 21:00:00\",\n            \"amount\": 2.3,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 592,\n            \"dateFrom\": \"2021-04-30 21:00:00\",\n            \"dateTo\": \"2021-05-30 21:00:00\",\n            \"amount\": 15.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 598,\n            \"dateFrom\": \"2021-04-30 21:00:00\",\n            \"dateTo\": \"2021-05-30 21:00:00\",\n            \"amount\": 22.4,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 603,\n            \"dateFrom\": \"2021-04-30 21:00:00\",\n            \"dateTo\": \"2021-05-30 21:00:00\",\n            \"amount\": 19.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 610,\n            \"dateFrom\": \"2021-05-31 21:00:00\",\n            \"dateTo\": \"2021-06-29 21:00:00\",\n            \"amount\": 7.95,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 611,\n            \"dateFrom\": \"2021-05-31 21:00:00\",\n            \"dateTo\": \"2021-06-29 21:00:00\",\n            \"amount\": 12.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 612,\n            \"dateFrom\": \"2021-05-31 21:00:00\",\n            \"dateTo\": \"2021-06-29 21:00:00\",\n            \"amount\": 25.5,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 613,\n            \"dateFrom\": \"2021-05-31 21:00:00\",\n            \"dateTo\": \"2021-06-29 21:00:00\",\n            \"amount\": 11.7,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 614,\n            \"dateFrom\": \"2021-05-31 21:00:00\",\n            \"dateTo\": \"2021-06-29 21:00:00\",\n            \"amount\": 2.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"olympia_odos\",\n            \"operatorDebited\": \"aodos\",\n            \"Type\": \"debited\"\n        },\n        {\n            \"settlementID\": 620,\n            \"dateFrom\": \"2021-05-31 21:00:00\",\n            \"dateTo\": \"2021-06-29 21:00:00\",\n            \"amount\": 19.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 631,\n            \"dateFrom\": \"2021-06-30 21:00:00\",\n            \"dateTo\": \"2021-07-30 21:00:00\",\n            \"amount\": 12.5,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 632,\n            \"dateFrom\": \"2021-06-30 21:00:00\",\n            \"dateTo\": \"2021-07-30 21:00:00\",\n            \"amount\": 22.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 633,\n            \"dateFrom\": \"2021-06-30 21:00:00\",\n            \"dateTo\": \"2021-07-30 21:00:00\",\n            \"amount\": 9.5,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 634,\n            \"dateFrom\": \"2021-06-30 21:00:00\",\n            \"dateTo\": \"2021-07-30 21:00:00\",\n            \"amount\": 8.45,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 635,\n            \"dateFrom\": \"2021-06-30 21:00:00\",\n            \"dateTo\": \"2021-07-30 21:00:00\",\n            \"amount\": 15.3,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 640,\n            \"dateFrom\": \"2021-06-30 21:00:00\",\n            \"dateTo\": \"2021-07-30 21:00:00\",\n            \"amount\": 25.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 652,\n            \"dateFrom\": \"2021-07-31 21:00:00\",\n            \"dateTo\": \"2021-08-30 21:00:00\",\n            \"amount\": 24.7,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 653,\n            \"dateFrom\": \"2021-07-31 21:00:00\",\n            \"dateTo\": \"2021-08-30 21:00:00\",\n            \"amount\": 36.35,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 654,\n            \"dateFrom\": \"2021-07-31 21:00:00\",\n            \"dateTo\": \"2021-08-30 21:00:00\",\n            \"amount\": 18.1,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 655,\n            \"dateFrom\": \"2021-07-31 21:00:00\",\n            \"dateTo\": \"2021-08-30 21:00:00\",\n            \"amount\": 4.7,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 656,\n            \"dateFrom\": \"2021-07-31 21:00:00\",\n            \"dateTo\": \"2021-08-30 21:00:00\",\n            \"amount\": 22.5,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 662,\n            \"dateFrom\": \"2021-07-31 21:00:00\",\n            \"dateTo\": \"2021-08-30 21:00:00\",\n            \"amount\": 36.4,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 673,\n            \"dateFrom\": \"2021-08-31 21:00:00\",\n            \"dateTo\": \"2021-09-29 21:00:00\",\n            \"amount\": 13.4,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 674,\n            \"dateFrom\": \"2021-08-31 21:00:00\",\n            \"dateTo\": \"2021-09-29 21:00:00\",\n            \"amount\": 20.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 675,\n            \"dateFrom\": \"2021-08-31 21:00:00\",\n            \"dateTo\": \"2021-09-29 21:00:00\",\n            \"amount\": 21.4,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 676,\n            \"dateFrom\": \"2021-08-31 21:00:00\",\n            \"dateTo\": \"2021-09-29 21:00:00\",\n            \"amount\": 9.25,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 677,\n            \"dateFrom\": \"2021-08-31 21:00:00\",\n            \"dateTo\": \"2021-09-29 21:00:00\",\n            \"amount\": 20.4,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 683,\n            \"dateFrom\": \"2021-08-31 21:00:00\",\n            \"dateTo\": \"2021-09-29 21:00:00\",\n            \"amount\": 25.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 694,\n            \"dateFrom\": \"2021-09-30 21:00:00\",\n            \"dateTo\": \"2021-10-30 21:00:00\",\n            \"amount\": 15.15,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 695,\n            \"dateFrom\": \"2021-09-30 21:00:00\",\n            \"dateTo\": \"2021-10-30 21:00:00\",\n            \"amount\": 2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 696,\n            \"dateFrom\": \"2021-09-30 21:00:00\",\n            \"dateTo\": \"2021-10-30 21:00:00\",\n            \"amount\": 12.25,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 697,\n            \"dateFrom\": \"2021-09-30 21:00:00\",\n            \"dateTo\": \"2021-10-30 21:00:00\",\n            \"amount\": 6.85,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"moreas\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 698,\n            \"dateFrom\": \"2021-09-30 21:00:00\",\n            \"dateTo\": \"2021-10-30 21:00:00\",\n            \"amount\": 9.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 699,\n            \"dateFrom\": \"2021-09-30 21:00:00\",\n            \"dateTo\": \"2021-10-30 21:00:00\",\n            \"amount\": 14.15,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 715,\n            \"dateFrom\": \"2021-10-31 22:00:00\",\n            \"dateTo\": \"2021-11-29 22:00:00\",\n            \"amount\": 10.3,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"egnatia\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 716,\n            \"dateFrom\": \"2021-10-31 22:00:00\",\n            \"dateTo\": \"2021-11-29 22:00:00\",\n            \"amount\": 4.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"kentriki_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 717,\n            \"dateFrom\": \"2021-10-31 22:00:00\",\n            \"dateTo\": \"2021-11-29 22:00:00\",\n            \"amount\": 4.1,\n            \"paid\": 0,\n            \"operatorCredited\": \"moreas\",\n            \"operatorDebited\": \"aodos\",\n            \"Type\": \"debited\"\n        },\n        {\n            \"settlementID\": 718,\n            \"dateFrom\": \"2021-10-31 22:00:00\",\n            \"dateTo\": \"2021-11-29 22:00:00\",\n            \"amount\": 8.2,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"nea_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 719,\n            \"dateFrom\": \"2021-10-31 22:00:00\",\n            \"dateTo\": \"2021-11-29 22:00:00\",\n            \"amount\": 0.05,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"olympia_odos\",\n            \"Type\": \"credit\"\n        },\n        {\n            \"settlementID\": 724,\n            \"dateFrom\": \"2021-10-31 22:00:00\",\n            \"dateTo\": \"2021-11-29 22:00:00\",\n            \"amount\": 19.6,\n            \"paid\": 0,\n            \"operatorCredited\": \"aodos\",\n            \"operatorDebited\": \"gefyra\",\n            \"Type\": \"credit\"\n        }\n    ]\n}"
 						},
 						{
 							"name": "GetSettlements",
 							"originalRequest": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "x-observatory-auth",
+										"value": "{{accessTokenHeader}}",
+										"description": "Μορφή: \"Bearer token\". Το token επιστρέφεται στο response του Login και καθορίζει τον χρήστη και τον λειτουργό στον οποίο υπάγεται ο χρήστης. ",
+										"type": "text"
+									}
+								],
 								"url": {
-									"raw": "https://localhost:9103/interoperability/api/settlements/GetSettlements/:op_ID?format=csv",
+									"raw": "https://localhost:9103/interoperability/api/settlements/GetSettlements/?format=csv",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -1141,20 +1491,13 @@
 										"api",
 										"settlements",
 										"GetSettlements",
-										":op_ID"
+										""
 									],
 									"query": [
 										{
 											"key": "format",
 											"value": "csv",
 											"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
-										}
-									],
-									"variable": [
-										{
-											"key": "op_ID",
-											"value": "aodos",
-											"description": "το ID του λειτουργού"
 										}
 									]
 								}
@@ -1168,20 +1511,36 @@
 									"value": "Express"
 								},
 								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "X-Requested-With,content-type,x-observatory-auth"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
 									"key": "Content-Type",
 									"value": "text/csv; charset=utf-8"
 								},
 								{
 									"key": "Content-Length",
-									"value": "172"
+									"value": "17588"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"ac-7+hBIlms8h2LGKjZktu2aGgPhrU\""
+									"value": "W/\"44b4-BY5l44Fy29fQtO1uoo8ydY6fjRQ\""
 								},
 								{
 									"key": "Date",
-									"value": "Tue, 21 Dec 2021 20:48:56 GMT"
+									"value": "Fri, 25 Feb 2022 14:46:18 GMT"
 								},
 								{
 									"key": "Connection",
@@ -1193,7 +1552,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "\"settlementID\",\"dateFrom\",\"dateTo\",\"amount\",\"paid\",\"operatorCredited\",\"operatorDebited\",\"Type\"\n1,\"2019-12-31 22:00:00\",\"2020-01-31 22:00:00\",123,1,\"aodos\",\"gefyra\",\"credit\""
+							"body": "\"settlementID\",\"dateFrom\",\"dateTo\",\"amount\",\"paid\",\"operatorCredited\",\"operatorDebited\",\"Type\"\n1,\"2018-12-31 22:00:00\",\"2019-01-30 22:00:00\",16.4,0,\"aodos\",\"egnatia\",\"credit\"\n2,\"2018-12-31 22:00:00\",\"2019-01-30 22:00:00\",19.2,0,\"aodos\",\"kentriki_odos\",\"credit\"\n3,\"2018-12-31 22:00:00\",\"2019-01-30 22:00:00\",1,0,\"moreas\",\"aodos\",\"debited\"\n4,\"2018-12-31 22:00:00\",\"2019-01-30 22:00:00\",21.2,0,\"aodos\",\"nea_odos\",\"credit\"\n5,\"2018-12-31 22:00:00\",\"2019-01-30 22:00:00\",2.45,0,\"olympia_odos\",\"aodos\",\"debited\"\n10,\"2018-12-31 22:00:00\",\"2019-01-30 22:00:00\",11.2,0,\"aodos\",\"gefyra\",\"credit\"\n22,\"2019-01-31 22:00:00\",\"2019-02-27 22:00:00\",19.5,0,\"aodos\",\"egnatia\",\"credit\"\n23,\"2019-01-31 22:00:00\",\"2019-02-27 22:00:00\",13.05,0,\"aodos\",\"kentriki_odos\",\"credit\"\n24,\"2019-01-31 22:00:00\",\"2019-02-27 22:00:00\",4,0,\"aodos\",\"moreas\",\"credit\"\n25,\"2019-01-31 22:00:00\",\"2019-02-27 22:00:00\",12.8,0,\"aodos\",\"nea_odos\",\"credit\"\n26,\"2019-01-31 22:00:00\",\"2019-02-27 22:00:00\",3.5,0,\"aodos\",\"olympia_odos\",\"credit\"\n31,\"2019-01-31 22:00:00\",\"2019-02-27 22:00:00\",19.6,0,\"aodos\",\"gefyra\",\"credit\"\n43,\"2019-02-28 22:00:00\",\"2019-03-30 22:00:00\",19.3,0,\"aodos\",\"egnatia\",\"credit\"\n44,\"2019-02-28 22:00:00\",\"2019-03-30 22:00:00\",11.8,0,\"aodos\",\"kentriki_odos\",\"credit\"\n45,\"2019-02-28 22:00:00\",\"2019-03-30 22:00:00\",24.1,0,\"aodos\",\"moreas\",\"credit\"\n46,\"2019-02-28 22:00:00\",\"2019-03-30 22:00:00\",9.05,0,\"aodos\",\"nea_odos\",\"credit\"\n47,\"2019-02-28 22:00:00\",\"2019-03-30 22:00:00\",9.85,0,\"aodos\",\"olympia_odos\",\"credit\"\n52,\"2019-02-28 22:00:00\",\"2019-03-30 22:00:00\",28,0,\"aodos\",\"gefyra\",\"credit\"\n64,\"2019-03-31 21:00:00\",\"2019-04-29 21:00:00\",29.55,0,\"aodos\",\"egnatia\",\"credit\"\n65,\"2019-03-31 21:00:00\",\"2019-04-29 21:00:00\",15.85,0,\"aodos\",\"kentriki_odos\",\"credit\"\n66,\"2019-03-31 21:00:00\",\"2019-04-29 21:00:00\",10,0,\"aodos\",\"moreas\",\"credit\"\n67,\"2019-03-31 21:00:00\",\"2019-04-29 21:00:00\",2.1,0,\"aodos\",\"nea_odos\",\"credit\"\n68,\"2019-03-31 21:00:00\",\"2019-04-29 21:00:00\",32.2,0,\"aodos\",\"olympia_odos\",\"credit\"\n73,\"2019-03-31 21:00:00\",\"2019-04-29 21:00:00\",14,0,\"aodos\",\"gefyra\",\"credit\"\n85,\"2019-04-30 21:00:00\",\"2019-05-30 21:00:00\",18.7,0,\"aodos\",\"egnatia\",\"credit\"\n86,\"2019-04-30 21:00:00\",\"2019-05-30 21:00:00\",6.6,0,\"aodos\",\"gefyra\",\"credit\"\n87,\"2019-04-30 21:00:00\",\"2019-05-30 21:00:00\",7.85,0,\"aodos\",\"kentriki_odos\",\"credit\"\n88,\"2019-04-30 21:00:00\",\"2019-05-30 21:00:00\",0.9,0,\"aodos\",\"moreas\",\"credit\"\n89,\"2019-04-30 21:00:00\",\"2019-05-30 21:00:00\",3.45,0,\"aodos\",\"nea_odos\",\"credit\"\n90,\"2019-04-30 21:00:00\",\"2019-05-30 21:00:00\",0.7,0,\"olympia_odos\",\"aodos\",\"debited\"\n106,\"2019-05-31 21:00:00\",\"2019-06-29 21:00:00\",28.1,0,\"aodos\",\"egnatia\",\"credit\"\n107,\"2019-05-31 21:00:00\",\"2019-06-29 21:00:00\",1.8,0,\"gefyra\",\"aodos\",\"debited\"\n108,\"2019-05-31 21:00:00\",\"2019-06-29 21:00:00\",9.1,0,\"aodos\",\"kentriki_odos\",\"credit\"\n109,\"2019-05-31 21:00:00\",\"2019-06-29 21:00:00\",0.4,0,\"aodos\",\"moreas\",\"credit\"\n110,\"2019-05-31 21:00:00\",\"2019-06-29 21:00:00\",4.7,0,\"aodos\",\"nea_odos\",\"credit\"\n111,\"2019-05-31 21:00:00\",\"2019-06-29 21:00:00\",12.5,0,\"aodos\",\"olympia_odos\",\"credit\"\n127,\"2019-06-30 21:00:00\",\"2019-07-30 21:00:00\",21.3,0,\"aodos\",\"egnatia\",\"credit\"\n128,\"2019-06-30 21:00:00\",\"2019-07-30 21:00:00\",31.8,0,\"aodos\",\"gefyra\",\"credit\"\n129,\"2019-06-30 21:00:00\",\"2019-07-30 21:00:00\",11.5,0,\"aodos\",\"kentriki_odos\",\"credit\"\n130,\"2019-06-30 21:00:00\",\"2019-07-30 21:00:00\",9.5,0,\"aodos\",\"moreas\",\"credit\"\n131,\"2019-06-30 21:00:00\",\"2019-07-30 21:00:00\",10.15,0,\"aodos\",\"nea_odos\",\"credit\"\n132,\"2019-06-30 21:00:00\",\"2019-07-30 21:00:00\",23.75,0,\"aodos\",\"olympia_odos\",\"credit\"\n148,\"2019-07-31 21:00:00\",\"2019-08-30 21:00:00\",15.25,0,\"aodos\",\"egnatia\",\"credit\"\n149,\"2019-07-31 21:00:00\",\"2019-08-30 21:00:00\",6.6,0,\"aodos\",\"gefyra\",\"credit\"\n150,\"2019-07-31 21:00:00\",\"2019-08-30 21:00:00\",7.65,0,\"aodos\",\"kentriki_odos\",\"credit\"\n151,\"2019-07-31 21:00:00\",\"2019-08-30 21:00:00\",13.45,0,\"aodos\",\"moreas\",\"credit\"\n152,\"2019-07-31 21:00:00\",\"2019-08-30 21:00:00\",6.7,0,\"nea_odos\",\"aodos\",\"debited\"\n153,\"2019-07-31 21:00:00\",\"2019-08-30 21:00:00\",16.8,0,\"aodos\",\"olympia_odos\",\"credit\"\n169,\"2019-08-31 21:00:00\",\"2019-09-29 21:00:00\",15.75,0,\"aodos\",\"egnatia\",\"credit\"\n170,\"2019-08-31 21:00:00\",\"2019-09-29 21:00:00\",12.2,0,\"aodos\",\"gefyra\",\"credit\"\n171,\"2019-08-31 21:00:00\",\"2019-09-29 21:00:00\",31.6,0,\"aodos\",\"kentriki_odos\",\"credit\"\n172,\"2019-08-31 21:00:00\",\"2019-09-29 21:00:00\",19.9,0,\"aodos\",\"nea_odos\",\"credit\"\n173,\"2019-08-31 21:00:00\",\"2019-09-29 21:00:00\",1.55,0,\"aodos\",\"olympia_odos\",\"credit\"\n186,\"2019-08-31 21:00:00\",\"2019-09-29 21:00:00\",14,0,\"aodos\",\"moreas\",\"credit\"\n190,\"2019-09-30 21:00:00\",\"2019-10-30 22:00:00\",23.5,0,\"aodos\",\"egnatia\",\"credit\"\n191,\"2019-09-30 21:00:00\",\"2019-10-30 22:00:00\",9.4,0,\"aodos\",\"gefyra\",\"credit\"\n192,\"2019-09-30 21:00:00\",\"2019-10-30 22:00:00\",12.45,0,\"aodos\",\"kentriki_odos\",\"credit\"\n193,\"2019-09-30 21:00:00\",\"2019-10-30 22:00:00\",9.35,0,\"aodos\",\"moreas\",\"credit\"\n194,\"2019-09-30 21:00:00\",\"2019-10-30 22:00:00\",2.35,0,\"nea_odos\",\"aodos\",\"debited\"\n195,\"2019-09-30 21:00:00\",\"2019-10-30 22:00:00\",16.8,0,\"aodos\",\"olympia_odos\",\"credit\"\n211,\"2019-10-31 22:00:00\",\"2019-11-29 22:00:00\",18.1,0,\"aodos\",\"egnatia\",\"credit\"\n212,\"2019-10-31 22:00:00\",\"2019-11-29 22:00:00\",2.75,0,\"aodos\",\"kentriki_odos\",\"credit\"\n213,\"2019-10-31 22:00:00\",\"2019-11-29 22:00:00\",2.8,0,\"aodos\",\"moreas\",\"credit\"\n214,\"2019-10-31 22:00:00\",\"2019-11-29 22:00:00\",2.75,0,\"aodos\",\"nea_odos\",\"credit\"\n215,\"2019-10-31 22:00:00\",\"2019-11-29 22:00:00\",5.7,0,\"aodos\",\"olympia_odos\",\"credit\"\n220,\"2019-10-31 22:00:00\",\"2019-11-29 22:00:00\",39.2,0,\"aodos\",\"gefyra\",\"credit\"\n232,\"2019-11-30 22:00:00\",\"2019-12-30 22:00:00\",35.1,0,\"aodos\",\"egnatia\",\"credit\"\n233,\"2019-11-30 22:00:00\",\"2019-12-30 22:00:00\",14.2,0,\"aodos\",\"kentriki_odos\",\"credit\"\n234,\"2019-11-30 22:00:00\",\"2019-12-30 22:00:00\",4.5,0,\"aodos\",\"moreas\",\"credit\"\n235,\"2019-11-30 22:00:00\",\"2019-12-30 22:00:00\",14.25,0,\"aodos\",\"nea_odos\",\"credit\"\n240,\"2019-11-30 22:00:00\",\"2019-12-30 22:00:00\",22.4,0,\"aodos\",\"gefyra\",\"credit\"\n252,\"2019-11-30 22:00:00\",\"2019-12-30 22:00:00\",11.2,0,\"aodos\",\"olympia_odos\",\"credit\"\n253,\"2019-12-31 22:00:00\",\"2020-01-30 22:00:00\",8.7,0,\"aodos\",\"egnatia\",\"credit\"\n254,\"2019-12-31 22:00:00\",\"2020-01-30 22:00:00\",25.2,0,\"aodos\",\"kentriki_odos\",\"credit\"\n255,\"2019-12-31 22:00:00\",\"2020-01-30 22:00:00\",23.7,0,\"aodos\",\"moreas\",\"credit\"\n256,\"2019-12-31 22:00:00\",\"2020-01-30 22:00:00\",10.85,0,\"aodos\",\"nea_odos\",\"credit\"\n261,\"2019-12-31 22:00:00\",\"2020-01-30 22:00:00\",33.6,0,\"aodos\",\"gefyra\",\"credit\"\n273,\"2019-12-31 22:00:00\",\"2020-01-30 22:00:00\",33.6,0,\"aodos\",\"olympia_odos\",\"credit\"\n274,\"2020-01-31 22:00:00\",\"2020-02-28 22:00:00\",21.95,0,\"aodos\",\"egnatia\",\"credit\"\n275,\"2020-01-31 22:00:00\",\"2020-02-28 22:00:00\",9.4,0,\"aodos\",\"gefyra\",\"credit\"\n276,\"2020-01-31 22:00:00\",\"2020-02-28 22:00:00\",18.35,0,\"aodos\",\"kentriki_odos\",\"credit\"\n277,\"2020-01-31 22:00:00\",\"2020-02-28 22:00:00\",17.9,0,\"aodos\",\"moreas\",\"credit\"\n278,\"2020-01-31 22:00:00\",\"2020-02-28 22:00:00\",17.55,0,\"aodos\",\"nea_odos\",\"credit\"\n279,\"2020-01-31 22:00:00\",\"2020-02-28 22:00:00\",6.3,0,\"aodos\",\"olympia_odos\",\"credit\"\n295,\"2020-02-29 22:00:00\",\"2020-03-30 21:00:00\",17.9,0,\"aodos\",\"egnatia\",\"credit\"\n296,\"2020-02-29 22:00:00\",\"2020-03-30 21:00:00\",15.15,0,\"aodos\",\"kentriki_odos\",\"credit\"\n297,\"2020-02-29 22:00:00\",\"2020-03-30 21:00:00\",4.2,0,\"aodos\",\"moreas\",\"credit\"\n298,\"2020-02-29 22:00:00\",\"2020-03-30 21:00:00\",1,0,\"aodos\",\"nea_odos\",\"credit\"\n299,\"2020-02-29 22:00:00\",\"2020-03-30 21:00:00\",14.8,0,\"aodos\",\"olympia_odos\",\"credit\"\n305,\"2020-02-29 22:00:00\",\"2020-03-30 21:00:00\",39.2,0,\"aodos\",\"gefyra\",\"credit\"\n316,\"2020-03-31 21:00:00\",\"2020-04-29 21:00:00\",7.8,0,\"aodos\",\"egnatia\",\"credit\"\n317,\"2020-03-31 21:00:00\",\"2020-04-29 21:00:00\",7.6,0,\"aodos\",\"kentriki_odos\",\"credit\"\n318,\"2020-03-31 21:00:00\",\"2020-04-29 21:00:00\",22.05,0,\"aodos\",\"moreas\",\"credit\"\n319,\"2020-03-31 21:00:00\",\"2020-04-29 21:00:00\",12.25,0,\"aodos\",\"nea_odos\",\"credit\"\n320,\"2020-03-31 21:00:00\",\"2020-04-29 21:00:00\",20.55,0,\"aodos\",\"olympia_odos\",\"credit\"\n325,\"2020-03-31 21:00:00\",\"2020-04-29 21:00:00\",28,0,\"aodos\",\"gefyra\",\"credit\"\n337,\"2020-04-30 21:00:00\",\"2020-05-30 21:00:00\",18,0,\"aodos\",\"egnatia\",\"credit\"\n338,\"2020-04-30 21:00:00\",\"2020-05-30 21:00:00\",10.3,0,\"aodos\",\"kentriki_odos\",\"credit\"\n339,\"2020-04-30 21:00:00\",\"2020-05-30 21:00:00\",14.6,0,\"aodos\",\"moreas\",\"credit\"\n340,\"2020-04-30 21:00:00\",\"2020-05-30 21:00:00\",8.8,0,\"aodos\",\"nea_odos\",\"credit\"\n341,\"2020-04-30 21:00:00\",\"2020-05-30 21:00:00\",13.9,0,\"aodos\",\"olympia_odos\",\"credit\"\n346,\"2020-04-30 21:00:00\",\"2020-05-30 21:00:00\",22.4,0,\"aodos\",\"gefyra\",\"credit\"\n358,\"2020-05-31 21:00:00\",\"2020-06-29 21:00:00\",25.1,0,\"aodos\",\"egnatia\",\"credit\"\n359,\"2020-05-31 21:00:00\",\"2020-06-29 21:00:00\",18.2,0,\"aodos\",\"kentriki_odos\",\"credit\"\n360,\"2020-05-31 21:00:00\",\"2020-06-29 21:00:00\",6.1,0,\"aodos\",\"moreas\",\"credit\"\n361,\"2020-05-31 21:00:00\",\"2020-06-29 21:00:00\",8.95,0,\"nea_odos\",\"aodos\",\"debited\"\n362,\"2020-05-31 21:00:00\",\"2020-06-29 21:00:00\",16.5,0,\"aodos\",\"olympia_odos\",\"credit\"\n367,\"2020-05-31 21:00:00\",\"2020-06-29 21:00:00\",30.8,0,\"aodos\",\"gefyra\",\"credit\"\n379,\"2020-06-30 21:00:00\",\"2020-07-30 21:00:00\",6.85,0,\"egnatia\",\"aodos\",\"debited\"\n380,\"2020-06-30 21:00:00\",\"2020-07-30 21:00:00\",18.6,0,\"aodos\",\"kentriki_odos\",\"credit\"\n381,\"2020-06-30 21:00:00\",\"2020-07-30 21:00:00\",12,0,\"aodos\",\"moreas\",\"credit\"\n382,\"2020-06-30 21:00:00\",\"2020-07-30 21:00:00\",16.7,0,\"aodos\",\"nea_odos\",\"credit\"\n383,\"2020-06-30 21:00:00\",\"2020-07-30 21:00:00\",9.65,0,\"aodos\",\"olympia_odos\",\"credit\"\n388,\"2020-06-30 21:00:00\",\"2020-07-30 21:00:00\",28,0,\"aodos\",\"gefyra\",\"credit\"\n400,\"2020-07-31 21:00:00\",\"2020-08-30 21:00:00\",12.8,0,\"aodos\",\"egnatia\",\"credit\"\n401,\"2020-07-31 21:00:00\",\"2020-08-30 21:00:00\",29,0,\"aodos\",\"gefyra\",\"credit\"\n402,\"2020-07-31 21:00:00\",\"2020-08-30 21:00:00\",19.3,0,\"aodos\",\"kentriki_odos\",\"credit\"\n403,\"2020-07-31 21:00:00\",\"2020-08-30 21:00:00\",11.5,0,\"aodos\",\"moreas\",\"credit\"\n404,\"2020-07-31 21:00:00\",\"2020-08-30 21:00:00\",16.3,0,\"aodos\",\"nea_odos\",\"credit\"\n405,\"2020-07-31 21:00:00\",\"2020-08-30 21:00:00\",6.1,0,\"aodos\",\"olympia_odos\",\"credit\"\n421,\"2020-08-31 21:00:00\",\"2020-09-29 21:00:00\",14.2,0,\"aodos\",\"egnatia\",\"credit\"\n422,\"2020-08-31 21:00:00\",\"2020-09-29 21:00:00\",29.15,0,\"aodos\",\"kentriki_odos\",\"credit\"\n423,\"2020-08-31 21:00:00\",\"2020-09-29 21:00:00\",18,0,\"aodos\",\"moreas\",\"credit\"\n424,\"2020-08-31 21:00:00\",\"2020-09-29 21:00:00\",3.7,0,\"nea_odos\",\"aodos\",\"debited\"\n425,\"2020-08-31 21:00:00\",\"2020-09-29 21:00:00\",7.25,0,\"aodos\",\"olympia_odos\",\"credit\"\n430,\"2020-08-31 21:00:00\",\"2020-09-29 21:00:00\",25.2,0,\"aodos\",\"gefyra\",\"credit\"\n442,\"2020-09-30 21:00:00\",\"2020-10-30 22:00:00\",6.1,0,\"aodos\",\"egnatia\",\"credit\"\n443,\"2020-09-30 21:00:00\",\"2020-10-30 22:00:00\",3.8,0,\"aodos\",\"gefyra\",\"credit\"\n444,\"2020-09-30 21:00:00\",\"2020-10-30 22:00:00\",20.2,0,\"aodos\",\"kentriki_odos\",\"credit\"\n445,\"2020-09-30 21:00:00\",\"2020-10-30 22:00:00\",9.7,0,\"aodos\",\"moreas\",\"credit\"\n446,\"2020-09-30 21:00:00\",\"2020-10-30 22:00:00\",4.7,0,\"aodos\",\"nea_odos\",\"credit\"\n447,\"2020-09-30 21:00:00\",\"2020-10-30 22:00:00\",34.4,0,\"aodos\",\"olympia_odos\",\"credit\"\n463,\"2020-10-31 22:00:00\",\"2020-11-29 22:00:00\",23.05,0,\"aodos\",\"egnatia\",\"credit\"\n464,\"2020-10-31 22:00:00\",\"2020-11-29 22:00:00\",11.9,0,\"aodos\",\"kentriki_odos\",\"credit\"\n465,\"2020-10-31 22:00:00\",\"2020-11-29 22:00:00\",17.4,0,\"aodos\",\"moreas\",\"credit\"\n466,\"2020-10-31 22:00:00\",\"2020-11-29 22:00:00\",13.9,0,\"aodos\",\"nea_odos\",\"credit\"\n467,\"2020-10-31 22:00:00\",\"2020-11-29 22:00:00\",1.65,0,\"aodos\",\"olympia_odos\",\"credit\"\n472,\"2020-10-31 22:00:00\",\"2020-11-29 22:00:00\",19.6,0,\"aodos\",\"gefyra\",\"credit\"\n484,\"2020-11-30 22:00:00\",\"2020-12-30 22:00:00\",13.65,0,\"aodos\",\"egnatia\",\"credit\"\n485,\"2020-11-30 22:00:00\",\"2020-12-30 22:00:00\",17.8,0,\"aodos\",\"kentriki_odos\",\"credit\"\n486,\"2020-11-30 22:00:00\",\"2020-12-30 22:00:00\",19.9,0,\"aodos\",\"moreas\",\"credit\"\n487,\"2020-11-30 22:00:00\",\"2020-12-30 22:00:00\",5.9,0,\"aodos\",\"nea_odos\",\"credit\"\n488,\"2020-11-30 22:00:00\",\"2020-12-30 22:00:00\",0,0,\"olympia_odos\",\"aodos\",\"debited\"\n493,\"2020-11-30 22:00:00\",\"2020-12-30 22:00:00\",39.2,0,\"aodos\",\"gefyra\",\"credit\"\n505,\"2020-12-31 22:00:00\",\"2021-01-30 22:00:00\",5.8,0,\"egnatia\",\"aodos\",\"debited\"\n506,\"2020-12-31 22:00:00\",\"2021-01-30 22:00:00\",15,0,\"aodos\",\"gefyra\",\"credit\"\n507,\"2020-12-31 22:00:00\",\"2021-01-30 22:00:00\",29.8,0,\"aodos\",\"kentriki_odos\",\"credit\"\n508,\"2020-12-31 22:00:00\",\"2021-01-30 22:00:00\",25.3,0,\"aodos\",\"moreas\",\"credit\"\n509,\"2020-12-31 22:00:00\",\"2021-01-30 22:00:00\",7.3,0,\"aodos\",\"nea_odos\",\"credit\"\n510,\"2020-12-31 22:00:00\",\"2021-01-30 22:00:00\",14.3,0,\"aodos\",\"olympia_odos\",\"credit\"\n526,\"2021-01-31 22:00:00\",\"2021-02-27 22:00:00\",22.8,0,\"aodos\",\"egnatia\",\"credit\"\n527,\"2021-01-31 22:00:00\",\"2021-02-27 22:00:00\",20.25,0,\"aodos\",\"kentriki_odos\",\"credit\"\n528,\"2021-01-31 22:00:00\",\"2021-02-27 22:00:00\",23,0,\"aodos\",\"moreas\",\"credit\"\n529,\"2021-01-31 22:00:00\",\"2021-02-27 22:00:00\",6.45,0,\"aodos\",\"nea_odos\",\"credit\"\n530,\"2021-01-31 22:00:00\",\"2021-02-27 22:00:00\",11.5,0,\"aodos\",\"olympia_odos\",\"credit\"\n535,\"2021-01-31 22:00:00\",\"2021-02-27 22:00:00\",11.2,0,\"aodos\",\"gefyra\",\"credit\"\n547,\"2021-02-28 22:00:00\",\"2021-03-30 21:00:00\",20.5,0,\"aodos\",\"egnatia\",\"credit\"\n548,\"2021-02-28 22:00:00\",\"2021-03-30 21:00:00\",16.35,0,\"aodos\",\"kentriki_odos\",\"credit\"\n549,\"2021-02-28 22:00:00\",\"2021-03-30 21:00:00\",13.55,0,\"aodos\",\"moreas\",\"credit\"\n550,\"2021-02-28 22:00:00\",\"2021-03-30 21:00:00\",37.25,0,\"aodos\",\"nea_odos\",\"credit\"\n551,\"2021-02-28 22:00:00\",\"2021-03-30 21:00:00\",12.1,0,\"aodos\",\"olympia_odos\",\"credit\"\n556,\"2021-02-28 22:00:00\",\"2021-03-30 21:00:00\",28,0,\"aodos\",\"gefyra\",\"credit\"\n568,\"2021-03-31 21:00:00\",\"2021-04-29 21:00:00\",7.8,0,\"aodos\",\"egnatia\",\"credit\"\n569,\"2021-03-31 21:00:00\",\"2021-04-29 21:00:00\",11.2,0,\"aodos\",\"kentriki_odos\",\"credit\"\n570,\"2021-03-31 21:00:00\",\"2021-04-29 21:00:00\",22.2,0,\"aodos\",\"moreas\",\"credit\"\n571,\"2021-03-31 21:00:00\",\"2021-04-29 21:00:00\",23.45,0,\"aodos\",\"nea_odos\",\"credit\"\n572,\"2021-03-31 21:00:00\",\"2021-04-29 21:00:00\",3.4,0,\"aodos\",\"olympia_odos\",\"credit\"\n578,\"2021-03-31 21:00:00\",\"2021-04-29 21:00:00\",30.8,0,\"aodos\",\"gefyra\",\"credit\"\n589,\"2021-04-30 21:00:00\",\"2021-05-30 21:00:00\",17.45,0,\"aodos\",\"egnatia\",\"credit\"\n590,\"2021-04-30 21:00:00\",\"2021-05-30 21:00:00\",6.2,0,\"aodos\",\"moreas\",\"credit\"\n591,\"2021-04-30 21:00:00\",\"2021-05-30 21:00:00\",2.3,0,\"aodos\",\"nea_odos\",\"credit\"\n592,\"2021-04-30 21:00:00\",\"2021-05-30 21:00:00\",15.6,0,\"aodos\",\"olympia_odos\",\"credit\"\n598,\"2021-04-30 21:00:00\",\"2021-05-30 21:00:00\",22.4,0,\"aodos\",\"gefyra\",\"credit\"\n603,\"2021-04-30 21:00:00\",\"2021-05-30 21:00:00\",19.6,0,\"aodos\",\"kentriki_odos\",\"credit\"\n610,\"2021-05-31 21:00:00\",\"2021-06-29 21:00:00\",7.95,0,\"aodos\",\"egnatia\",\"credit\"\n611,\"2021-05-31 21:00:00\",\"2021-06-29 21:00:00\",12.6,0,\"aodos\",\"kentriki_odos\",\"credit\"\n612,\"2021-05-31 21:00:00\",\"2021-06-29 21:00:00\",25.5,0,\"aodos\",\"moreas\",\"credit\"\n613,\"2021-05-31 21:00:00\",\"2021-06-29 21:00:00\",11.7,0,\"aodos\",\"nea_odos\",\"credit\"\n614,\"2021-05-31 21:00:00\",\"2021-06-29 21:00:00\",2.2,0,\"olympia_odos\",\"aodos\",\"debited\"\n620,\"2021-05-31 21:00:00\",\"2021-06-29 21:00:00\",19.6,0,\"aodos\",\"gefyra\",\"credit\"\n631,\"2021-06-30 21:00:00\",\"2021-07-30 21:00:00\",12.5,0,\"aodos\",\"egnatia\",\"credit\"\n632,\"2021-06-30 21:00:00\",\"2021-07-30 21:00:00\",22.6,0,\"aodos\",\"kentriki_odos\",\"credit\"\n633,\"2021-06-30 21:00:00\",\"2021-07-30 21:00:00\",9.5,0,\"aodos\",\"moreas\",\"credit\"\n634,\"2021-06-30 21:00:00\",\"2021-07-30 21:00:00\",8.45,0,\"aodos\",\"nea_odos\",\"credit\"\n635,\"2021-06-30 21:00:00\",\"2021-07-30 21:00:00\",15.3,0,\"aodos\",\"olympia_odos\",\"credit\"\n640,\"2021-06-30 21:00:00\",\"2021-07-30 21:00:00\",25.2,0,\"aodos\",\"gefyra\",\"credit\"\n652,\"2021-07-31 21:00:00\",\"2021-08-30 21:00:00\",24.7,0,\"aodos\",\"egnatia\",\"credit\"\n653,\"2021-07-31 21:00:00\",\"2021-08-30 21:00:00\",36.35,0,\"aodos\",\"kentriki_odos\",\"credit\"\n654,\"2021-07-31 21:00:00\",\"2021-08-30 21:00:00\",18.1,0,\"aodos\",\"moreas\",\"credit\"\n655,\"2021-07-31 21:00:00\",\"2021-08-30 21:00:00\",4.7,0,\"aodos\",\"nea_odos\",\"credit\"\n656,\"2021-07-31 21:00:00\",\"2021-08-30 21:00:00\",22.5,0,\"aodos\",\"olympia_odos\",\"credit\"\n662,\"2021-07-31 21:00:00\",\"2021-08-30 21:00:00\",36.4,0,\"aodos\",\"gefyra\",\"credit\"\n673,\"2021-08-31 21:00:00\",\"2021-09-29 21:00:00\",13.4,0,\"aodos\",\"egnatia\",\"credit\"\n674,\"2021-08-31 21:00:00\",\"2021-09-29 21:00:00\",20.2,0,\"aodos\",\"kentriki_odos\",\"credit\"\n675,\"2021-08-31 21:00:00\",\"2021-09-29 21:00:00\",21.4,0,\"aodos\",\"moreas\",\"credit\"\n676,\"2021-08-31 21:00:00\",\"2021-09-29 21:00:00\",9.25,0,\"aodos\",\"nea_odos\",\"credit\"\n677,\"2021-08-31 21:00:00\",\"2021-09-29 21:00:00\",20.4,0,\"aodos\",\"olympia_odos\",\"credit\"\n683,\"2021-08-31 21:00:00\",\"2021-09-29 21:00:00\",25.2,0,\"aodos\",\"gefyra\",\"credit\"\n694,\"2021-09-30 21:00:00\",\"2021-10-30 21:00:00\",15.15,0,\"aodos\",\"egnatia\",\"credit\"\n695,\"2021-09-30 21:00:00\",\"2021-10-30 21:00:00\",2,0,\"aodos\",\"gefyra\",\"credit\"\n696,\"2021-09-30 21:00:00\",\"2021-10-30 21:00:00\",12.25,0,\"aodos\",\"kentriki_odos\",\"credit\"\n697,\"2021-09-30 21:00:00\",\"2021-10-30 21:00:00\",6.85,0,\"aodos\",\"moreas\",\"credit\"\n698,\"2021-09-30 21:00:00\",\"2021-10-30 21:00:00\",9.6,0,\"aodos\",\"nea_odos\",\"credit\"\n699,\"2021-09-30 21:00:00\",\"2021-10-30 21:00:00\",14.15,0,\"aodos\",\"olympia_odos\",\"credit\"\n715,\"2021-10-31 22:00:00\",\"2021-11-29 22:00:00\",10.3,0,\"aodos\",\"egnatia\",\"credit\"\n716,\"2021-10-31 22:00:00\",\"2021-11-29 22:00:00\",4.6,0,\"aodos\",\"kentriki_odos\",\"credit\"\n717,\"2021-10-31 22:00:00\",\"2021-11-29 22:00:00\",4.1,0,\"moreas\",\"aodos\",\"debited\"\n718,\"2021-10-31 22:00:00\",\"2021-11-29 22:00:00\",8.2,0,\"aodos\",\"nea_odos\",\"credit\"\n719,\"2021-10-31 22:00:00\",\"2021-11-29 22:00:00\",0.05,0,\"aodos\",\"olympia_odos\",\"credit\"\n724,\"2021-10-31 22:00:00\",\"2021-11-29 22:00:00\",19.6,0,\"aodos\",\"gefyra\",\"credit\""
 						}
 					]
 				},
@@ -1201,9 +1560,16 @@
 					"name": "GetPassesForSettlemet",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-observatory-auth",
+								"value": "{{accessTokenHeader}}",
+								"description": "Μορφή: \"Bearer token\". Το token επιστρέφεται στο response του Login και καθορίζει τον χρήστη και τον λειτουργό στον οποίο υπάγεται ο χρήστης. ",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "https://localhost:9103/interoperability/api/settlements/GetPassesForSettlement/:settlement_ID",
+							"raw": "https://localhost:9103/interoperability/api/settlements/GetPassesForSettlement/:settlement_ID?format=csv",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1220,8 +1586,7 @@
 								{
 									"key": "format",
 									"value": "csv",
-									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json",
-									"disabled": true
+									"description": "format των δεδομένων που επιστρέφονται, αν δεν προσδιοριστεί επιστρέφονται σε json"
 								}
 							],
 							"variable": [
@@ -1232,16 +1597,23 @@
 								}
 							]
 						},
-						"description": "Επιστρέφεται η λίστα όλων των διελεύσεων που συνυπολογίζονται στην οφειλή με συγκεκριμένο settlement_ID."
+						"description": "Επιστρέφεται η λίστα όλων των διελεύσεων που συνυπολογίζονται στην οφειλή με συγκεκριμένο settlement\\_ID εάν ο λειτουργός που καθορίζεται από το token που δίνεται στο x-observatory-auth header σχετίζεται με την οφειλή στην οποία αναφέρεται το request."
 					},
 					"response": [
 						{
 							"name": "GetPassesForSettlemet",
 							"originalRequest": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "x-observatory-auth",
+										"value": "{{accessTokenHeader}}",
+										"description": "Μορφή: \"Bearer token\". Το token επιστρέφεται στο response του Login και καθορίζει τον χρήστη και τον λειτουργό στον οποίο υπάγεται ο χρήστης. ",
+										"type": "text"
+									}
+								],
 								"url": {
-									"raw": "https://localhost:9103/interoperability/api/GetPassesForSettlement/:settlement_ID",
+									"raw": "https://localhost:9103/interoperability/api/settlements/GetPassesForSettlement/:settlement_ID",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -1250,6 +1622,7 @@
 									"path": [
 										"interoperability",
 										"api",
+										"settlements",
 										"GetPassesForSettlement",
 										":settlement_ID"
 									],
@@ -1279,20 +1652,36 @@
 									"value": "Express"
 								},
 								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "X-Requested-With,content-type,x-observatory-auth"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
 									"key": "Content-Type",
 									"value": "application/json; charset=utf-8"
 								},
 								{
 									"key": "Content-Length",
-									"value": "440"
+									"value": "1482"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"1b8-XFkv5PhgJROQ0YeKXsZeAIS3OuQ\""
+									"value": "W/\"5ca-eI8k4lDDKdlKqqwXf7KA8RoGf+w\""
 								},
 								{
 									"key": "Date",
-									"value": "Tue, 21 Dec 2021 09:52:15 GMT"
+									"value": "Fri, 25 Feb 2022 14:47:41 GMT"
 								},
 								{
 									"key": "Connection",
@@ -1304,15 +1693,22 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"settlementID\": \"1\",\n    \"RequestTimestamp\": \"2021-12-21 09:52:15\",\n    \"PassesLength\": 3,\n    \"PassesList\": [\n        {\n            \"passID\": \"AAB7311258\",\n            \"timestamp\": \"2021-12-21T07:39:10.000Z\",\n            \"stationRef\": \"NE02\",\n            \"charge\": 3.1,\n            \"tagID\": \"EG52J0268\"\n        },\n        {\n            \"passID\": \"AAF5102386\",\n            \"timestamp\": \"2021-12-21T07:38:30.000Z\",\n            \"stationRef\": \"AO11\",\n            \"charge\": 13,\n            \"tagID\": \"AO27P4628\"\n        },\n        {\n            \"passID\": \"AAK2274580\",\n            \"timestamp\": \"2021-12-21T07:39:10.000Z\",\n            \"stationRef\": \"GF00\",\n            \"charge\": 2.8,\n            \"tagID\": \"GF87C4626\"\n        }\n    ]\n}"
+							"body": "{\n    \"settlementID\": \"1\",\n    \"RequestTimestamp\": \"2022-02-25 14:47:41\",\n    \"PassesLength\": 12,\n    \"PassesList\": [\n        {\n            \"passID\": \"AOA9639007\",\n            \"timestamp\": \"2019-01-22T04:02:00.000Z\",\n            \"stationRef\": \"EG02\",\n            \"charge\": 1,\n            \"tagID\": \"AO11L5271\"\n        },\n        {\n            \"passID\": \"BSD8964729\",\n            \"timestamp\": \"2019-01-19T21:25:00.000Z\",\n            \"stationRef\": \"EG01\",\n            \"charge\": 2,\n            \"tagID\": \"AO18S3731\"\n        },\n        {\n            \"passID\": \"INQ8456777\",\n            \"timestamp\": \"2019-01-08T03:47:00.000Z\",\n            \"stationRef\": \"AO17\",\n            \"charge\": 2.8,\n            \"tagID\": \"EG13U6715\"\n        },\n        {\n            \"passID\": \"LLB0471775\",\n            \"timestamp\": \"2019-01-12T15:28:00.000Z\",\n            \"stationRef\": \"AO02\",\n            \"charge\": 2.8,\n            \"tagID\": \"EG76E0993\"\n        },\n        {\n            \"passID\": \"LMA8654820\",\n            \"timestamp\": \"2019-01-08T05:59:00.000Z\",\n            \"stationRef\": \"AO04\",\n            \"charge\": 2.8,\n            \"tagID\": \"EG23G6966\"\n        },\n        {\n            \"passID\": \"PVJ3943516\",\n            \"timestamp\": \"2019-01-06T08:54:00.000Z\",\n            \"stationRef\": \"AO15\",\n            \"charge\": 2.8,\n            \"tagID\": \"EG47I2811\"\n        },\n        {\n            \"passID\": \"RDV6518451\",\n            \"timestamp\": \"2019-01-02T22:39:00.000Z\",\n            \"stationRef\": \"AO15\",\n            \"charge\": 2.8,\n            \"tagID\": \"EG47I2811\"\n        },\n        {\n            \"passID\": \"SBI5830386\",\n            \"timestamp\": \"2019-01-29T11:27:00.000Z\",\n            \"stationRef\": \"EG05\",\n            \"charge\": 1.5,\n            \"tagID\": \"AO19H6549\"\n        },\n        {\n            \"passID\": \"SQI6683172\",\n            \"timestamp\": \"2019-01-12T09:15:00.000Z\",\n            \"stationRef\": \"EG08\",\n            \"charge\": 1.5,\n            \"tagID\": \"AO49I8807\"\n        },\n        {\n            \"passID\": \"TOH4508765\",\n            \"timestamp\": \"2019-01-10T02:28:00.000Z\",\n            \"stationRef\": \"AO19\",\n            \"charge\": 2.8,\n            \"tagID\": \"EG56V3913\"\n        },\n        {\n            \"passID\": \"TYT3955033\",\n            \"timestamp\": \"2019-01-04T23:58:00.000Z\",\n            \"stationRef\": \"AO08\",\n            \"charge\": 2.8,\n            \"tagID\": \"EG76E0993\"\n        },\n        {\n            \"passID\": \"WUW7239302\",\n            \"timestamp\": \"2019-01-25T18:59:00.000Z\",\n            \"stationRef\": \"AO11\",\n            \"charge\": 2.8,\n            \"tagID\": \"EG74B6896\"\n        }\n    ]\n}"
 						},
 						{
 							"name": "GetPassesForSettlemet",
 							"originalRequest": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "x-observatory-auth",
+										"value": "{{accessTokenHeader}}",
+										"description": "Μορφή: \"Bearer token\". Το token επιστρέφεται στο response του Login και καθορίζει τον χρήστη και τον λειτουργό στον οποίο υπάγεται ο χρήστης. ",
+										"type": "text"
+									}
+								],
 								"url": {
-									"raw": "https://localhost:9103/interoperability/api/GetPassesForSettlement/:settlement_ID?format=csv",
+									"raw": "https://localhost:9103/interoperability/api/settlements/GetPassesForSettlement/:settlement_ID?format=csv",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -1321,6 +1717,7 @@
 									"path": [
 										"interoperability",
 										"api",
+										"settlements",
 										"GetPassesForSettlement",
 										":settlement_ID"
 									],
@@ -1349,20 +1746,36 @@
 									"value": "Express"
 								},
 								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "X-Requested-With,content-type,x-observatory-auth"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
 									"key": "Content-Type",
 									"value": "text/csv; charset=utf-8"
 								},
 								{
 									"key": "Content-Length",
-									"value": "238"
+									"value": "802"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"ee-aZOYeZ+IZyWAeF5/bHC0XmRQvOw\""
+									"value": "W/\"322-KPfJpcytppj/Ir5gthgl0Q+TOnY\""
 								},
 								{
 									"key": "Date",
-									"value": "Tue, 21 Dec 2021 09:52:28 GMT"
+									"value": "Fri, 25 Feb 2022 14:52:33 GMT"
 								},
 								{
 									"key": "Connection",
@@ -1374,7 +1787,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "\"passID\",\"timestamp\",\"stationRef\",\"charge\",\"tagID\"\n\"AAB7311258\",\"2021-12-21T07:39:10.000Z\",\"NE02\",3.1,\"EG52J0268\"\n\"AAF5102386\",\"2021-12-21T07:38:30.000Z\",\"AO11\",13,\"AO27P4628\"\n\"AAK2274580\",\"2021-12-21T07:39:10.000Z\",\"GF00\",2.8,\"GF87C4626\""
+							"body": "\"passID\",\"timestamp\",\"stationRef\",\"charge\",\"tagID\"\n\"AOA9639007\",\"2019-01-22T04:02:00.000Z\",\"EG02\",1,\"AO11L5271\"\n\"BSD8964729\",\"2019-01-19T21:25:00.000Z\",\"EG01\",2,\"AO18S3731\"\n\"INQ8456777\",\"2019-01-08T03:47:00.000Z\",\"AO17\",2.8,\"EG13U6715\"\n\"LLB0471775\",\"2019-01-12T15:28:00.000Z\",\"AO02\",2.8,\"EG76E0993\"\n\"LMA8654820\",\"2019-01-08T05:59:00.000Z\",\"AO04\",2.8,\"EG23G6966\"\n\"PVJ3943516\",\"2019-01-06T08:54:00.000Z\",\"AO15\",2.8,\"EG47I2811\"\n\"RDV6518451\",\"2019-01-02T22:39:00.000Z\",\"AO15\",2.8,\"EG47I2811\"\n\"SBI5830386\",\"2019-01-29T11:27:00.000Z\",\"EG05\",1.5,\"AO19H6549\"\n\"SQI6683172\",\"2019-01-12T09:15:00.000Z\",\"EG08\",1.5,\"AO49I8807\"\n\"TOH4508765\",\"2019-01-10T02:28:00.000Z\",\"AO19\",2.8,\"EG56V3913\"\n\"TYT3955033\",\"2019-01-04T23:58:00.000Z\",\"AO08\",2.8,\"EG76E0993\"\n\"WUW7239302\",\"2019-01-25T18:59:00.000Z\",\"AO11\",2.8,\"EG74B6896\""
 						}
 					]
 				},
@@ -1487,18 +1900,56 @@
 					]
 				}
 			],
-			"description": "Τα παρακάτω endpoints μπορούν να χρησιμοποιηθούν από τους λειτουργούς για να διαχειριστούν τις οφειλές τους."
+			"description": "Τα παρακάτω endpoints μπορούν να χρησιμοποιηθούν από τους λειτουργούς για να διαχειριστούν τις οφειλές τους.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
 		},
 		{
 			"name": "Authentication Endpoints",
 			"item": [
 				{
 					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const login_response = pm.response.json()",
+									"",
+									"//console.log(login_response.accessToken)",
+									"",
+									"pm.globals.set(\"accessToken\", login_response.accessToken)",
+									"pm.globals.set(\"accessTokenHeader\", \"Bearer \"+login_response.accessToken)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:9103/interoperability/api/auth/login?username=toulis&password=test",
+							"raw": "https://localhost:9103/interoperability/api/auth/login?username=username&password=password",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1513,11 +1964,11 @@
 							"query": [
 								{
 									"key": "username",
-									"value": "toulis"
+									"value": "username"
 								},
 								{
 									"key": "password",
-									"value": "test"
+									"value": "password"
 								}
 							]
 						}
@@ -1592,12 +2043,105 @@
 					]
 				},
 				{
-					"name": "Logout",
+					"name": "Test Authentication",
 					"request": {
 						"method": "GET",
+						"header": [
+							{
+								"key": "x-observatory-auth",
+								"value": "{{accessTokenHeader}}",
+								"description": "Έχει την μορφή Bearer TOKEN, όπου TOKEN το token που λήφθηκε κατά login",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:9103/interoperability/api/auth/test_authentication",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "9103",
+							"path": [
+								"interoperability",
+								"api",
+								"auth",
+								"test_authentication"
+							]
+						},
+						"description": "Αυτό το request απλώς ελέγχει αν το token που δίνεται στο x-observatory-auth header υπάρχει αποθηκευμένο και στον εξυπηρετητή. Ελέγχεται δηλαδή αν ο χρήστης είναι logged in εκείνη τη στιγμή."
+					},
+					"response": [
+						{
+							"name": "Test Authentication",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-observatory-auth",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidG91bGlzIiwib3BlcmF0b3JJRCI6ImFvZG9zIiwiaWF0IjoxNjQwMTAwMzM0fQ.8qr1fkMt2-OQ_H0O_qFEbHJcq1-ASlEdbViK6E6OL_U",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:9103/interoperability/api/auth/test_authentication",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "9103",
+									"path": [
+										"interoperability",
+										"api",
+										"auth",
+										"test_authentication"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "15"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f-v/Y1JusChTxrQUzPtNAKycooOTA\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Dec 2021 15:31:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"OK\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:9103/interoperability/api/auth/logout?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidG91bGlzIiwib3BlcmF0b3JJRCI6ImFvZG9zIiwiaWF0IjoxNjQwMTAwMDAxfQ.YsOBUoECFdcQ6oB9JFGd-IL2c-qkHB4aCPaTw5GWzRc",
+							"raw": "https://localhost:9103/interoperability/api/auth/logout?token={{accessToken}}",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1612,7 +2156,7 @@
 							"query": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidG91bGlzIiwib3BlcmF0b3JJRCI6ImFvZG9zIiwiaWF0IjoxNjQwMTAwMDAxfQ.YsOBUoECFdcQ6oB9JFGd-IL2c-qkHB4aCPaTw5GWzRc"
+									"value": "{{accessToken}}"
 								},
 								{
 									"key": "password",
@@ -1691,101 +2235,31 @@
 							"body": "{\n    \"status\": \"OK\"\n}"
 						}
 					]
-				},
-				{
-					"name": "Test Authentication",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidG91bGlzIiwib3BlcmF0b3JJRCI6ImFvZG9zIiwiaWF0IjoxNjQwMTAwMzM0fQ.8qr1fkMt2-OQ_H0O_qFEbHJcq1-ASlEdbViK6E6OL_U",
-								"description": "Έχει την μορφή Bearer TOKEN, όπου TOKEN το token που λήφθηκε κατά login",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "https://localhost:9103/interoperability/api/auth/test_authentication",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "9103",
-							"path": [
-								"interoperability",
-								"api",
-								"auth",
-								"test_authentication"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Test Authentication",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidG91bGlzIiwib3BlcmF0b3JJRCI6ImFvZG9zIiwiaWF0IjoxNjQwMTAwMzM0fQ.8qr1fkMt2-OQ_H0O_qFEbHJcq1-ASlEdbViK6E6OL_U",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "https://localhost:9103/interoperability/api/auth/test_authentication",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "9103",
-									"path": [
-										"interoperability",
-										"api",
-										"auth",
-										"test_authentication"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "15"
-								},
-								{
-									"key": "ETag",
-									"value": "W/\"f-v/Y1JusChTxrQUzPtNAKycooOTA\""
-								},
-								{
-									"key": "Date",
-									"value": "Tue, 21 Dec 2021 15:31:44 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"status\": \"OK\"\n}"
-						}
-					]
 				}
 			],
-			"description": "Τα παρακάτω endpoints χρησιμοποιούνται από τους λειτουργούς για να συνδεθούν με τον λογαριασμό τους στο σύστημα."
+			"description": "Τα παρακάτω endpoints χρησιμοποιούνται από τους λειτουργούς για να συνδεθούν με τον λογαριασμό τους στο σύστημα.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
 		}
 	]
 }
