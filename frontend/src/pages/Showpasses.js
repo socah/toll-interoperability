@@ -11,6 +11,20 @@ function Showpasses() {
 
   const history = useHistory();
 
+  function currentDate() {
+    var today = new Date();
+    var dd = today.getDate();
+    if (dd < 10) {
+      dd = '0' + dd
+    }
+    var mm = today.getMonth() + 1;
+    if (mm < 10) {
+      mm = '0' + mm
+    }
+    var yyyy = today.getFullYear();
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
   var [data, setData] = useState([]);
 
     // αν δεν είναι συνδεμένος, ανακατεύθυνση προς το login screen
@@ -119,12 +133,12 @@ function Showpasses() {
 
               <label>
                 Από
-                <input type="date" name="date_from" id="date_from" required/>
+                <input type="date" name="date_from" id="date_from" defaultValue="2018-12-31" required/>
               </label>
 
               <label>
                 Έως
-                <input type="date" name="date_to" id="date_to" required/>
+                <input type="date" name="date_to" id="date_to" defaultValue={currentDate()} required/>
               </label>
 
             </div>

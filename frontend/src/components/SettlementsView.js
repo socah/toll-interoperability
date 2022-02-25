@@ -31,7 +31,7 @@ function ProviderSelection({data, onPaid}) {
         axios.post(url)
         .then((res) => {
             alert("Η πληρωμή επιβεβαιώθηκε επιτυχώς!")
-            if(onPaid != undefined){
+            if(onPaid !== undefined){
               onPaid(element.settlementID);
             }
             // αν αλλάξαμε την κατάσταση της οφειλής σε πληρωμένη κάνουμε ανανέωση της σελίδας

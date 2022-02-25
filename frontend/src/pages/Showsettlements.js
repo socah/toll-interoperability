@@ -63,7 +63,7 @@ function Showsettlements() {
       let new_data = data.map((element) => {
         let other = element;
         other.paid = 1;
-        return element.settlementID == settlementID ? other : element
+        return element.settlementID === settlementID ? other : element
       })
 
       setData(new_data);
