@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const db = require('../../backend/db_auth.js')
 const md5 = require("md5")
 const ls = require('store2');
+const {authenticateToken} = require("../utilities/token_authentication.js")
 
 
 let active_tokens = []
@@ -50,19 +51,5 @@ router.post('/logout', (req, res) => {
     res.json({ "status": "OK"})
 })
 
-function authenticateToken(req, res, next) {
-    const authHeader = req.headers['x-observatory-auth']
-    const token = authHeader && authHeader.split(' ')[1]
-    if (token == null) return res.status(401).json({"status":"failed"})
-
-    var active_tokens = ls.get("active_tokens")
-    if (!active_tokens.includes(token)) return res.sendStatus(403)
-
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        if (err) return res.status(400).json({"status":"failed"})
-        req.user = user
-        next()
-    })
-}
 
 module.exports = router;
