@@ -9,7 +9,7 @@ function authenticateToken(req, res, next) {
 
     var active_tokens = ls.get("active_tokens")
     console.log("active tokens:", active_tokens)
-    if (!active_tokens.includes(token)) return res.sendStatus(403)
+    if (!active_tokens.includes(token)) return res.sendStatus(401)
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if (err) return res.status(400).json({"status":"failed"})

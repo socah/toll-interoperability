@@ -5,7 +5,7 @@
 function ProviderSelection({data}) {
 
     
-    if(data.length == 0){ // αν δεν έχουμε δεδομένα
+    if(data.length === 0){ // αν δεν έχουμε δεδομένα
         return (<p>Δεν υπάρχουν δεδομένα προς προβολή.</p>);
     }
 
