@@ -40,7 +40,7 @@ function Showsettlements() {
           setData(res.data.SettlementsList);
 
           // debug
-          console.log(res.data.SettlementsList)
+          //console.log(res.data.SettlementsList)
 
         }).catch((e) => {
           // Είτε το response είναι κωδικό != 200 είτε δημιουργήθηκε κάποιο exception
@@ -60,11 +60,18 @@ function Showsettlements() {
 
       console.log("onSettlementPaid() called");
 
-      let new_data = data.map((element) => {
-        let other = element;
-        other.paid = 1;
-        return element.settlementID === settlementID ? other : element
-      })
+      var new_data = data.map(x => x);
+
+      var index = new_data.findIndex((element) => element.settlementID === settlementID);
+
+      //console.log(settlementID);
+      //console.log(index);
+
+      if(index < 0){
+        return;
+      }
+
+      new_data[index].paid = 1;
 
       setData(new_data);
     }

@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 // Component 
 function ProviderSelection({data, onPaid}) {
 
+    console.log("Inside ProviderSelection()");
+
     const history = useHistory();
 
     if(data.length === 0){ // αν δεν έχουμε δεδομένα
@@ -84,7 +86,7 @@ function ProviderSelection({data, onPaid}) {
                                             Εξόφληση
                                         </button>
                                     </td>
-                                    
+
                                 </tr>
                             </tbody>
                         }
