@@ -18,23 +18,28 @@ function App() {
 
         </header>
 
-        <Navbar />
+        
 
         <div className="ContentDiv">
         <Switch>
             <Route exact path="/">
+              <Navbar />
               <Login />
             </Route>
             <Route exact path="/options">
+              <Navbar />
               <Options />
             </Route>
             <Route exact path="/showpasses">
+              <Navbar />
               <Showpasses />
             </Route>
             <Route exact path="/showsettlements">
+              <Navbar />
               <Showsettlements />
             </Route>
             <Route path="/showsettlementpasses/:settlementID">
+              <Navbar />
               <ShowSettlementPasses />
             </Route>
         </Switch>
