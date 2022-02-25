@@ -4,7 +4,8 @@
   "description": "Περιεχόμενα:",
   "main": "db_calls.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "settlements": "node fill_settlements.js"
   },
   "keywords": [],
   "author": "",
