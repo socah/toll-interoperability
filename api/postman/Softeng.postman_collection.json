@@ -182,17 +182,17 @@
 							"variable": [
 								{
 									"key": "stationID",
-									"value": "NE08",
+									"value": "AO10",
 									"description": "Το ID του σταθμού για τον οποίο θα λάβουμε τα Passes"
 								},
 								{
 									"key": "date_from",
-									"value": "20201217",
+									"value": "20201001",
 									"description": "Από ημ/νία"
 								},
 								{
 									"key": "date_to",
-									"value": "20210125",
+									"value": "20201031",
 									"description": "Έως ημ/νία"
 								}
 							]
@@ -403,17 +403,17 @@
 								},
 								{
 									"key": "op2_ID",
-									"value": "gefyra",
+									"value": "egnatia",
 									"description": "Το ID του δεύτερου λειτουργού"
 								},
 								{
 									"key": "date_from",
-									"value": "20210120",
+									"value": "20200101",
 									"description": "Από ημ/νία"
 								},
 								{
 									"key": "date_to",
-									"value": "20210222",
+									"value": "20201031",
 									"description": "Έως ημ/νία"
 								}
 							]
@@ -908,15 +908,15 @@
 							"variable": [
 								{
 									"key": "op_ID",
-									"value": "aodos"
+									"value": "gefyra"
 								},
 								{
 									"key": "date_from",
-									"value": "20210120"
+									"value": "20190101"
 								},
 								{
 									"key": "date_to",
-									"value": "20210222"
+									"value": "20190630"
 								}
 							]
 						},
@@ -1123,12 +1123,12 @@
 								},
 								{
 									"key": "date_from",
-									"value": "20190613",
+									"value": "20200101",
 									"description": "Από ημ/νία"
 								},
 								{
 									"key": "date_to",
-									"value": "20210613",
+									"value": "20201231",
 									"description": "Έως ημ/νία"
 								}
 							]
