@@ -2,7 +2,7 @@ import axios from "axios";
 import { useHistory } from 'react-router-dom';
 
 // Component 
-function ProviderSelection({data}) {
+function ProviderSelection({data, onPaid}) {
 
     const history = useHistory();
 
@@ -18,15 +18,24 @@ function ProviderSelection({data}) {
     let confirmPayment = (element) => {
 
         // popup dialog όπου ο χρήστης εισάγει τον κωδικό της τράπεζας
-        const enteredCode = prompt('Εισάγετε τον κωδικό επιβεβαίωσης')
+        const enteredCode = prompt('Εισάγετε τον κωδικό συναλλαγής')
+
+        // αν πατήθηκε το κουμπί ακύρωση
+        if(enteredCode == null){
+            return;
+        }
+
         
         const url = `https://localhost:9103/interoperability/api/settlements/PaySettlement/${element.settlementID}/${enteredCode}`;
 
         axios.post(url)
         .then((res) => {
-          alert("Η πληρωμή επιβεβαιώθηκε επιτυχώς!")
-          // αν αλλάξαμε την κατάσταση της οφειλής σε πληρωμένη κάνουμε ανανέωση της σελίδας
-          history.push("/showsettlements")
+            alert("Η πληρωμή επιβεβαιώθηκε επιτυχώς!")
+            if(onPaid != undefined){
+              onPaid(element.settlementID);
+            }
+            // αν αλλάξαμε την κατάσταση της οφειλής σε πληρωμένη κάνουμε ανανέωση της σελίδας
+            history.push("/showsettlements")
         }).catch((e) => {
           alert("Σφάλμα κατά την επιβεβαίωση της πληρωμής")
         })
@@ -69,14 +78,13 @@ function ProviderSelection({data}) {
                                             Λεπτομέρειες
                                         </button>
                                     </td>
-                                    {
-                                        element.paid ? (<td> </td>) : (
-                                        <td>
-                                            <button id={`"${element.settlementID.toString()}"`} onClick={() => confirmPayment(element)}>
-                                                Εξόφληση
-                                            </button>
-                                        </td>)
-                                    }
+                                        
+                                    <td>
+                                        <button id={`"${element.settlementID.toString()}"`} onClick={() => confirmPayment(element)} disabled={element.paid}>
+                                            Εξόφληση
+                                        </button>
+                                    </td>
+                                    
                                 </tr>
                             </tbody>
                         }

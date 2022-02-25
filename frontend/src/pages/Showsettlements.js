@@ -55,6 +55,20 @@ function Showsettlements() {
 
     }, [])
 
+
+    function onSettlementPaid(settlementID){
+
+      console.log("onSettlementPaid() called");
+
+      let new_data = data.map((element) => {
+        let other = element;
+        other.paid = 1;
+        return element.settlementID == settlementID ? other : element
+      })
+
+      setData(new_data);
+    }
+
     
 
     return (
@@ -64,7 +78,7 @@ function Showsettlements() {
 
             <small id="error" style={{color: '#ff0000', visibility: 'hidden'}}></small>
 
-            <SettlementsView data={data}/>
+            <SettlementsView data={data} onPaid={onSettlementPaid}/>
 
         </div>
     );
