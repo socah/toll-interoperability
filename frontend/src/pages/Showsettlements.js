@@ -2,15 +2,20 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import SettlementsView from '../components/SettlementsView'
 
+import { useHistory } from 'react-router-dom';
+
 var ls = require('local-storage');
 
 function Showsettlements() {
+
+    const history = useHistory();
+
     console.log("Showsettlements called")
     var [data, setData] = useState([]);
 
     // αν δεν είναι συνδεμένος, ανακατεύθυνση προς το login screen
     if(!ls.get("accessToken")){
-      window.location.replace("/");
+      history.push("/");
     }
 
     useEffect(() => {

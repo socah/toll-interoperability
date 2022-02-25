@@ -3,15 +3,19 @@ import axios from "axios";
 import ProviderSelection from '../components/ProviderSelection'
 import PassesView from '../components/PassesView'
 
+import { useHistory } from 'react-router-dom';
+
 var ls = require('local-storage');
 
 function Showpasses() {
+
+  const history = useHistory();
 
   var [data, setData] = useState([]);
 
     // αν δεν είναι συνδεμένος, ανακατεύθυνση προς το login screen
     if(!ls.get("accessToken")){
-      window.location.replace("/");
+      history.push("/");
     }
 
     function handleSubmit(e){

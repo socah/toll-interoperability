@@ -1,19 +1,23 @@
+import { useHistory } from 'react-router-dom';
 var ls = require('local-storage');
+
 
 // Σελίδα "Dashboard" όπου φαίνονται όλες οι δυνατές ενέργειες
 function Options() {
 
+  const history = useHistory();
+
     // αν δεν είναι συνδεμένος, ανακατεύθυνση προς το login screen
     if(!ls.get("accessToken")){
-      window.location.replace("/");
+      history.push("/");
     }
 
     function gotoShowpasses(){
-      window.location.replace("/showpasses");
+      history.push("/showpasses");
     }
 
     function gotoShowsettlements(){
-      window.location.replace("/showsettlements");
+      history.push("/showsettlements");
     }
 
     return (

@@ -1,4 +1,6 @@
 import axios from "axios"
+import { useHistory } from 'react-router-dom';
+
 
 var ls = require('local-storage');
 
@@ -6,14 +8,16 @@ var ls = require('local-storage');
 
 function Navbar() {
 
+    const history = useHistory();
+
     // αν κάνει click στο όνομα τότε πηγαίνει στο homepage
     // αν είναι συνδεμένος τότε στο /options (dashboard)
     // αλλιώς στο / (login screen)
     function gotoHomepage(){
         if(ls.get("accessToken")){
-            window.location.replace("/options");
+            history.push("/options");
         }else{
-            window.location.replace("/");
+            history.push("/");
         }
     }
 
@@ -29,7 +33,7 @@ function Navbar() {
             // πήραμε response με 200 ΟΚ
 
             ls.remove("accessToken");
-            window.location.replace("/");
+            history.push("/");
 
         }).catch((e) => {
             // Είτε το response είναι κωδικό != 200 είτε δημιουργήθηκε κάποιο exception
@@ -37,7 +41,7 @@ function Navbar() {
             // Σε αυτή την περίπτωση πάλι θα κάνουμε το ίδιο
             // Ισως πρέπει να προστεθεί κάποιο notification..
             ls.remove("accessToken");
-            window.location.replace("/");
+            history.push("/");
 
         console.log(e);
       })
@@ -45,7 +49,7 @@ function Navbar() {
 
     // ανακατεύθυνση προς το dashboard
     function gotoDashboard(){
-        window.location.replace("/options");
+        history.push("/options");
     }
 
     return (

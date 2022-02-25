@@ -1,7 +1,10 @@
 import axios from "axios";
+import { useHistory } from 'react-router-dom';
 
 // Component 
 function ProviderSelection({data}) {
+
+    const history = useHistory();
 
     if(data.length === 0){ // αν δεν έχουμε δεδομένα
         return (<p>Δεν υπάρχουν δεδομένα προς προβολή.</p>);
@@ -9,7 +12,7 @@ function ProviderSelection({data}) {
 
     function showSettlementPasses(element) {
         // redirect to showsettlementpasses with element parameter
-        window.location.replace("/showsettlementpasses/"+element.settlementID)
+        history.push("/showsettlementpasses/"+element.settlementID)
     }
 
     let confirmPayment = (element) => {
@@ -23,7 +26,7 @@ function ProviderSelection({data}) {
         .then((res) => {
           alert("Η πληρωμή επιβεβαιώθηκε επιτυχώς!")
           // αν αλλάξαμε την κατάσταση της οφειλής σε πληρωμένη κάνουμε ανανέωση της σελίδας
-          window.location.replace("/showsettlements")
+          history.push("/showsettlements")
         }).catch((e) => {
           alert("Σφάλμα κατά την επιβεβαίωση της πληρωμής")
         })
