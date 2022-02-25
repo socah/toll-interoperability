@@ -122,12 +122,12 @@ function Showpasses() {
             <div className="grid">
 
               <label>
-                Λειτουργός 1
+                Ιδιοκτήτης διοδίων
                 <ProviderSelection name="op1_ID" id="op1_ID"/>
               </label>
 
               <label>
-                Λειτουργός 2
+                Ιδιοκτήτης των tags
                 <ProviderSelection name="op2_ID" id="op2_ID"/>
               </label>
 
