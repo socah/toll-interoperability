@@ -99,10 +99,12 @@ function getChargesBy(opID, dateFrom, dateTo) {
     return new Promise((fullfil, reject) => {
 
         // κάνουμε query για να λάβουμε τις διελεύσεις
+        // ΣΤΟ QUERY Έλειπε ένα AND στην γραμμή WHERE S.deleted = 0 AND V.deleted = 0 AND S.stationProvider... 
+        // προστέθηκε στις 25/2/2021
         return pool.query(`SELECT V.tagProvider as VistingOperator, count(*) as NumberOfPasses, sum(P.charge) as PassesCost
             FROM (Pass as P JOIN Station as S ON P.stationRef = S.stationID)
             JOIN Vehicle as V ON P.vehicleRef = V.vehicleID
-            WHERE S.deleted = 0 AND V.deleted = 0 S.stationProvider != V.tagProvider AND S.stationProvider = ? AND P.timestamp BETWEEN ? AND ?
+            WHERE S.deleted = 0 AND V.deleted = 0 AND S.stationProvider != V.tagProvider AND S.stationProvider = ? AND P.timestamp BETWEEN ? AND ?
             GROUP BY V.tagProvider`, [opID, dateFrom, dateTo])
         .then((rows) => {
             console.log("Received Rows:" + rows);

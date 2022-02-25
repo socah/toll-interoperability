@@ -31,7 +31,7 @@ function getSettlementPasses(settlementID) {
             WHERE settlementID = ? AND V.deleted = 0;`, [settlementID])
         .then((rows) => {
             if(rows.length == 0){
-                console.log("No settlement found for : " + operatorID);
+                // removed console log from here. operatorID is not defined at 24/2/2021
                 fullfil(null); // Return No Data
                 return;
             }else{

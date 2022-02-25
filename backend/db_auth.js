@@ -9,7 +9,7 @@ function authUser(username, password_hash) {
         console.log("authenticating user...")
         pool.query(`SELECT operatorID FROM Account WHERE Username='${username}' AND MD5PasswordHash='${password_hash}' AND deleted=0`)
             .then(rows => {
-                console.log(rows);
+                //console.log(rows);
                 if(rows.length == 0){
                     console.log("Incorrect username/password");
                     fulfill(null);
