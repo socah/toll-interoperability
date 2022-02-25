@@ -59,7 +59,7 @@ function getPassesAnalysis(opID_1, opID_2, dateFrom, dateTo) {
             JOIN Vehicle as V ON V.vehicleID=P.vehicleRef
             WHERE S.stationProvider = ? AND S.deleted = 0 AND V.tagProvider = ? AND P.timestamp BETWEEN ? AND ?;`, [opID_1, opID_2, dateFrom, dateTo])
         .then((rows) => {
-            console.log("Received Rows:" + rows);
+            //console.log("Received Rows:" + rows);
             output = {
                 rows: rows
             }
@@ -107,7 +107,7 @@ function getChargesBy(opID, dateFrom, dateTo) {
             WHERE S.deleted = 0 AND V.deleted = 0 AND S.stationProvider != V.tagProvider AND S.stationProvider = ? AND P.timestamp BETWEEN ? AND ?
             GROUP BY V.tagProvider`, [opID, dateFrom, dateTo])
         .then((rows) => {
-            console.log("Received Rows:" + rows);
+            //console.log("Received Rows:" + rows);
             output = {
                 rows: rows
             }

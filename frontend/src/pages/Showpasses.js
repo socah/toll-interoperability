@@ -53,16 +53,21 @@ function Showpasses() {
       }
 
       // προετοιμασία του url και προσθήκη παραμέτρων
-      var url = `https://localhost:9103/interoperability/api/PassesAnalysis/${op1_ID}/${op2_ID}/${date_from}/${date_to}`;
+      var url = `https://localhost:9103/interoperability/api/PassesAnalysisAuth/${op1_ID}/${op2_ID}/${date_from}/${date_to}`;
 
       // εμφανίζουμε στο κουμπί το animation φορτώματος
       submit_button.setAttribute("aria-busy", "true");
       submit_button.disabled = true;
 
+      var config = {
+        headers: {'X-OBSERVATORY-AUTH': "Bearer " + ls.get("accessToken")},
+        params: {
+          format: "json"
+        },
+      }
+
       // στέλνουμε request
-      axios.get(url, null, { params: {
-        format: "json"
-      }})
+      axios.get(url, config)
       .then((res) => {
         // αν λάβαμε response 200 OK
 
