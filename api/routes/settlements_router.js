@@ -101,34 +101,41 @@ router.get("/GetPassesForSettlement/:settlement_ID", authenticateToken, (req, re
             return;
         }else{
             examinedSettlement = result.find(settlement => settlement.settlementID == settlementID)
-            // αν ο operatorID δεν είναι ούτε ο operatorCredited ούτε ο operatorDebited τότε δεν έχει δικαίωμα να δει τις διελεύσεις
-            if (examinedSettlement.operatorCredited != operatorID && examinedSettlement.operatorDebited != operatorID){
+            // αν ο operatorID δεν είναι ούτε ο operatorCredited ούτε ο operatorDebited τότε δεν έχει βρεθεί το examinedSettlement
+            // γιατί το result περιέχει μόνο τις οφειλές που αφορούν τον λειτουργό με operatorID
+            if (examinedSettlement == undefined){
                 res.status(401).json({status:"failed", reason:"Not authorized"});
-                return;
-            }
-            return db_settlements.getSettlementPasses(settlementID)
-        }
-    })
-    .then((result) => {
-        if(result == null){
-            res.status(402).json({status:"failed", reason:"No data"});
-        }else{
+                console.log("this should not be printed")
+            } else {
+                db_settlements.getSettlementPasses(settlementID)
+                .then((result) => {
+                    if(result == null){
+                        res.status(402).json({status:"failed", reason:"No data"});
+                    }else{
+                        
+                        if(format == "json"){
             
-            if(format == "json"){
-
-                output_obj = {
-                    settlementID : settlementID,
-                    RequestTimestamp: formatDate(requestTimestamp),
-
-                    PassesLength: result.length,
-                    PassesList: result
-                }
-
-                res.status(200).json(output_obj);
-
-            }else{
-                // αν είναι csv τότε επιστρέφουμε ουσιαστικά μόνο το PassesList
-                res.status(200).set('Content-Type', 'text/csv').send(parse(result));
+                            output_obj = {
+                                settlementID : settlementID,
+                                RequestTimestamp: formatDate(requestTimestamp),
+            
+                                PassesLength: result.length,
+                                PassesList: result
+                            }
+            
+                            res.status(200).json(output_obj);
+            
+                        }else{
+                            // αν είναι csv τότε επιστρέφουμε ουσιαστικά μόνο το PassesList
+                            res.status(200).set('Content-Type', 'text/csv').send(parse(result));
+                        }
+                    }
+                })
+                .catch((err) => {
+                    console.log("Error on GetSettlements:");
+                    console.log(err);
+                    res.status(500).json( {status:"failed", reason:"Internal server error"} );
+                }); 
             }
         }
     })
