@@ -36,6 +36,8 @@ Built as the semester project for the *Software Engineering* course at the Schoo
 
 ### Data model
 
+![ER diagram of the database schema](doc/images/er-diagram.jpg)
+
 `Provider` (toll operators) own `Station`s and issue e-tags to `Vehicle`s. Every `Pass` records a vehicle going through a station, along with its charge. `Settlement` rows hold the net monthly amount one provider owes another, and each pass points to the settlement that covers it. Operators log in through `Account`.
 
 ## API overview
