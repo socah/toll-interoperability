@@ -36,12 +36,28 @@ Built as the semester project for the *Software Engineering* course at the Schoo
 
 ### Operator workflow
 
-This UML sequence diagram traces an operator's session: logging in, viewing passes, reviewing settlements and their passes, paying a settlement, and logging out.
+These UML diagrams come from the requirements documents. They show what an operator can do in the portal (activity diagram) and how the browser, frontend, API and database interact while they do it (sequence diagram).
+
+<details>
+<summary>Show activity diagram</summary>
+
+![UML activity diagram of the operator portal](doc/images/activity-operator.png)
+
+</details>
 
 <details>
 <summary>Show sequence diagram</summary>
 
 ![UML sequence diagram of an operator session](doc/images/sequence-diagram.png)
+
+</details>
+
+<details>
+<summary>Show pass-ingestion activity diagram (designed only)</summary>
+
+How operators would push new passes to the system through the API. This was specified but not built: the `/admin/addpasses` endpoint loads passes from the sample CSV instead.
+
+![UML activity diagram of pass ingestion](doc/images/activity-pass-ingestion.png)
 
 </details>
 
