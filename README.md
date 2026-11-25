@@ -52,15 +52,6 @@ These UML diagrams come from the requirements documents. They show what an opera
 
 </details>
 
-<details>
-<summary>Show pass-ingestion activity diagram (designed only)</summary>
-
-How operators would push new passes to the system through the API. This was specified but not built: the `/admin/addpasses` endpoint loads passes from the sample CSV instead.
-
-![UML activity diagram of pass ingestion](doc/images/activity-pass-ingestion.png)
-
-</details>
-
 ### Data model
 
 ![ER diagram of the database schema](doc/images/er-diagram.jpg)
