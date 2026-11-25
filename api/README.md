@@ -1,9 +1,14 @@
-# Back-end
+# API
 
-Για να εγκατασταθούν τα modules και για να εκκινήσει ο server τρέχουμε:
-`./build_deploy.sh`
-(αυτή η εντολή μπορεί να εκτελεστεί ακόμη και αν έχουν ήδη εγκατασταθεί τα modules)
+The Express REST server (HTTPS, port 9103). For the endpoint list and setup, see the [main README](../README.md).
 
-Περιεχόμενα:
+```sh
+npm install
+npm run devStart   # or ./build_deploy.sh
+```
 
-- RESTful API
+- `server.js`: sets up the app and HTTPS server
+- `routes/`: `admin`, `auth`, `settlements` and functional (pass/charge) endpoints
+- `utilities/`: JWT authentication middleware and date formatting
+- `postman/`: Postman collection for exploring the API
+- `SSL/`: self-signed certificate for local development only

@@ -5,3 +5,6 @@
 
 # VS Code hidden dir
 .vscode/
+# Dependencies & local config
+node_modules/
+.env

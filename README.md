@@ -1,46 +1,116 @@
-# Sotfeng - Λογισμικό Διαλειτουργικότητας Διοδίων
+# Toll Interoperability System
 
-## Setup Steps
+A web platform that lets Greek motorway operators settle toll charges with each other. When a vehicle with one operator's e-tag passes through another operator's toll station, the system records the pass, nets out what each operator owes the others every month, and lets operators review the passes and mark the settlements as paid.
 
-### Setup βάσης δεδομένων
-Χρησιμοποιούμε ως βάση δεδομένων το MariaDB. Θα χρειαστεί να εγκατασταθεί αυτό και να κάνει listen στο default port 3306.
-Αφού εγκατασταθεί το MariaDB χρειάζεται να φορτωθούν τα δεδομένα που υπάρχουν στο αρχείο: database/Softeng_DB_Dump.sql
+Built as the semester project for the *Software Engineering* course at the School of Electrical & Computer Engineering, National Technical University of Athens (NTUA), 2021–22.
 
-### Δημιουργία `.env` αρχείου
-- Πρέπει να δημιουργηθεί ένα αρχείο με όνομα `.env` στον φάκελο api το οποίο θα περιέχει για παράδειγμα τα παρακάτω:
-`DB_URL=localhost` Η διεύθυνση της βάσης δεδομένων\
-`DB_USER=user`  Το όνομα χρήστη\
-`DB_PASSWD=password` Το password\
-`DB_NAME=main` To όνομα της βάσης που θα χρησιμοποιηθεί\
-`ACCESS_TOKEN_SECRET=6176379a7b4ec482944bc58c47064a9845c94b40abfe11c08dab31cb1d98f662469464bc5d33a97c81d701e088eb5a4133b4ef65a9b7ec1b83496a378d17b090` Η τιμή αυτού δεν χρειάζεται να αλλάξει
+## Features
 
+- **REST API** (Node.js / Express over HTTPS) for pass data: passes per station, passes between two operators, charges owed between operators, all as JSON or CSV.
+- **Monthly settlement engine**: computes mutual debts between every pair of operators, nets them into one settlement each, and links each pass to its settlement.
+- **Operator web portal** (React): login, browsing passes between operators over a date range, viewing outstanding and paid settlements, drilling into the passes behind each settlement, and confirming payment with a transaction code.
+- **Authentication** with JWT access tokens, plus checks that an operator can only see passes and settlements that involve them.
+- **Admin endpoints** for a health check and for resetting or reloading stations, vehicles and passes from the sample CSV data.
+- **Requirements & design docs**: StRS/SRS documents (following ISO/IEC/IEEE 29148) and UML models in Visual Paradigm.
 
-### Τρέξιμο και εγκατάσταση πακέτων npm
+## Architecture
 
-#### Για το backend-api server
-Εκτελούμε τις εντολές:
-- `cd backend`
-- `./build_deploy.sh`
-- `cd ../api`
-- `./build_deploy.sh`
+```
+┌──────────────┐   HTTPS + JWT   ┌──────────────────┐     ┌──────────────┐
+│ React front- │ ──────────────▶ │ Express REST API │ ──▶ │   MariaDB    │
+│ end  (:3000) │                 │     (:9103)      │     │   (:3306)    │
+└──────────────┘                 └──────────────────┘     └──────────────┘
+                                   api/  ──uses──▶  backend/ (data access,
+                                                    settlement calculation)
+```
 
-Αφού εκτελεστούν όλες οι παραπάνω εντολές εκκινεί ο εξυπηρετητής backend-api και κάνει listen στο port 9103.
+| Directory | Contents |
+| --- | --- |
+| [`api/`](api) | Express server, routers (`admin`, `auth`, `settlements`, functional endpoints), JWT middleware, Postman collection |
+| [`backend/`](backend) | Data-access layer for MariaDB, the settlement calculation script, and Mocha tests |
+| [`frontend/`](frontend) | React single-page app for toll operators |
+| [`database/`](database) | Schema (`create_tables.ddl`), full data dump, and sample CSV data |
+| [`doc/`](doc) | Requirements documents (Greek) and the Visual Paradigm UML project |
+| [`test-api/`](test-api) | Postman functional tests for the API |
+| [`test-backend/`](test-backend) | Script that runs the backend tests |
 
-Μπορούμε σε αυτό το σημείο να ελέγξουμε εύκολα αν όλα δουλεύουν σωστά γράφοντας το παρακάτω URL σε έναν browser:
-https://localhost:9103/interoperability/api/admin/healthcheck
-(Για να δουλέψει αυτό πρέπει να έχουν γίνει όσα περιγράφονται στην παράγραφο "Σχετικά με το SSL certificate")
+### Data model
 
-Εφόσον εκτελεστούν οι παραπάνω εντολές ο backend-api server μπορεί να εκκινηθεί ξανά μονάχα τρέχοντας το api/build_deploy.sh.
+`Provider` (toll operators) own `Station`s and issue e-tags to `Vehicle`s. Every `Pass` records a vehicle going through a station, along with its charge. `Settlement` rows hold the net monthly amount one provider owes another, and each pass points to the settlement that covers it. Operators log in through `Account`.
 
-#### Για το frontend server
-- `cd frontend`
-- `./build_deploy.sh`
+## API overview
 
-Αφού εκτελεστούν όλες οι παραπάνω εντολές εκκινεί ο εξυπηρετητής του frontend και κάνει listen στο port 3000. (Πρόκειται για ένα React Application)
+All endpoints sit under `https://localhost:9103/interoperability/api`. Dates use the `YYYYMMDD` format. Add `?format=csv` to get CSV instead of JSON.
 
-### Σχετικά με το SSL certificate
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| GET | `/admin/healthcheck` | Check the database connection |
+| POST | `/admin/resetpasses` · `/admin/resetstations` · `/admin/resetvehicles` · `/admin/addpasses` | Reset or reload data from the sample CSVs |
+| POST | `/auth/login?username=&password=` | Returns a JWT access token |
+| POST | `/auth/logout?token=` | Invalidates a token |
+| GET | `/PassesPerStation/:stationID/:from/:to` | Passes through a station |
+| GET | `/PassesAnalysis/:op1_ID/:op2_ID/:from/:to` | Passes through op1's stations by vehicles with op2's tags |
+| GET | `/PassesCost/:op1_ID/:op2_ID/:from/:to` | Total cost of those passes |
+| GET | `/ChargesBy/:op_ID/:from/:to` | What every other operator owes `op_ID` |
+| GET | `/settlements/GetSettlements` 🔒 | Settlements involving the logged-in operator |
+| GET | `/settlements/GetPassesForSettlement/:id` 🔒 | Passes covered by a settlement |
+| POST | `/settlements/PaySettlement/:id/:transaction` | Mark a settlement as paid |
 
-ΣΗΜΑΝΤΙΚΟ: Οι server πρεπει να τρέχουν.
+🔒 Requires the header `X-OBSERVATORY-AUTH: Bearer <token>`.
 
-To certificate μας είναι self signed. Οπότε οι περισσότεροι browsers θα γράφουν πως "Η σύνδεση δεν είναι ασφαλής". Εμείς για να το αποφύγουμε αυτό 
-χρησιμοποιούμε το Firefox. Πηγαίνουμε Ρυθμίσεις > Απόρρητο & Ασφάλεια > {Στην "παράγραφο" για τα πιστοποιητικά}. Εκεί πατάμε "Προβολή Πιστοποιητικών", πηγαίνουμε στην καρτέλα "Διακομιστές" και πατάμε το κουμπί "Προσθήκη Εξαίρεσης". Προσθέτουμε εκεί την τοποθεσία "https://localhost:3000", πατάμε το κουμπί "Λήψη πιστοποιητικού" και τέλος το κουμπί "Επιβεβαίωση εξαίρεσης Ασφαλείας". Επίσης με όμοιο τρόπο προσθέτουμε και την τοποθεσία "https://localhost:9103".
+## Running locally
+
+**Requirements:** Node.js (developed with v16; v18 also works) and MariaDB.
+
+1. **Database.** Create a database in MariaDB and load the dump into it:
+   ```sh
+   mysql -u <user> -p -e "CREATE DATABASE main"
+   mysql -u <user> -p main < database/Softeng_DB_Dump.sql
+   ```
+2. **Configuration.** Create `api/.env`:
+   ```ini
+   DB_URL=localhost
+   DB_USER=<user>
+   DB_PASSWD=<password>
+   DB_NAME=main
+   ACCESS_TOKEN_SECRET=<any long random string>
+   ```
+3. **API server** (listens on port 9103):
+   ```sh
+   cd backend && npm install
+   cd ../api && npm install && npm run devStart
+   ```
+   To check it's working, open <https://localhost:9103/interoperability/api/admin/healthcheck>.
+4. **Frontend** (listens on port 3000):
+   ```sh
+   cd frontend && npm install && npm start
+   ```
+5. Log in at <https://localhost:3000> with one of the demo accounts below.
+
+> **Self-signed certificate:** both servers use the self-signed certificate in `api/SSL/`, so your browser will warn you. Open https://localhost:9103 once and accept the warning, otherwise the frontend's requests to the API will fail. The certificate, private key and any example secrets in this repo are for local demos only.
+
+### Demo accounts
+
+The password for every account is `password`.
+
+| Username | Operator |
+| --- | --- |
+| `aodos`, `username` | aodos |
+| `egnatia`, `egnatia2`, `egnatia3` | egnatia |
+| `gefyra` | gefyra |
+| `kentriki_odos` | kentriki_odos |
+| `moreas` | moreas |
+| `nea_odos`, `nea_odos2` | nea_odos |
+| `olympia_odos` | olympia_odos |
+
+## Tests
+
+- **Backend unit tests (Mocha):** `cd backend && npm test`. These need a running database configured through `api/.env`.
+- **API functional tests:** import the [Postman collection](test-api) and run it against the running server.
+
+## Authors
+
+- **Leonidas Delimpasis** ([@socah](https://github.com/socah))
+- [@PanosMenEl18052](https://github.com/PanosMenEl18052)
+
+The course staff at NTUA provided the requirements templates and the sample data.

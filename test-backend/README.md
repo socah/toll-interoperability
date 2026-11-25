@@ -1,12 +1,3 @@
-# test-backend
+# Backend tests
 
-Για να εκτελεστούν τα test εκτελούμε την εντολή:
- `./test.sh`
-
-O Κώδικας που κάνει το testing βρίσκεται στο αρχείο backend/test.js.
-Το test.sh είναι απλά ένα bash script.
-
-Περιεχόμενα:
-
-- Backend tests
-
+`./test.sh` runs the Mocha tests in [`backend/test.js`](../backend/test.js). They need the database to be running and configured through `api/.env`.

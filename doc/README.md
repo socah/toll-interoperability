@@ -1,10 +1,9 @@
 # Documentation
 
-Έχουμε ανεβάσει τα αρχεία ασυμπίεστα σε αυτόν το φάκελο.
-Τα ίδια αρχεία υπάρχουν επίσης και συμπιεσμένα μέσα στον φάκελο zipped.
+Requirements and design documents, written in Greek on the course's ISO/IEC/IEEE 29148 templates.
 
-Περιεχόμενα:
-
-- ΕΝΑ αρχείο Visual Paradigm με τα ζητούμενα διαγράμματα.
-- Εγγραφο SRS - Software Requirements Specification.
-- Εγγραφο StRS - Stakeholders Requirements Specification.
+- `SRS.docx`: Software Requirements Specification, including UML component and deployment diagrams
+- `StRS_λειτουργοί_αυτοκινητοδρόμων_2021-v1.docx`: Stakeholder Requirements for the motorway operators
+- `StRS_υπουργείο_μεταφοράς.docx`, `StRS_τράπεζες_2021-v1.docx`: Stakeholder Requirements for the Ministry of Transport and for banks. These were written for the original larger team and fell out of scope when the team shrank to two members.
+- `softeng21-7_vp.vpp`: the Visual Paradigm project holding all UML diagrams
+- `zipped/`: the same files, compressed, as submitted

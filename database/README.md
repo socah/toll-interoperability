@@ -1,12 +1,8 @@
-# database
+# Database
 
+MariaDB schema and data.
 
-Στον φάκελο testing_sql_files είναι δικά μας βοηθητικά πράγματα. Δεν περιέχει ο φάκελος αυτός κάτι για βαθμολόγηση.
-
-Το αρχείο Softeng_DB_Dump.sql είναι αυτό που περιέχει το dump όλης της βάσης δεδομένων.
-
-Το αρχείο create_tables.ddl φτιάχνει μόνο τους πίνακες χωρίς δεδομένα.
-Περιεχόμενα:
-
-- Database dump (sql ή json)
-
+- `Softeng_DB_Dump.sql`: full dump (schema, sample data and computed settlements). Load this one to run the app.
+- `create_tables.ddl`: schema only, no data
+- `csv_files/`: sample stations, vehicles and passes used by the `/admin/reset*` endpoints
+- `testing_sql_files/`: helper scripts used during development
