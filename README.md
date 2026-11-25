@@ -34,6 +34,17 @@ Built as the semester project for the *Software Engineering* course at the Schoo
 | [`test-api/`](test-api) | Postman functional tests for the API |
 | [`test-backend/`](test-backend) | Script that runs the backend tests |
 
+### Operator workflow
+
+This UML sequence diagram traces an operator's session: logging in, viewing passes, reviewing settlements and their passes, paying a settlement, and logging out.
+
+<details>
+<summary>Show sequence diagram</summary>
+
+![UML sequence diagram of an operator session](doc/images/sequence-diagram.png)
+
+</details>
+
 ### Data model
 
 ![ER diagram of the database schema](doc/images/er-diagram.jpg)
