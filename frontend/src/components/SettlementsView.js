@@ -9,7 +9,7 @@ function ProviderSelection({data, onPaid}) {
     const history = useHistory();
 
     if(data.length === 0){ // αν δεν έχουμε δεδομένα
-        return (<p>Δεν υπάρχουν δεδομένα προς προβολή.</p>);
+        return (<p>No data to display.</p>);
     }
 
     function showSettlementPasses(element) {
@@ -20,7 +20,7 @@ function ProviderSelection({data, onPaid}) {
     let confirmPayment = (element) => {
 
         // popup dialog όπου ο χρήστης εισάγει τον κωδικό της τράπεζας
-        const enteredCode = prompt('Εισάγετε τον κωδικό συναλλαγής')
+        const enteredCode = prompt('Enter the transaction code')
 
         // αν πατήθηκε το κουμπί ακύρωση
         if(enteredCode == null){
@@ -32,14 +32,14 @@ function ProviderSelection({data, onPaid}) {
 
         axios.post(url)
         .then((res) => {
-            alert("Η πληρωμή επιβεβαιώθηκε επιτυχώς!")
+            alert("Payment confirmed!")
             if(onPaid !== undefined){
               onPaid(element.settlementID);
             }
             // αν αλλάξαμε την κατάσταση της οφειλής σε πληρωμένη κάνουμε ανανέωση της σελίδας
             history.push("/showsettlements")
         }).catch((e) => {
-          alert("Σφάλμα κατά την επιβεβαίωση της πληρωμής")
+          alert("Payment confirmation failed")
         })
       }
 
@@ -77,13 +77,13 @@ function ProviderSelection({data, onPaid}) {
                                     <td>{element.operatorCredited}</td>
                                     <td>
                                         <button onClick={() => showSettlementPasses(element)}>
-                                            Λεπτομέρειες
+                                            Details
                                         </button>
                                     </td>
                                         
                                     <td>
                                         <button id={`"${element.settlementID.toString()}"`} onClick={() => confirmPayment(element)} disabled={element.paid}>
-                                            Εξόφληση
+                                            Pay
                                         </button>
                                     </td>
 
@@ -123,7 +123,7 @@ function ProviderSelection({data, onPaid}) {
                                     <td>{element.operatorDebited}</td>
                                     <td>
                                         <button  onClick={() => showSettlementPasses(element)}>
-                                            Λεπτομέρειες
+                                            Details
                                         </button>
                                     </td>
                                 </tr>

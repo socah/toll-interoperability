@@ -61,7 +61,7 @@ function Showpasses() {
         document.getElementById("date_from").setAttribute("aria-invalid", "true");
         document.getElementById("date_to").setAttribute("aria-invalid", "true");
 
-        error_msg_elem.innerHTML = "Η ημερομηνία 'Από' είναι μεταγενέστερη της 'Έως'";
+        error_msg_elem.innerHTML = "The 'From' date is after the 'To' date";
         error_msg_elem.style.visibility = 'visible';
         return;
       }
@@ -103,7 +103,7 @@ function Showpasses() {
         submit_button.disabled = false;
 
         // εμφανίζουμε κατάλληλο κείμενο σφάλματος
-        error_msg_elem.innerHTML = "Σφάλμα κατά το αίτημα";
+        error_msg_elem.innerHTML = "The request failed";
         error_msg_elem.style.visibility = 'visible';
    
         //debug
@@ -114,7 +114,7 @@ function Showpasses() {
 
     return (
       <div className="container">
-        <h2>Showpasses Page</h2>
+        <h2>Passes</h2>
 
         {/* form for search parameters */}
         <form onSubmit={handleSubmit}>
@@ -122,22 +122,22 @@ function Showpasses() {
             <div className="grid">
 
               <label>
-                Ιδιοκτήτης διοδίων
+                Station operator
                 <ProviderSelection name="op1_ID" id="op1_ID"/>
               </label>
 
               <label>
-                Ιδιοκτήτης των tags
+                Tag operator
                 <ProviderSelection name="op2_ID" id="op2_ID"/>
               </label>
 
               <label>
-                Από
+                From
                 <input type="date" name="date_from" id="date_from" defaultValue="2018-12-31" required/>
               </label>
 
               <label>
-                Έως
+                To
                 <input type="date" name="date_to" id="date_to" defaultValue={currentDate()} required/>
               </label>
 
@@ -145,7 +145,7 @@ function Showpasses() {
         
             <small id="error" style={{color: '#ff0000', visibility: 'hidden'}}></small>
 
-            <button id="submit-button"> Εύρεση </button>
+            <button id="submit-button"> Search </button>
           </form>
 
           <PassesView data={data}/>

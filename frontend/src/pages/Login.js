@@ -79,7 +79,7 @@ function Login() {
           <div className="grid">
 
             <label>
-              Όνομα χρήστη:
+              Username:
               <input
                 type="text"
                 required
@@ -89,7 +89,7 @@ function Login() {
             </label>
 
             <label>
-              Κωδικός πρόσβασης:
+              Password:
               <input
                 type="password"
                 required
@@ -101,15 +101,15 @@ function Login() {
           </div>
 
           <small id="login-error" style={{visibility: 'hidden', color: '#ff0000'}}>
-            Λανθασμένος συνδυασμός ονόματος χρήστη και κωδικού.
+            Incorrect username or password.
           </small>          
 
 
-          <button id="login-submit-button"> Σύνδεση </button>
+          <button id="login-submit-button"> Log in </button>
         </form>
       </div>
 
-      <p>Η παροχή στοιχείων εισόδου γίνεται μετά από τηλεφωνική επικοινωνία με τους διαχειριστές του συστήματος.</p>
+      <p>Login credentials are issued by the system administrators by phone.</p>
       
     </div>
   );

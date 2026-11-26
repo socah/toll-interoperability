@@ -10,13 +10,13 @@ function ProviderSelection({name, id}) {
     return (
 
         <select name={name} id={id} required>
-                <option value="aodos">Αττική Οδός</option>
-                <option value="egnatia">Εγνατία Οδός</option>
-                <option value="gefyra">Γέφυρα</option>
-                <option value="kentriki_odos">Κεντική Οδος</option>
+                <option value="aodos">Attiki Odos</option>
+                <option value="egnatia">Egnatia Odos</option>
+                <option value="gefyra">Gefyra</option>
+                <option value="kentriki_odos">Kentriki Odos</option>
                 <option value="moreas">Moreas</option>
-                <option value="nea_odos">Νέα Οδός</option>
-                <option value="olympia_odos">Ολυμπία Οδός</option>
+                <option value="nea_odos">Nea Odos</option>
+                <option value="olympia_odos">Olympia Odos</option>
         </select>
     );
   }

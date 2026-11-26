@@ -39,7 +39,7 @@ function ShowSettlementPasses() {
             // Είτε το response είναι κωδικό != 200 είτε δημιουργήθηκε κάποιο exception
   
             // εμφανίζουμε κατάλληλο κείμενο σφάλματος
-            error_msg_elem.innerHTML = "Σφάλμα κατά το αίτημα";
+            error_msg_elem.innerHTML = "The request failed";
             error_msg_elem.style.color = '#ff0000';
             error_msg_elem.style.visibility = 'visible';
       
@@ -52,7 +52,7 @@ function ShowSettlementPasses() {
     return (
       <div className="container">
         
-        <h2> Showsettelmentpasses Page </h2>
+        <h2>Settlement Passes</h2>
         
         <small id="error" style={{color: '#ff0000', visibility: 'hidden'}}></small>
 

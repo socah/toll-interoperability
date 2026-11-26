@@ -57,7 +57,7 @@ function Navbar() {
         <nav>
             <ul>
                 <li onClick={gotoHomepage} style={{cursor: 'pointer'}}>
-                    <h1>Σύστημα Διαλειτουργικότητας Διοδίων</h1>
+                    <h1>Toll Interoperability System</h1>
                 </li>
             </ul>
             <ul>
@@ -70,7 +70,7 @@ function Navbar() {
 
                 {ls.get("accessToken") && 
                 <li>
-                    <button onClick={disconnect}>Αποσύνδεση</button>
+                    <button onClick={disconnect}>Log out</button>
                 </li>
                 }
 

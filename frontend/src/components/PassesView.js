@@ -6,7 +6,7 @@ function ProviderSelection({data}) {
 
     
     if(data.length === 0){ // αν δεν έχουμε δεδομένα
-        return (<p>Δεν υπάρχουν δεδομένα προς προβολή.</p>);
+        return (<p>No data to display.</p>);
     }
 
     // μετατροπή του data σε csv κείμενο
@@ -32,7 +32,7 @@ function ProviderSelection({data}) {
 
         <div>
 
-            <a href={getDownloadURL()}>Κατέβασε CSV</a>
+            <a href={getDownloadURL()}>Download CSV</a>
 
             <table>
                 <thead>

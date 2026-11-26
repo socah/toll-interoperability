@@ -46,7 +46,7 @@ function Showsettlements() {
           // Είτε το response είναι κωδικό != 200 είτε δημιουργήθηκε κάποιο exception
 
           // εμφανίζουμε κατάλληλο κείμενο σφάλματος
-          error_msg_elem.innerHTML = "Σφάλμα κατά το αίτημα";
+          error_msg_elem.innerHTML = "The request failed";
           error_msg_elem.style.visibility = 'visible';
     
           //debug
@@ -81,7 +81,7 @@ function Showsettlements() {
     return (
         <div className="container">
 
-            <h2>Showsettlements Page</h2>
+            <h2>Settlements</h2>
 
             <small id="error" style={{color: '#ff0000', visibility: 'hidden'}}></small>
 

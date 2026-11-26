@@ -23,12 +23,12 @@ function Options() {
     return (
       <div className="container">
 
-        <h2>Επιλογές</h2>
+        <h2>Options</h2>
 
         <div>
 
-          <button onClick={gotoShowpasses}>Προβολή δεδομένων Διελεύσεων</button>
-          <button onClick={gotoShowsettlements}>Προβολή οφειλών</button>
+          <button onClick={gotoShowpasses}>View pass data</button>
+          <button onClick={gotoShowsettlements}>View settlements</button>
 
         </div>
 

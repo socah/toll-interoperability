@@ -4,6 +4,10 @@ A web platform that lets Greek motorway operators settle toll charges with each 
 
 Built as the semester project for the *Software Engineering* course at the School of Electrical & Computer Engineering, National Technical University of Athens (NTUA), 2021–22.
 
+![Settlements page of the operator portal](doc/images/settlements-screenshot.png)
+
+*The settlements page, logged in as the `aodos` operator. It lists the monthly amounts this operator owes others, each with a link to the passes behind it and a button to confirm payment. Amounts owed to the operator appear in a second table further down.*
+
 ## Features
 
 - **REST API** (Node.js / Express over HTTPS) for pass data: passes per station, passes between two operators, charges owed between operators, all as JSON or CSV.
@@ -33,6 +37,8 @@ Built as the semester project for the *Software Engineering* course at the Schoo
 | [`doc/`](doc) | Requirements documents (Greek) and the Visual Paradigm UML project |
 | [`test-api/`](test-api) | Postman functional tests for the API |
 | [`test-backend/`](test-backend) | Script that runs the backend tests |
+
+The user interface is in English. Code comments are mostly in Greek.
 
 ### Operator workflow
 
