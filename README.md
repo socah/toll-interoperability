@@ -8,6 +8,10 @@ Built as the semester project for the *Software Engineering* course at the Schoo
 
 *The settlements page, logged in as the `aodos` operator. It lists the monthly amounts this operator owes others, each with a link to the passes behind it and a button to confirm payment. Amounts owed to the operator appear in a second table further down.*
 
+![Passes page of the operator portal](doc/images/passes-screenshot.png)
+
+*The passes page: every pass through Attiki Odos stations by vehicles carrying an Egnatia Odos e-tag in June 2019, with a CSV export. Both screenshots are in dark mode; the interface follows the system's light or dark setting.*
+
 ## Features
 
 - **REST API** (Node.js / Express over HTTPS) for pass data: passes per station, passes between two operators, charges owed between operators, all as JSON or CSV.
